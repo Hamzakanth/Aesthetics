@@ -5,93 +5,97 @@
 
 /* ==========================================================================
    AURELIUS DESIGN TOKENS
-   Swiss Modernism 2.0 — strict grid, mathematical spacing, single accent.
+   Quiet Luxury — soft nude ground, warm neutrals, a single gold accent.
    Layer 1 (primitive) -> Layer 2 (semantic) -> Layer 3 (component).
    Never reference a raw hex inside a component. Always go through a token.
    ========================================================================== */
 
 :root {
   /* --- Layer 1: primitives -------------------------------------------- */
-  /* Cool slate neutrals. Blue-leaning grey reads clinical and calm next to
-     a blue accent; a warm grey would fight it. */
-  --slate-0: #ffffff;
-  --slate-50: #f7f9fc;
-  --slate-100: #eef2f7;
-  --slate-200: #e3e8ef;
-  --slate-300: #cdd5e0;
-  --slate-400: #9aa7b8;
-  --slate-500: #6c7a8d;
-  --slate-600: #4e5a6b;
-  --slate-700: #37424f;
-  --slate-800: #212b36;
-  --slate-900: #131c26;
-  --slate-950: #0a121b;
+  /* Warm nude neutrals. Ivory / beige / sand / charcoal — the ramp a skin
+     and beauty brand lives on. A cool grey next to gold reads grubby. */
+  --stone-0: #ffffff; /* Warm White */
+  --stone-50: #f9f7f4; /* Ivory — the page ground */
+  --stone-100: #f2ede7;
+  --stone-200: #e8d9cf; /* Beige — hairlines and borders */
+  --stone-300: #d8c4b6; /* Sand — inputs, stronger rules */
+  --stone-400: #b9a394;
+  --stone-500: #8f7d6e;
+  --stone-600: #6b5d52;
+  --stone-700: #4d443c;
+  --stone-800: #333333; /* Charcoal Text */
+  --stone-900: #2a241f;
+  --stone-950: #191512;
 
-  /* Single accent. Apple's system blue, which is also the one blue that
-     survives on pure white without vibrating. */
-  --blue-300: #7ab8ff;
-  --blue-400: #4da3ff;
-  --blue-500: #0a84ff;
-  --blue-600: #0071e3;
-  --blue-700: #0062c4;
-  --blue-900: #0b3c78;
+  /* Single accent. Gold-500 is the brand gold and is used for fills, marks
+     and decoration; gold-700 is the same hue taken down until it clears
+     4.5:1 on ivory, which is what any gold *text* has to use. */
+  --gold-200: #efe0c6;
+  --gold-300: #e3cfa3;
+  --gold-400: #d9be87;
+  --gold-500: #c9a96a; /* Gold Accent */
+  --gold-600: #a9853f;
+  --gold-700: #8a6a2f;
+  --gold-900: #4a3818;
 
   /* --- Layer 2: semantic (light) --------------------------------------- */
-  /* Apple's ground is pure white, not off-white. Elevation is carried by
-     hairlines and shadow, never by a grey page. */
-  --background: var(--slate-0);
-  --foreground: var(--slate-950);
+  /* Ivory ground, warm-white cards. The half-step between the two is what
+     makes a nude palette read as considered rather than as unpainted. */
+  --background: var(--stone-50);
+  --foreground: var(--stone-900);
 
-  --card: var(--slate-0);
-  --card-foreground: var(--slate-950);
-  --popover: var(--slate-0);
-  --popover-foreground: var(--slate-950);
+  --card: var(--stone-0);
+  --card-foreground: var(--stone-900);
+  --popover: var(--stone-0);
+  --popover-foreground: var(--stone-900);
 
-  /* Primary IS the blue. On an Apple-register site the filled button is the
-     brand, so primary and accent are intentionally the same hue. */
-  --primary: var(--blue-600);
-  --primary-foreground: #ffffff;
+  /* Primary is charcoal, not gold. The Chanel move: the filled button is
+     near-black and the gold stays scarce — a page of gold buttons reads
+     costume, not couture. Gold carries emphasis, charcoal carries action. */
+  --primary: var(--stone-900);
+  --primary-foreground: var(--stone-50);
 
-  --secondary: var(--slate-100);
-  --secondary-foreground: var(--slate-900);
+  --secondary: var(--stone-100);
+  --secondary-foreground: var(--stone-900);
 
-  --muted: var(--slate-50);
-  --muted-foreground: var(--slate-600);
+  --muted: var(--stone-100);
+  --muted-foreground: var(--stone-600);
 
-  --accent: var(--blue-600);
+  --accent: var(--gold-700);
   --accent-foreground: #ffffff;
-  --accent-subtle: color-mix(in oklab, var(--blue-600) 9%, transparent);
+  --accent-subtle: color-mix(in oklab, var(--gold-500) 16%, transparent);
 
-  /* Deep navy panel used for the closing CTA. Trust register — Nabla's move
-     of ending on a dark, quiet, confident block rather than a loud one. */
-  --ink: var(--slate-950);
-  --ink-foreground: var(--slate-50);
+  /* Espresso panel used for the closing CTA. Ending dark and quiet is the
+     luxury register — a loud close is a discount close. */
+  --ink: var(--stone-950);
+  --ink-foreground: var(--stone-50);
 
-  /* Scrim behind modals and the mobile sheet. Cool, never neutral grey. */
-  --overlay: color-mix(in oklab, var(--slate-950) 45%, transparent);
+  /* Scrim behind modals and the mobile sheet. Warm, never neutral grey. */
+  --overlay: color-mix(in oklab, var(--stone-950) 45%, transparent);
 
-  --destructive: #d92d20;
+  --destructive: #b3261e;
   --destructive-foreground: #ffffff;
-  --success: #0e7a4d;
-  --warning: #b54708;
+  /* Sage rather than a clinical green — the one cool note the palette keeps. */
+  --success: #4f7a52;
+  --warning: #a15c07;
 
-  --border: var(--slate-200);
-  --input: var(--slate-200);
-  --ring: var(--blue-600);
+  --border: var(--stone-200);
+  --input: var(--stone-300);
+  --ring: var(--gold-600);
 
-  /* Hairline used for the Swiss grid rules. Deliberately near-invisible. */
-  --rule: color-mix(in oklab, var(--slate-950) 6%, transparent);
+  /* Hairline used for the grid rules. Deliberately near-invisible. */
+  --rule: color-mix(in oklab, var(--stone-900) 6%, transparent);
 
-  --chart-1: var(--blue-600);
-  --chart-2: var(--blue-400);
-  --chart-3: var(--slate-400);
-  --chart-4: var(--blue-900);
-  --chart-5: var(--slate-600);
+  --chart-1: var(--gold-600);
+  --chart-2: var(--gold-400);
+  --chart-3: var(--stone-400);
+  --chart-4: var(--stone-700);
+  --chart-5: var(--stone-500);
 
   /* --- Layer 3: component --------------------------------------------- */
-  /* Softened from 0.625rem. Rounder geometry reads calmer and more
-     approachable — the trust register — without tipping into playful. */
-  --radius: 0.875rem;
+  /* Tightened from 0.875rem. Editorial geometry — a beauty brand that
+     over-rounds reads as an app; a little square reads as a boutique. */
+  --radius: 0.75rem;
 
   /* Density dial = 4/10 (standard). 8px base unit, mathematical scale. */
   --space-2xs: 0.5rem;
@@ -104,19 +108,21 @@
   --space-3xl: 8rem;
 
   /* Elevation. Premium = tight, low-opacity, never a soft gray blob. */
-  /* Blue-tinted shadow rather than neutral grey. On a pure-white ground a
-     grey shadow reads as dirt; a cool one reads as depth. */
-  --shadow-xs: 0 1px 2px 0 rgb(10 18 27 / 0.04);
-  --shadow-sm: 0 1px 3px 0 rgb(10 18 27 / 0.06), 0 1px 2px -1px rgb(10 18 27 / 0.04);
-  --shadow-md: 0 4px 14px -2px rgb(10 18 27 / 0.09), 0 2px 6px -2px rgb(10 18 27 / 0.05);
-  --shadow-lg: 0 16px 40px -10px rgb(10 18 27 / 0.14), 0 4px 12px -4px rgb(10 18 27 / 0.06);
-  --shadow-blue: 0 8px 28px -8px rgb(0 113 227 / 0.35);
+  /* Warm-tinted shadow. On an ivory ground a neutral grey shadow reads as
+     dirt; a warm one reads as depth in the same light as the palette. */
+  --shadow-xs: 0 1px 2px 0 rgb(42 36 31 / 0.04);
+  --shadow-sm: 0 1px 3px 0 rgb(42 36 31 / 0.06), 0 1px 2px -1px rgb(42 36 31 / 0.04);
+  --shadow-md: 0 4px 14px -2px rgb(42 36 31 / 0.09), 0 2px 6px -2px rgb(42 36 31 / 0.05);
+  --shadow-lg: 0 16px 40px -10px rgb(42 36 31 / 0.14), 0 4px 12px -4px rgb(42 36 31 / 0.06);
+  /* Lift under filled buttons — warm and soft, so the control looks like it
+     is resting on the page rather than cut out of it. */
+  --shadow-lift: 0 8px 28px -8px rgb(42 36 31 / 0.28);
 
   /* Gradient-mesh blob fills. Tokenised so the field is theme-aware and can
      be retuned in one place instead of across three blurred divs. */
-  --mesh-a: color-mix(in oklab, var(--blue-500) 18%, transparent);
-  --mesh-b: color-mix(in oklab, var(--blue-600) 14%, transparent);
-  --mesh-c: color-mix(in oklab, var(--blue-300) 26%, transparent);
+  --mesh-a: color-mix(in oklab, var(--gold-500) 22%, transparent);
+  --mesh-b: color-mix(in oklab, var(--stone-300) 34%, transparent);
+  --mesh-c: color-mix(in oklab, var(--gold-300) 30%, transparent);
 
   /* Motion dial = 6/10 (standard). Exit is always faster than enter. */
   --duration-fast: 150ms;
@@ -127,60 +133,63 @@
 }
 
 .dark {
-  --background: #070d14;
-  --foreground: var(--slate-50);
+  /* Dark is espresso, not black — the same warmth as the light theme with
+     the lights off. A neutral black under a gold accent goes green. */
+  --background: #14110e;
+  --foreground: #f5f0ea;
 
-  --card: #0e161f;
-  --card-foreground: var(--slate-50);
-  --popover: #111a24;
-  --popover-foreground: var(--slate-50);
+  --card: #1d1915;
+  --card-foreground: #f5f0ea;
+  --popover: #221d18;
+  --popover-foreground: #f5f0ea;
 
-  /* Lifted from blue-600 to blue-400: 600 fails 4.5:1 against a dark ground. */
-  --primary: var(--blue-400);
-  --primary-foreground: #04121f;
+  /* Charcoal is invisible on an espresso ground, so on dark the filled
+     button becomes the gold and takes dark type. */
+  --primary: var(--gold-400);
+  --primary-foreground: #1a150f;
 
-  --secondary: #1a2430;
-  --secondary-foreground: var(--slate-50);
+  --secondary: #292219;
+  --secondary-foreground: #f5f0ea;
 
-  --muted: #101a24;
-  --muted-foreground: var(--slate-400);
+  --muted: #1b1713;
+  --muted-foreground: #b6a99b;
 
-  --accent: var(--blue-400);
-  --accent-foreground: #04121f;
-  --accent-subtle: color-mix(in oklab, var(--blue-400) 14%, transparent);
+  --accent: var(--gold-400);
+  --accent-foreground: #1a150f;
+  --accent-subtle: color-mix(in oklab, var(--gold-400) 14%, transparent);
 
-  /* On dark the CTA panel inverts to a raised surface, not a darker hole. */
-  --ink: #0e161f;
-  --ink-foreground: var(--slate-50);
+  /* On dark the CTA panel lifts to a raised surface, not a darker hole. */
+  --ink: #1d1915;
+  --ink-foreground: #f5f0ea;
 
   --overlay: color-mix(in oklab, #000000 62%, transparent);
 
-  --destructive: #ff6b63;
-  --destructive-foreground: #04121f;
-  --success: #3ddc9a;
-  --warning: #fbbf24;
+  --destructive: #ff8079;
+  --destructive-foreground: #1a150f;
+  --success: #8fb890;
+  --warning: #e0a75a;
 
-  --border: #1e2937;
-  --input: #24303f;
-  --ring: var(--blue-400);
+  --border: #2f2820;
+  --input: #3a3128;
+  --ring: var(--gold-400);
 
-  --rule: color-mix(in oklab, var(--slate-50) 9%, transparent);
+  --rule: color-mix(in oklab, #f5f0ea 9%, transparent);
 
-  --chart-1: var(--blue-400);
-  --chart-2: var(--blue-300);
-  --chart-3: var(--slate-500);
-  --chart-4: var(--blue-600);
-  --chart-5: var(--slate-400);
+  --chart-1: var(--gold-400);
+  --chart-2: var(--gold-200);
+  --chart-3: var(--stone-500);
+  --chart-4: var(--gold-600);
+  --chart-5: var(--stone-400);
 
   --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.3);
   --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4);
   --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.5);
   --shadow-lg: 0 12px 32px -8px rgb(0 0 0 / 0.6);
-  --shadow-blue: 0 8px 28px -8px rgb(77 163 255 / 0.28);
+  --shadow-lift: 0 8px 28px -8px rgb(201 169 106 / 0.3);
 
-  --mesh-a: color-mix(in oklab, var(--blue-500) 26%, transparent);
-  --mesh-b: color-mix(in oklab, var(--blue-600) 34%, transparent);
-  --mesh-c: color-mix(in oklab, var(--blue-300) 16%, transparent);
+  --mesh-a: color-mix(in oklab, var(--gold-600) 30%, transparent);
+  --mesh-b: color-mix(in oklab, var(--stone-700) 42%, transparent);
+  --mesh-c: color-mix(in oklab, var(--gold-500) 18%, transparent);
 }
 
 /* ==========================================================================
@@ -224,8 +233,13 @@
   --color-chart-5: var(--chart-5);
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-inter-tight), var(--font-inter), sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  /* Display is a high-contrast serif. It is the single loudest signal that
+     this is a beauty brand and not a dashboard. */
+  --font-display: var(--font-cormorant), ui-serif, Georgia, serif;
+  /* `font-mono` in this codebase means "system label" — eyebrows, status
+     chips, small caps. A true monospace reads engineering, so the role maps
+     to the sans and earns its distinction from tracking instead. */
+  --font-mono: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -237,7 +251,7 @@
   --shadow-sm: var(--shadow-sm);
   --shadow-md: var(--shadow-md);
   --shadow-lg: var(--shadow-lg);
-  --shadow-blue: var(--shadow-blue);
+  --shadow-lift: var(--shadow-lift);
 
   --ease-out-expo: var(--ease-out);
 
@@ -297,9 +311,9 @@
 /* The ink CTA panel sits on a dark ground in BOTH themes, so it always wants
    the high-saturation blob mix rather than the light-theme one. */
 [data-mesh-tone="ink"] {
-  --mesh-a: color-mix(in oklab, var(--blue-500) 30%, transparent);
-  --mesh-b: color-mix(in oklab, var(--blue-600) 42%, transparent);
-  --mesh-c: color-mix(in oklab, var(--blue-300) 20%, transparent);
+  --mesh-a: color-mix(in oklab, var(--gold-600) 34%, transparent);
+  --mesh-b: color-mix(in oklab, var(--stone-700) 46%, transparent);
+  --mesh-c: color-mix(in oklab, var(--gold-500) 22%, transparent);
 }
 
 /* --------------------------------------------------------------------------
@@ -375,6 +389,60 @@
   }
 }
 
+/* --------------------------------------------------------------------------
+   Drafting field motion (LineField)
+   The field stays a static drawing; only the paper drifts and a plotter head
+   travels the two struck lines. Everything here animates `transform` or
+   `opacity` only, so it composites off the main thread, and every layer is
+   masked by its PARENT — animating a masked element would drag its fade
+   around with it.
+   -------------------------------------------------------------------------- */
+
+/* Exactly one cell of travel, so the grid loops with no visible seam. */
+@keyframes field-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(var(--line-cell), var(--line-cell), 0);
+  }
+}
+
+/* Rings breathe rather than expand. An expanding ring set reads as a radar
+   sweep — too much event for a sign-in screen. */
+@keyframes field-breathe {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Plotter head: a short bright segment running the length of a struck line,
+   then a long dark pause before it comes round again. The pause is what keeps
+   it ambient — a continuous loop turns into a progress bar. */
+@keyframes trace-y {
+  0% {
+    transform: translate3d(0, -45%, 0);
+  }
+  55%,
+  100% {
+    transform: translate3d(0, 145%, 0);
+  }
+}
+
+@keyframes trace-x {
+  0% {
+    transform: translate3d(-45%, 0, 0);
+  }
+  55%,
+  100% {
+    transform: translate3d(145%, 0, 0);
+  }
+}
+
 /* ==========================================================================
    BASE
    ========================================================================== */
@@ -403,14 +471,25 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Swiss Modernism: display type is tight, body type is not. */
+  /* The serif is reserved for display sizes. Cormorant below ~20px loses its
+     hairlines and reads as a rendering fault, so h3/h4 stay on the sans. */
   h1,
-  h2,
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+  }
+
   h3,
   h4 {
-    font-family: var(--font-display);
-    letter-spacing: -0.028em;
+    letter-spacing: -0.012em;
     text-wrap: balance;
+  }
+
+  /* Anything explicitly opting into the serif is display-sized by contract. */
+  .font-display {
+    letter-spacing: -0.012em;
   }
 
   p {

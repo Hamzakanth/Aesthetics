@@ -73,8 +73,8 @@ export function LoginForm() {
     mode: "onBlur",
     reValidateMode: "onChange",
     // Defaults to off. Front-desk machines are shared by the whole rota and
-    // sit in a room with patients in it — a persistent session is the wrong
-    // default for the majority of the people signing in here.
+    // sit in a reception with clients in it — a persistent session is the
+    // wrong default for the majority of the people signing in here.
     defaultValues: { email: "", password: "", remember: false },
   })
 
@@ -106,7 +106,7 @@ export function LoginForm() {
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Federated first: most clinics are already in Google Workspace or
+      {/* Federated first: most studios are already in Google Workspace or
           Microsoft 365. Google takes the wide slot because it is the majority
           path — the others stay reachable without competing for the eye. */}
       <div className="flex gap-2.5">
@@ -172,7 +172,7 @@ export function LoginForm() {
             type="email"
             autoComplete="username"
             autoFocus
-            placeholder="dana@cedarparkfm.com"
+            placeholder="dana@maisonskin.com"
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? "email-error" : undefined}
             {...register("email")}

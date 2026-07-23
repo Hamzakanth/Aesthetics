@@ -3,17 +3,18 @@
 **Global source of truth.** Page-level overrides live in `design-system/aurelius/pages/<page>.md`
 and win over anything here. Absent an override, these rules apply.
 
-Design philosophy: **Apple × Stripe × Nabla**.
+Design philosophy: **Apple Store × Chanel × Stripe** — quiet luxury.
 
 | Reference | What we take | What we do *not* take |
 |-----------|--------------|------------------------|
-| Apple | Pure-white ground, system blue, generous whitespace, restraint | Giant product photography, full-bleed video |
+| Apple Store | Generous whitespace, restraint, one product per eyeline | Giant product photography, full-bleed video |
+| Chanel | Nude ground, charcoal type, scarce gold, editorial serif display | Fashion-shoot imagery, all-caps everything, black slabs |
 | Stripe | Animated gradient mesh behind the hero and closing CTA | WebGL, scroll-jacking, the multi-hue rainbow |
-| Nabla | Trust register — soft geometry, calm density, dark quiet close | Illustration-led warmth, pastel tinting |
 
 Substrate remains **Swiss Modernism 2.0** — strict grid, mathematical spacing, single accent,
-no decoration that does not carry information. The gradient field sits *behind* that grid;
-it never replaces it.
+no decoration that does not carry information. Luxury here is *subtraction*: the serif and the
+gold do the signalling, and everything else gets quieter to let them. The gradient field sits
+*behind* the grid; it never replaces it.
 
 ---
 
@@ -32,36 +33,44 @@ Recorded so they are not silently reverted:
 | Dimension | Generator said | Shipped | Why |
 |-----------|----------------|---------|-----|
 | Style | SaaS Mobile (High-Tech Boutique) | Swiss Modernism 2.0 | The query matched a mobile-app style; this is a desktop-first marketing site. |
-| Display font | Calistoga | Inter Tight | Calistoga reads warm-editorial. Enterprise governance needs precision, not warmth. |
-| Palette | Stone + gold | **White + Apple blue** | Superseded by direction: white/blue, Apple register. Warm stone neutrals fought the blue, so the whole neutral ramp moved to cool slate. |
+| Display font | Calistoga | Cormorant Garamond | Calistoga is a warm slab. The brief is couture, which wants high stroke contrast and real serifs. |
+| Palette | White + Apple blue | **Soft nude + gold** | Superseded by direction: this sells to aesthetic and beauty studios. Cool slate neutrals read clinical — exactly the register the product is *not* in — so the whole ramp moved to warm stone. |
+| Primary button | The accent | Charcoal | A page of gold buttons reads costume. Gold marks emphasis; charcoal carries action. |
 
 ## 3. Colour
 
 Three token layers. **Never write a raw hex in a component** — always go through a semantic token.
 Defined in `src/app/globals.css`.
 
+Source palette: Ivory `#F9F7F4` · Warm White `#FFFFFF` · Beige `#E8D9CF` · Sand `#D8C4B6` ·
+Charcoal `#333333` · Gold `#C9A96A`.
+
 | Role | Light | Dark | Token |
 |------|-------|------|-------|
-| Background | `#FFFFFF` | `#070D14` | `--background` |
-| Foreground | `#0A121B` | `#F7F9FC` | `--foreground` |
-| Card | `#FFFFFF` | `#0E161F` | `--card` |
-| Primary / Accent | `#0071E3` | `#4DA3FF` | `--primary`, `--accent` |
-| Muted fg | `#4E5A6B` | `#9AA7B8` | `--muted-foreground` |
-| Border | `#E3E8EF` | `#1E2937` | `--border` |
-| Ink panel | `#0A121B` | `#0E161F` | `--ink` |
+| Background | `#F9F7F4` (ivory) | `#14110E` | `--background` |
+| Foreground | `#2A241F` | `#F5F0EA` | `--foreground` |
+| Card | `#FFFFFF` (warm white) | `#1D1915` | `--card` |
+| Primary | `#2A241F` (charcoal) | `#D9BE87` (gold-400) | `--primary` |
+| Accent | `#8A6A2F` (gold-700) | `#D9BE87` (gold-400) | `--accent` |
+| Muted fg | `#6B5D52` | `#B6A99B` | `--muted-foreground` |
+| Border | `#E8D9CF` (beige) | `#2F2820` | `--border` |
+| Ink panel | `#191512` (espresso) | `#1D1915` | `--ink` |
 
-Four rules that are easy to break by accident:
+Five rules that are easy to break by accident:
 
-1. **The ground is pure white, not off-white.** Elevation comes from hairlines and cool shadow.
-   A grey page is the single fastest way to lose the Apple register.
-2. **Neutrals are cool (slate), never warm (stone).** A warm grey next to `#0071E3` vibrates.
-3. **`--primary` and `--accent` are the same blue on purpose.** In this register the filled
-   button *is* the brand. Do not split them to add a second brand colour.
-4. **The accent shifts between modes on purpose.** `blue-600` clears 4.5:1 on white but fails
-   on the dark ground; dark lifts it to `blue-400`. Do not "unify" these to one value.
+1. **The ground is ivory, the cards are warm white.** That half-step is the whole nude palette.
+   Flattening both to `#FFFFFF` empties the page; darkening the ground makes it look unpainted.
+2. **Neutrals are warm (stone), never cool (slate).** A cool grey next to `#C9A96A` turns the
+   gold green and the page grubby.
+3. **`--primary` is charcoal, `--accent` is gold — they are deliberately different.** The filled
+   button is near-black; gold marks emphasis. Do not "unify" them.
+4. **Brand gold `#C9A96A` is for fills, marks and decoration — never for text.** It sits at
+   ~2:1 on ivory. Gold *text* uses `--accent` (`gold-700`), which clears 4.5:1.
+5. **The accent shifts between modes on purpose.** `gold-700` clears 4.5:1 on ivory but goes
+   muddy on espresso; dark lifts it to `gold-400`.
 
-Shadows are blue-tinted (`--shadow-*`), and filled buttons use `--shadow-blue` so they read as
-emitting the brand colour rather than sitting on grey dirt.
+Shadows are warm-tinted (`--shadow-*`), and filled buttons use `--shadow-lift` so they rest on
+the page rather than being cut out of it.
 
 Accent budget: **one accent element per viewport**. It marks the primary action, the active state,
 or the single number worth reading — never all three at once. The gradient mesh does not count
@@ -85,11 +94,17 @@ instance makes it wallpaper instead of a signature.
 
 | Role | Family | Usage |
 |------|--------|-------|
-| Display | Inter Tight | `h1`–`h4`, metric numerals. Tracking `-0.028em`. |
-| UI / body | Inter | Everything else. Base 16px, line-height 1.5+. |
-| Mono | JetBrains Mono | Eyebrows, policy identifiers, status labels only. |
+| Display | Cormorant Garamond | `h1`, `h2`, `.font-display` — metric numerals, pull figures. Tracking `-0.012em`. |
+| UI / body | Inter | Everything else, including `h3`/`h4`. Base 16px, line-height 1.5+. |
+| Label (`font-mono`) | Inter, letterspaced | Eyebrows, status chips, small caps only. |
 
-Mono is a **system-label signal**, not decoration. If a mono string is a sentence, it is misused.
+**The serif has a floor of ~20px.** Cormorant is high-contrast; below that its hairlines drop out
+and it reads as a rendering fault, which is why `h3`/`h4` stay on the sans. Never apply
+`font-display` to body copy or a control label.
+
+`font-mono` in this codebase means *system label*, not monospace — the role maps to Inter and
+earns its distinction from tracking and case. A true monospace reads engineering, not couture.
+If a label string is a sentence, it is misused.
 
 Display sizes are fluid `clamp()` (`text-display-sm|md|lg`) — headlines never need a breakpoint.
 
@@ -115,9 +130,9 @@ Display sizes are fluid `clamp()` (`text-display-sm|md|lg`) — headlines never 
 - All interactive controls ≥ 44×44px on coarse pointers; ≥ 8px apart.
 - `cursor-pointer` on everything clickable.
 - Focus rings are replaced, never removed.
-- Radius scale from `--radius: 0.875rem`. Buttons `lg`, cards `xl`, hero surfaces `2xl`.
-  Softened from 0.625rem for the trust register — calmer, still not playful.
-- Shadows are tight, low-opacity and **cool-tinted**. A soft grey blob reads as cheap.
+- Radius scale from `--radius: 0.75rem`. Buttons `lg`, cards `xl`, hero surfaces `2xl`.
+  Tightened from 0.875rem — over-rounding reads as an app, a little square reads as a boutique.
+- Shadows are tight, low-opacity and **warm-tinted**. A soft grey blob reads as cheap.
 - Icons: Lucide, 1.5px stroke, sized in `rem`. **No emoji as icons, ever.**
 
 ## 8. Non-negotiables

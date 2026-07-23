@@ -64,7 +64,7 @@ export function MobileNav() {
             <Link href="/login">Sign in</Link>
           </Button>
           <Button size="lg" asChild>
-            <Link href="/contact">Book a demo</Link>
+            <Link href="/contact">Book a walkthrough</Link>
           </Button>
         </div>
       </SheetContent>

@@ -4,59 +4,59 @@ import type {
 } from "@/types"
 
 /**
- * Priced per provider, not per seat. Clinics add front-desk staff to survive
- * admin load; charging per seat would penalise exactly the customer whose
+ * Priced per location, not per seat. Studios add front-desk cover to survive
+ * the message volume; charging per seat would penalise exactly the owner whose
  * problem this solves.
  */
 export const pricingTiers: PricingTier[] = [
   {
-    id: "practice",
-    name: "Practice",
-    description: "For independent clinics of one to five providers.",
-    monthlyPrice: 499,
-    annualPrice: 399,
+    id: "studio",
+    name: "Studio",
+    description: "For a single clinic, salon or treatment room.",
+    monthlyPrice: 249,
+    annualPrice: 199,
     features: [
-      "AI phone agent, 24/7",
-      "Scheduling and waitlist backfill",
-      "Automated intake and eligibility",
-      "One EHR integration",
-      "Recall and no-show follow-up",
+      "AI front desk — calls, DMs, WhatsApp",
+      "Diary management and waitlist refill",
+      "Consultation forms and consents",
+      "One booking-system integration",
+      "Rebooking and review requests",
       "Email support",
     ],
     cta: "Start free pilot",
-    href: "/signup?plan=practice",
+    href: "/signup?plan=studio",
   },
   {
     id: "group",
     name: "Group",
-    description: "For multi-provider groups running more than one location.",
-    monthlyPrice: 899,
-    annualPrice: 719,
+    description: "For multi-room clinics and small studio groups.",
+    monthlyPrice: 449,
+    annualPrice: 359,
     features: [
-      "Everything in Practice",
-      "Prior authorisation automation",
-      "Claim scrubbing and denial appeals",
-      "Payment posting and reconciliation",
+      "Everything in Studio",
+      "Deposits, card-on-file and late-cancellation policy",
+      "Courses, memberships and retail follow-up",
+      "Patch-test and aftercare automation",
       "Multi-location routing",
-      "Spanish and Mandarin call handling",
-      "Dedicated success manager",
+      "Second-language message handling",
+      "Dedicated onboarding manager",
     ],
     cta: "Start free pilot",
     href: "/signup?plan=group",
     popular: true,
   },
   {
-    id: "enterprise",
-    name: "Health system",
-    description: "For systems, MSOs and networks with their own compliance bar.",
+    id: "brand",
+    name: "Brand",
+    description: "For chains, franchises and multi-site beauty brands.",
     monthlyPrice: null,
     annualPrice: null,
     features: [
-      "Unlimited providers and locations",
-      "Private cloud or in-VPC deployment",
-      "Custom payer and workflow build-out",
+      "Unlimited locations and treatment rooms",
+      "Brand-wide tone of voice and approval flows",
+      "Custom workflows and reporting",
       "SSO, SCIM and role-based access",
-      "Signed BAA and security review",
+      "Franchisee onboarding and training",
       "99.99% uptime SLA",
     ],
     cta: "Talk to us",
@@ -76,28 +76,28 @@ export const pricingComparison: PricingComparisonGroup[] = [
     title: "Scale",
     rows: [
       {
-        label: "Providers",
-        values: {
-          practice: "Up to 5",
-          group: "Unlimited",
-          enterprise: "Unlimited",
-        },
-      },
-      {
         label: "Locations",
         values: {
-          practice: "1",
-          group: "Multi-location",
-          enterprise: "Unlimited",
+          studio: "1",
+          group: "Up to 5",
+          brand: "Unlimited",
         },
       },
       {
-        label: "Front-desk seats",
+        label: "Treatment rooms",
+        values: {
+          studio: "Up to 3",
+          group: "Unlimited",
+          brand: "Unlimited",
+        },
+      },
+      {
+        label: "Team logins",
         hint: "Never billed per seat, on any plan.",
         values: {
-          practice: "Unlimited",
+          studio: "Unlimited",
           group: "Unlimited",
-          enterprise: "Unlimited",
+          brand: "Unlimited",
         },
       },
     ],
@@ -107,69 +107,69 @@ export const pricingComparison: PricingComparisonGroup[] = [
     title: "Front desk",
     rows: [
       {
-        label: "AI phone agent",
-        hint: "24/7, including after hours and holidays.",
-        values: { practice: true, group: true, enterprise: true },
+        label: "Calls, Instagram DMs and WhatsApp",
+        hint: "Answered outside opening hours, including Sundays.",
+        values: { studio: true, group: true, brand: true },
       },
       {
-        label: "Scheduling and waitlist backfill",
-        values: { practice: true, group: true, enterprise: true },
+        label: "Diary management and waitlist refill",
+        values: { studio: true, group: true, brand: true },
       },
       {
-        label: "Recall and no-show follow-up",
-        values: { practice: true, group: true, enterprise: true },
+        label: "Rebooking and review requests",
+        values: { studio: true, group: true, brand: true },
       },
       {
-        label: "Multi-location call routing",
-        values: { practice: false, group: true, enterprise: true },
+        label: "Multi-location routing",
+        values: { studio: false, group: true, brand: true },
       },
       {
-        label: "Spanish and Mandarin call handling",
-        values: { practice: false, group: true, enterprise: true },
+        label: "Second-language message handling",
+        values: { studio: false, group: true, brand: true },
       },
     ],
   },
   {
-    id: "revenue-cycle",
-    title: "Revenue cycle",
+    id: "revenue",
+    title: "Revenue",
     rows: [
       {
-        label: "Automated intake and eligibility",
-        values: { practice: true, group: true, enterprise: true },
+        label: "Consultation forms and consents",
+        values: { studio: true, group: true, brand: true },
       },
       {
-        label: "Prior authorisation automation",
-        values: { practice: false, group: true, enterprise: true },
+        label: "Deposits and card-on-file",
+        values: { studio: false, group: true, brand: true },
       },
       {
-        label: "Claim scrubbing and denial appeals",
-        values: { practice: false, group: true, enterprise: true },
+        label: "Late-cancellation policy enforcement",
+        values: { studio: false, group: true, brand: true },
       },
       {
-        label: "Payment posting and reconciliation",
-        values: { practice: false, group: true, enterprise: true },
+        label: "Courses, memberships and retail follow-up",
+        values: { studio: false, group: true, brand: true },
       },
     ],
   },
   {
     id: "integrations",
-    title: "Integrations and security",
+    title: "Integrations and data",
     rows: [
       {
-        label: "EHR integrations",
-        values: { practice: "One", group: "Unlimited", enterprise: "Custom" },
+        label: "Booking-system integrations",
+        values: { studio: "One", group: "Unlimited", brand: "Custom" },
       },
       {
         label: "SSO, SCIM and role-based access",
-        values: { practice: false, group: false, enterprise: true },
+        values: { studio: false, group: false, brand: true },
       },
       {
-        label: "Private cloud or in-VPC deployment",
-        values: { practice: false, group: false, enterprise: true },
+        label: "Brand-wide tone of voice controls",
+        values: { studio: false, group: false, brand: true },
       },
       {
-        label: "Signed BAA and security review",
-        values: { practice: false, group: false, enterprise: true },
+        label: "Data processing agreement and review",
+        values: { studio: false, group: false, brand: true },
       },
     ],
   },
@@ -180,29 +180,29 @@ export const pricingComparison: PricingComparisonGroup[] = [
       {
         label: "Support channel",
         values: {
-          practice: "Email",
+          studio: "Email",
           group: "Email and phone",
-          enterprise: "24/7 priority",
+          brand: "7-day priority",
         },
       },
       {
-        label: "Dedicated success manager",
-        values: { practice: false, group: true, enterprise: true },
+        label: "Dedicated onboarding manager",
+        values: { studio: false, group: true, brand: true },
       },
       {
         label: "Onboarding",
         values: {
-          practice: "Guided",
+          studio: "Guided",
           group: "White-glove",
-          enterprise: "Custom",
+          brand: "Custom",
         },
       },
       {
         label: "Uptime SLA",
         values: {
-          practice: "99.9%",
+          studio: "99.9%",
           group: "99.9%",
-          enterprise: "99.99%",
+          brand: "99.99%",
         },
       },
     ],

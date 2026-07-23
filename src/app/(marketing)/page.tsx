@@ -23,8 +23,9 @@ export default function HomePage() {
 
       <Hero />
       <LogoCloud />
-      {/* Social proof sits immediately after the hero: in healthcare the first
-          question is "who else trusts this", not "what are the features". */}
+      {/* Social proof sits immediately after the hero: an owner's first
+          question is "which studios like mine use this", not "what are the
+          features". */}
       <Testimonials />
       <Features />
       <HowItWorks />

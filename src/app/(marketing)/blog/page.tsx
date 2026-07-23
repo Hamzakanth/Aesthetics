@@ -12,9 +12,9 @@ import { GradientMesh } from "@/components/motion/gradient-mesh"
 import { BlogList, PostMeta } from "@/components/sections/blog-list"
 
 export const metadata = buildMetadata({
-  title: "Blog and product updates",
+  title: "Journal and product updates",
   description:
-    "Release notes, front-office operations and revenue-cycle notes from the team deploying Aurelius in real clinics.",
+    "Release notes, front-of-house craft and retention notes from the team setting Aurelius up in real studios.",
   path: "/blog",
 })
 
@@ -31,14 +31,14 @@ export default function BlogPage() {
 
         <Container className="py-16 sm:py-24">
           <div className="flex max-w-2xl flex-col gap-5">
-            <Eyebrow>Blog</Eyebrow>
-            <h1 className="text-display-md font-semibold text-gradient">
-              Product updates and notes from the front office
+            <Eyebrow>Journal</Eyebrow>
+            <h1 className="text-display-md font-medium text-gradient">
+              Product updates and notes from the front desk
             </h1>
             <p className="text-lg leading-relaxed text-muted-foreground text-balance">
-              Everything we ship, plus what we learn deploying Aurelius in real
-              clinics — scheduling, prior authorisation, denials, and running AI
-              somewhere HIPAA applies.
+              Everything we ship, plus what we learn setting Aurelius up in real
+              studios — the diary, deposits, rebooking, and holding client data
+              you would not want leaked.
             </p>
           </div>
         </Container>

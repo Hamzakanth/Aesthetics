@@ -60,7 +60,7 @@ export function SiteFooter() {
             rights reserved.
           </p>
           <p className="font-mono text-xs tracking-wider text-muted-foreground">
-            HIPAA &middot; SOC 2 Type II &middot; BAA on every plan
+            GDPR &middot; PCI DSS &middot; Your clients never train our models
           </p>
         </div>
       </Container>

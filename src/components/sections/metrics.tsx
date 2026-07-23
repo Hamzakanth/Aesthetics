@@ -33,8 +33,8 @@ export function Metrics() {
         <SectionHeading
           headingId="metrics-heading"
           eyebrow="Outcomes"
-          title="Measured across 400+ clinics"
-          description="Aggregated from customer telemetry over the trailing twelve months. Medians, not best cases."
+          title="Measured across 600+ studios"
+          description="Aggregated from customer data over the trailing twelve months. Medians, not best cases."
         />
 
         <RevealGroup className="mt-14 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
@@ -65,10 +65,10 @@ export function Metrics() {
 
         <div className="mt-6 rounded-xl border border-border bg-card p-6">
           <h3 className="text-base font-semibold">
-            Front-office tasks: automated vs. manual
+            Enquiries and bookings: handled by Aurelius vs. your team
           </h3>
           <p className="mt-1 mb-6 text-sm text-muted-foreground">
-            A representative four-provider group through its first eight months.
+            A representative two-location studio through its first eight months.
           </p>
           <CoverageChart />
         </div>

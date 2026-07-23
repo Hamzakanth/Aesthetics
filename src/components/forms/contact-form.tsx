@@ -77,9 +77,9 @@ function SuccessPanel({ onReset }: { onReset: () => void }) {
       <div>
         <h3 className="text-lg font-semibold">Request received</h3>
         <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">
-          Someone who has actually deployed Aurelius will reply within one
-          business day — usually with a couple of questions about your payer mix
-          before we meet.
+          Someone who has actually set Aurelius up in a studio will reply within
+          one business day — usually with a couple of questions about your
+          treatment menu before we meet.
         </p>
       </div>
 
@@ -87,9 +87,9 @@ function SuccessPanel({ onReset }: { onReset: () => void }) {
           where most "did that send?" emails come from. */}
       <ol className="mx-auto mt-2 flex max-w-sm flex-col gap-3 rounded-xl border border-border bg-muted/30 p-5 text-left">
         {[
-          "We read it and check which payers you work with.",
+          "We read it and check which booking system you run.",
           "You get a reply with two or three times to choose from.",
-          "Thirty minutes, on your own numbers.",
+          "Thirty minutes, on your own diary.",
         ].map((step, i) => (
           <li key={step} className="flex items-start gap-3">
             <span
@@ -133,7 +133,7 @@ export function ContactForm() {
       name: "",
       email: "",
       company: "",
-      teamSize: "6-20",
+      teamSize: "2-5",
       message: "",
     },
   })
@@ -183,7 +183,7 @@ export function ContactForm() {
             id="email"
             type="email"
             autoComplete="email"
-            placeholder="dana@cedarparkfm.com"
+            placeholder="dana@maisonskin.com"
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? "email-error" : undefined}
             {...register("email")}
@@ -194,20 +194,20 @@ export function ContactForm() {
       <div className="grid gap-5 sm:grid-cols-2">
         <Field
           id="company"
-          label="Clinic or group"
+          label="Studio or group"
           error={errors.company?.message}
         >
           <Input
             id="company"
             autoComplete="organization"
-            placeholder="Cedar Park Family Medicine"
+            placeholder="Maison Skin"
             aria-invalid={!!errors.company}
             aria-describedby={errors.company ? "company-error" : undefined}
             {...register("company")}
           />
         </Field>
 
-        <Field id="teamSize" label="Providers" error={errors.teamSize?.message}>
+        <Field id="teamSize" label="Locations" error={errors.teamSize?.message}>
           {/* Native select for mobile ergonomics; the chevron is drawn on top
               because appearance-none removes the platform one. */}
           <div className="relative">
@@ -248,7 +248,7 @@ export function ContactForm() {
           id="message"
           rows={4}
           maxLength={MESSAGE_MAX}
-          placeholder="We run Athena across two locations, take about 200 calls a day, and prior auth is eating a full-time role…"
+          placeholder="We run Fresha across two locations, get about 150 calls and DMs a day, and no-shows on laser are eating our Tuesdays…"
           aria-invalid={!!errors.message}
           aria-describedby={errors.message ? "message-error" : undefined}
           {...register("message")}
@@ -275,7 +275,7 @@ export function ContactForm() {
               Sending…
             </>
           ) : (
-            "Request a demo"
+            "Request a walkthrough"
           )}
         </Button>
         <p className="text-center text-xs text-muted-foreground">

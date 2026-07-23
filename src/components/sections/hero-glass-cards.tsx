@@ -1,4 +1,4 @@
-import { CalendarCheck, PhoneIncoming, TrendingUp } from "lucide-react"
+import { CalendarCheck, MessageCircle, TrendingUp } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -15,23 +15,23 @@ import { cn } from "@/lib/utils"
  */
 
 const LIVE_CALL = {
-  icon: PhoneIncoming,
-  label: "Incoming call",
+  icon: MessageCircle,
+  label: "Instagram DM",
   value: "Booked in 38s",
-  detail: "New patient · Tue 9:40am",
+  detail: "New client · Tue 9:40am, hydrafacial",
 }
 
 const SLOT = {
   icon: CalendarCheck,
   label: "2:15pm cancellation",
-  value: "Backfilled",
+  value: "Refilled",
   detail: "Waitlist worked automatically",
 }
 
 export function HeroGlassCards() {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 hidden lg:block">
-      {/* Upper card — sits over the glazing, away from faces. */}
+      {/* Upper card — sits over the open field, away from the subject. */}
       <GlassCard
         icon={LIVE_CALL.icon}
         label={LIVE_CALL.label}
@@ -53,7 +53,9 @@ export function HeroGlassCards() {
       {/* Compact metric chip, bottom right, anchoring the composition. */}
       <div
         className={cn(
-          "glass animate-float-slow absolute top-[46%] right-[6%] rounded-2xl px-4 py-3",
+          // Dropped to shoulder height: at 46% it landed across her jaw. The
+          // chest and shoulder are the only quiet area on the right of the crop.
+          "glass animate-float-slow absolute top-[68%] right-[8%] rounded-2xl px-4 py-3",
           "motion-reduce:animate-none"
         )}
       >
@@ -61,10 +63,10 @@ export function HeroGlassCards() {
           <TrendingUp className="size-4 text-accent" />
           <div>
             <p className="font-display text-xl leading-none font-semibold tabular-nums">
-              214
+              186
             </p>
             <p className="mt-1 text-[0.6875rem] text-muted-foreground">
-              calls handled today
+              messages handled today
             </p>
           </div>
         </div>

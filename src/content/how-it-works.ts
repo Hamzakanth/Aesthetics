@@ -1,4 +1,4 @@
-import { DatabaseZap, PhoneIncoming, SlidersHorizontal } from "lucide-react"
+import { DatabaseZap, MessagesSquare, SlidersHorizontal } from "lucide-react"
 
 import type { HowItWorksStep } from "@/types"
 
@@ -8,10 +8,10 @@ import type { HowItWorksStep } from "@/types"
  */
 export const panelNav = [
   "Today",
-  "Queue",
+  "Inbox",
   "Workflows",
   "Integrations",
-  "Billing",
+  "Payments",
 ] as const
 
 /**
@@ -25,44 +25,44 @@ export const howItWorks: HowItWorksStep[] = [
   {
     id: "connect",
     step: "01",
-    title: "Connect your EHR",
+    title: "Connect your booking system",
     description:
-      "Read-only to start. Aurelius maps your schedule, providers, payers and templates in about a day. Epic, Athena, eClinicalWorks, Elation, DrChrono and 20 more.",
+      "Read-only to start. Aurelius maps your treatments, therapists, rooms and price list in an afternoon. Fresha, Phorest, Zenoti, Mindbody, Treatwell, Booksy, Vagaro, Timely and more.",
     panel: {
-      path: "app.aurelius.health/integrations",
+      path: "app.aurelius.studio/integrations",
       navIndex: 3,
-      heading: "Epic · MyChart",
+      heading: "Fresha · Studio diary",
       statIcon: DatabaseZap,
       stat: "Read-only",
-      footnote: "Mapped in 19 hours — no interface engine, no downtime.",
+      footnote: "Mapped in 4 hours — no migration, no closed days.",
       rows: [
         {
-          title: "Schedule templates",
-          detail: "41 templates across 3 sites",
+          title: "Treatment menu",
+          detail: "68 services across 2 locations",
           meta: "Mapped",
           state: "done",
         },
         {
-          title: "Providers & locations",
-          detail: "12 providers · hours, rooms, block rules",
+          title: "Therapists and rooms",
+          detail: "9 therapists · hours, rooms, skill matrix",
           meta: "Mapped",
           state: "done",
         },
         {
-          title: "Payer contracts",
-          detail: "26 plans matched to fee schedules",
+          title: "Price list and packages",
+          detail: "34 prices, 6 courses, 2 memberships",
           meta: "Mapped",
           state: "done",
         },
         {
-          title: "Appointment types",
-          detail: "18 of 21 matched · 3 need a human decision",
+          title: "Patch-test rules",
+          detail: "5 of 7 matched · 2 need your call",
           meta: "Review",
           state: "attention",
         },
         {
-          title: "Historical no-shows",
-          detail: "24 months imported · risk model fitting",
+          title: "Client history",
+          detail: "24 months imported · rebooking intervals fitting",
           meta: "Running",
           state: "pending",
         },
@@ -74,48 +74,48 @@ export const howItWorks: HowItWorksStep[] = [
     step: "02",
     title: "Choose what it handles",
     description:
-      "Turn on one workflow or all six. Every action carries a confidence threshold; anything below it routes to a human with the full context attached.",
+      "Turn on one workflow or all six. Every reply carries a confidence threshold; anything below it — a reaction, a complaint, a question about a result — goes to a human with the full thread attached.",
     panel: {
-      path: "app.aurelius.health/workflows",
+      path: "app.aurelius.studio/workflows",
       navIndex: 2,
       heading: "Workflows",
       statIcon: SlidersHorizontal,
       stat: "4 of 6 live",
-      footnote: "Below threshold, Aurelius asks instead of acting.",
+      footnote: "Below threshold, Aurelius asks instead of answering.",
       rows: [
         {
-          title: "Phones",
-          detail: "Booking, rescheduling, refills, directions",
+          title: "Front desk",
+          detail: "Calls, Instagram DMs, WhatsApp, web chat",
           meta: "≥ 92%",
           state: "on",
         },
         {
-          title: "Scheduling",
-          detail: "Waitlist worked by clinical priority",
+          title: "The diary",
+          detail: "Waitlist worked by treatment and therapist",
           meta: "≥ 95%",
           state: "on",
         },
         {
-          title: "Intake",
-          detail: "Forms, consents, eligibility by text",
+          title: "Consultations",
+          detail: "Patch tests, questionnaires, consents",
           meta: "≥ 90%",
           state: "on",
         },
         {
-          title: "Prior authorisations",
-          detail: "Packet assembled, submitted, chased",
+          title: "Deposits",
+          detail: "Card at booking, policy applied on lates",
           meta: "≥ 88%",
           state: "on",
         },
         {
-          title: "Billing",
-          detail: "Starts in shadow mode · week 3",
+          title: "Courses and retail",
+          detail: "Starts in draft mode · week 3",
           meta: "Off",
           state: "off",
         },
         {
-          title: "Recall",
-          detail: "Enable once your cadence is approved",
+          title: "Rebooking and reviews",
+          detail: "Enable once your intervals are approved",
           meta: "Off",
           state: "off",
         },
@@ -125,44 +125,44 @@ export const howItWorks: HowItWorksStep[] = [
   {
     id: "supervise",
     step: "03",
-    title: "Supervise, do not operate",
+    title: "Run the room, not the phone",
     description:
-      "Your staff move from doing the work to reviewing it. One queue, one inbox, and an audit trail behind every decision Aurelius made.",
+      "Your team moves from chasing messages to checking them. One inbox, one morning review, and a record behind every booking Aurelius took.",
     panel: {
-      path: "app.aurelius.health/queue",
+      path: "app.aurelius.studio/inbox",
       navIndex: 1,
       heading: "Handled today",
-      statIcon: PhoneIncoming,
-      stat: "214 calls",
-      footnote: "One item needs a human. The other 213 do not.",
+      statIcon: MessagesSquare,
+      stat: "186 messages",
+      footnote: "One needs you. The other 185 do not.",
       rows: [
         {
           title: "Booked · Marisol A.",
-          detail: "Inbound call · new patient · Tue 9:40am, Dr. Reyes",
+          detail: "Instagram DM · new client · Tue 9:40am, hydrafacial",
           meta: "Front desk",
           state: "done",
         },
         {
-          title: "Backfilled · 2:15pm cancellation",
-          detail: "Waitlist worked · confirmed in 4 min",
-          meta: "Scheduling",
+          title: "Refilled · 2:15pm cancellation",
+          detail: "Waitlist worked · confirmed in 4 min · deposit taken",
+          meta: "Diary",
           state: "done",
         },
         {
-          title: "Prior auth · MRI lumbar spine",
-          detail: "Submitted to Aetna · awaiting determination · day 2",
-          meta: "Authorisations",
+          title: "Patch test · laser, first session",
+          detail: "Booked 48h ahead · consent form signed",
+          meta: "Consultations",
           state: "pending",
         },
         {
-          title: "Denial · CPT 99214",
-          detail: "Needs a human — payer requests clinical notes",
-          meta: "Billing",
+          title: "Reaction reported · dermaplaning",
+          detail: "Needs a human — client sent photos this morning",
+          meta: "Front desk",
           state: "attention",
         },
         {
-          title: "Recall · 34 overdue A1c",
-          detail: "Texts sent · 11 booked · 3 opted out",
+          title: "Rebooking · 34 clients due",
+          detail: "Texts sent · 19 booked · 3 opted out",
           meta: "Retention",
           state: "done",
         },

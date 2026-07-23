@@ -21,9 +21,9 @@ const buttonVariants = cva(
         // Blue-tinted lift rather than a grey drop shadow — the filled button
         // should look like it is emitting the brand colour, not sitting on dirt.
         default:
-          "bg-primary text-primary-foreground shadow-blue hover:bg-primary/90",
+          "bg-primary text-primary-foreground shadow-lift hover:bg-primary/90",
         accent:
-          "bg-accent text-accent-foreground shadow-blue hover:bg-accent/90",
+          "bg-accent text-accent-foreground shadow-lift hover:bg-accent/90",
         outline:
           "border border-border bg-card text-foreground shadow-xs hover:bg-muted",
         secondary:

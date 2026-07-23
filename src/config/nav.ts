@@ -4,7 +4,7 @@ import type { NavItem, NavSection } from "@/types"
 export const mainNav: NavItem[] = [
   { title: "What it does", href: "/#features" },
   { title: "How it works", href: "/#how-it-works" },
-  { title: "Clinics", href: "/#testimonials" },
+  { title: "Studios", href: "/#testimonials" },
   { title: "Pricing", href: "/#pricing" },
 ]
 
@@ -12,18 +12,18 @@ export const footerNav: NavSection[] = [
   {
     title: "Product",
     items: [
-      { title: "AI phone agent", href: "/#features" },
-      { title: "Scheduling", href: "/#features" },
-      { title: "Prior authorisation", href: "/#features" },
-      { title: "Revenue cycle", href: "/#features" },
-      { title: "EHR integrations", href: "/integrations" },
+      { title: "AI front desk", href: "/#features" },
+      { title: "Booking and waitlist", href: "/#features" },
+      { title: "Consultations and consents", href: "/#features" },
+      { title: "Deposits and no-shows", href: "/#features" },
+      { title: "Booking-system integrations", href: "/integrations" },
     ],
   },
   {
     title: "Company",
     items: [
       { title: "About", href: "/about" },
-      { title: "Clinics", href: "/#testimonials" },
+      { title: "Studios", href: "/#testimonials" },
       { title: "Careers", href: "/careers" },
       { title: "Contact", href: "/contact" },
     ],
@@ -31,10 +31,10 @@ export const footerNav: NavSection[] = [
   {
     title: "Resources",
     items: [
-      { title: "Blog", href: "/blog" },
+      { title: "Journal", href: "/blog" },
       { title: "Documentation", href: "/docs" },
-      { title: "Implementation guide", href: "/docs/implementation" },
-      { title: "Security & HIPAA", href: "/security" },
+      { title: "Onboarding guide", href: "/docs/onboarding" },
+      { title: "Client data and privacy", href: "/security" },
       { title: "System status", href: "/status", external: true },
     ],
   },
@@ -43,7 +43,7 @@ export const footerNav: NavSection[] = [
     items: [
       { title: "Privacy", href: "/privacy" },
       { title: "Terms", href: "/terms" },
-      { title: "BAA", href: "/baa" },
+      { title: "Data processing", href: "/dpa" },
       { title: "Subprocessors", href: "/subprocessors" },
     ],
   },

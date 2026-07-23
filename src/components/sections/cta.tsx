@@ -16,19 +16,19 @@ export function Cta() {
             <GradientMesh tone="ink" fade={false} rules={false} className="-z-0" />
 
             <div className="relative z-10 flex flex-col items-center">
-              <h2 className="max-w-2xl text-display-md font-semibold text-ink-foreground">
-                Give your clinic its front office back.
+              <h2 className="max-w-2xl text-display-md font-medium text-ink-foreground">
+                Give your studio its front desk back.
               </h2>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-ink-foreground/70 sm:text-lg">
-                Thirty minutes, against your own schedule and call volume. We
+                Thirty minutes, against your own diary and message volume. We
                 will tell you which workflows are worth automating and which are
                 not.
               </p>
 
               <div className="mt-9 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-                <Button size="lg" variant="accent" className="shadow-blue" asChild>
+                <Button size="lg" variant="accent" className="shadow-lift" asChild>
                   <Link href="/contact">
-                    Book a demo
+                    Book a walkthrough
                     <ArrowRight />
                   </Link>
                 </Button>

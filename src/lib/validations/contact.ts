@@ -28,10 +28,10 @@ export const contactSchema = z.object({
   company: z
     .string()
     .trim()
-    .min(2, "Please enter your clinic or group name.")
+    .min(2, "Please enter your studio or group name.")
     .max(100),
 
-  teamSize: z.enum(["1-5", "6-20", "21-75", "75+"], {
+  teamSize: z.enum(["1", "2-5", "6-15", "15+"], {
     errorMap: () => ({ message: "Select the closest range." }),
   }),
 
@@ -45,8 +45,8 @@ export const contactSchema = z.object({
 export type ContactValues = z.infer<typeof contactSchema>
 
 export const TEAM_SIZES = [
-  { value: "1-5", label: "1–5 providers" },
-  { value: "6-20", label: "6–20 providers" },
-  { value: "21-75", label: "21–75 providers" },
-  { value: "75+", label: "75+ providers" },
+  { value: "1", label: "1 location" },
+  { value: "2-5", label: "2–5 locations" },
+  { value: "6-15", label: "6–15 locations" },
+  { value: "15+", label: "15+ locations" },
 ] as const

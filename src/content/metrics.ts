@@ -2,37 +2,38 @@ import type { Metric } from "@/types"
 
 export const metrics: Metric[] = [
   {
-    id: "calls",
-    value: 92,
+    id: "messages",
+    value: 94,
     suffix: "%",
-    label: "Calls resolved without staff",
-    description: "Booking, rescheduling, refills and routine questions.",
+    label: "Calls and DMs handled",
+    description: "Bookings, prices, aftercare and the same four questions.",
   },
   {
     id: "noshow",
-    value: 38,
+    value: 41,
     suffix: "%",
     label: "Fewer no-shows",
-    description: "Median reduction after three months of automated recall.",
+    description: "Median drop once deposits and reminders run themselves.",
   },
   {
-    id: "auth",
-    value: 2.1,
+    id: "recovered",
+    prefix: "$",
+    value: 14.2,
     decimals: 1,
-    suffix: " days",
-    label: "Prior auth turnaround",
-    description: "Down from a nine-day average across our customer base.",
+    suffix: "k",
+    label: "Recovered per location",
+    description: "Monthly, from filled gaps, deposits taken and rebooking.",
   },
   {
     id: "hours",
-    value: 31,
+    value: 27,
     suffix: " hrs",
-    label: "Admin hours returned",
-    description: "Per provider per month, given back to patient-facing work.",
+    label: "Front-desk hours returned",
+    description: "Per location per month, given back to clients in the room.",
   },
 ]
 
-/** Powers the front-office workload chart. */
+/** Powers the front-of-house workload chart. */
 export const coverageSeries = [
   { month: "Jan", automated: 180, manual: 1240 },
   { month: "Feb", automated: 420, manual: 1090 },

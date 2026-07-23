@@ -16,7 +16,7 @@ export function Features() {
         <SectionHeading
           headingId="features-heading"
           eyebrow="What it does"
-          title="Six jobs your front office no longer has to do"
+          title="Six jobs your front desk no longer has to do"
           description="Turn them on one at a time or all at once. Each one is measured against the work it replaced, not against a demo."
         />
 
@@ -80,8 +80,9 @@ export function Features() {
           })}
         </RevealGroup>
 
-        {/* Trust strip. Compliance is the first objection in healthcare, so it
-            sits with the capabilities rather than buried in the footer. */}
+        {/* Trust strip. "Who holds my clients' data and their photos" is the
+            first objection, so it sits with the capabilities rather than
+            buried in the footer. */}
         <Reveal delay={0.1} className="mt-8">
           <div className="rounded-xl border border-border bg-muted/40 p-6 sm:p-7">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
@@ -104,7 +105,7 @@ export function Features() {
 
               <Button variant="outline" className="shrink-0 lg:ml-4" asChild>
                 <Link href="/security">
-                  Read our security posture
+                  How we handle client data
                   <ArrowRight />
                 </Link>
               </Button>

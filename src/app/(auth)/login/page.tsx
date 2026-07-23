@@ -9,7 +9,7 @@ import { LoginForm } from "@/components/forms/login-form"
 
 export const metadata = buildMetadata({
   title: "Sign in",
-  description: "Sign in to the Aurelius operations console.",
+  description: "Sign in to the Aurelius front-desk console.",
   path: "/login",
   // Auth screens have no business in an index, and a crawled login page is a
   // steady source of soft-404s and crawl budget waste.
@@ -29,13 +29,21 @@ export default function LoginPage() {
   return (
     <div className="relative isolate min-h-dvh overflow-hidden bg-background">
       {/* ---- Brand band ------------------------------------------------- */}
-      {/* Blue in both themes: this is a brand surface, like the ink CTA panel
-          on the marketing site, not a themed one. */}
+      {/* Espresso in both themes: this is a brand surface, like the ink CTA
+          panel on the marketing site, not a themed one. */}
       <div
         aria-hidden
-        className="absolute inset-x-0 top-0 h-[40%] min-h-[15rem] overflow-hidden bg-[linear-gradient(135deg,var(--blue-700)_0%,var(--blue-600)_45%,var(--blue-500)_100%)] lg:h-[72%] lg:min-h-[26rem]"
+        className="absolute inset-x-0 top-0 h-[40%] min-h-[15rem] overflow-hidden bg-[linear-gradient(135deg,var(--stone-950)_0%,var(--stone-900)_45%,var(--stone-700)_100%)] lg:h-[72%] lg:min-h-[26rem]"
       >
-        <LineField className="text-white" originX="34%" originY="46%" />
+        {/* Animated here and nowhere else: a sign-in screen is a wait, not a
+            read, so slow drift on the band gives the eye something to do
+            without competing with the form. */}
+        <LineField
+          className="text-white"
+          originX="34%"
+          originY="46%"
+          animated
+        />
         {/* Softens the hard bottom edge into the page below it. */}
         <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-black/10" />
       </div>
@@ -47,15 +55,15 @@ export default function LoginPage() {
           {/* ---- Left: the pitch, then the device's own accounts --------- */}
           {/* Centred against the card now that nothing sits beneath it. */}
           <div className="flex h-full flex-col lg:justify-center lg:pb-20">
-            {/* Written for the person actually signing in at 8:15am — a
-                practice manager or front-desk lead — not for the person who
-                bought it. It says what happened while they were out and what
-                is waiting, in their words. */}
+            {/* Written for the person actually signing in at 8:15am — a studio
+                manager or front-of-house lead — not for the person who bought
+                it. It says what happened while they were closed and what is
+                waiting, in their words. */}
             <div className="max-w-md">
-              <h1 className="text-2xl leading-[1.15] font-semibold tracking-[-0.03em] text-balance text-white sm:text-3xl lg:text-[2.5rem] lg:leading-[1.1]">
-                Your phones were answered.
+              <h1 className="font-display text-3xl leading-[1.1] font-medium tracking-[-0.012em] text-balance text-white sm:text-4xl lg:text-[3rem]">
+                Your messages were answered.
                 <br />
-                Your queue is ready.
+                Your diary is full.
               </h1>
               {/* Persuasion is desktop-only. On a phone every line here is a
                   line between the person and the password field. */}
@@ -66,9 +74,9 @@ export default function LoginPage() {
 
               <ul className="mt-7 hidden flex-col gap-2.5 text-sm text-white/75 lg:flex">
                 {[
-                  "Calls, bookings and cancellations already worked",
-                  "Prior auths chased, denials triaged",
-                  "Anything uncertain waiting in one review queue",
+                  "Calls, DMs and cancellations already worked",
+                  "Deposits taken, patch tests booked",
+                  "Anything uncertain waiting in one inbox",
                 ].map((line) => (
                   <li key={line} className="flex items-start gap-2.5">
                     <Check aria-hidden className="mt-0.5 size-4 shrink-0" />
@@ -96,7 +104,7 @@ export default function LoginPage() {
                   href="/contact"
                   className="block rounded-sm font-medium text-accent underline-offset-4 transition-colors duration-[--duration-fast] hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                 >
-                  Book a demo
+                  Book a walkthrough
                 </Link>
               </p>
             </div>
@@ -107,12 +115,12 @@ export default function LoginPage() {
 
             <LoginForm />
 
-            {/* A locked-out front desk has patients in the waiting room and a
-                phone ringing. A phone number beats a help centre article. */}
+            {/* A locked-out front desk has clients in reception and a phone
+                ringing. A phone number beats a help centre article. */}
             <div className="mt-6 flex items-start gap-2.5 border-t border-border pt-5 text-sm text-muted-foreground">
               <Phone aria-hidden className="mt-0.5 size-3.5 shrink-0" />
               <p>
-                Locked out mid-clinic?{" "}
+                Locked out mid-shift?{" "}
                 <a
                   href={`tel:${siteConfig.support.phone.replace(/[^+\d]/g, "")}`}
                   className="rounded-sm font-medium text-foreground underline-offset-4 transition-colors duration-[--duration-fast] hover:text-accent hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
@@ -131,11 +139,11 @@ export default function LoginPage() {
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
             <span className="flex items-center gap-1.5">
               <Lock aria-hidden className="size-3" />
-              HIPAA compliant · SOC 2 Type II
+              GDPR compliant · PCI DSS payments
             </span>
 
             {/* "Is it down, or is it me?" is the first question when a sign-in
-                fails during a busy clinic. Answer it before they ask. */}
+                fails on a full day. Answer it before they ask. */}
             <a
               href={siteConfig.links.status}
               className="flex items-center gap-1.5 rounded-sm transition-colors duration-[--duration-fast] hover:text-foreground"

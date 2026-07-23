@@ -15,28 +15,28 @@ export interface BlogPost {
 
 export type BlogCategory =
   | "Product update"
-  | "Front office"
-  | "Revenue cycle"
+  | "Front of house"
+  | "Retention"
   | "Case study"
-  | "Security"
+  | "Client data"
   | "Company"
 
 /** Filter order. "All" is prepended by the list component. */
 export const blogCategories: BlogCategory[] = [
   "Product update",
-  "Front office",
-  "Revenue cycle",
+  "Front of house",
+  "Retention",
   "Case study",
-  "Security",
+  "Client data",
   "Company",
 ]
 
 export const blogPosts: BlogPost[] = [
   {
-    slug: "release-2-8-multilingual-intake",
-    title: "Aurelius 2.8 — multilingual intake and a rebuilt waitlist",
+    slug: "release-2-8-dm-booking-and-waitlist",
+    title: "Aurelius 2.8 — Instagram booking and a rebuilt waitlist",
     excerpt:
-      "Intake forms now run in Spanish and Mandarin end to end, the waitlist backfills from cancellations within ninety seconds, and eligibility results land on the appointment instead of in a separate queue.",
+      "DMs now book end to end without leaving the thread, the waitlist refills a cancellation within ninety seconds, and patch-test rules sit on the treatment instead of in someone's head.",
     category: "Product update",
     date: "2026-07-16",
     readingMinutes: 5,
@@ -45,10 +45,10 @@ export const blogPosts: BlogPost[] = [
     featured: true,
   },
   {
-    slug: "release-2-7-denial-appeals",
-    title: "Aurelius 2.7 — automated denial appeals and payer rules",
+    slug: "release-2-7-deposits-and-policies",
+    title: "Aurelius 2.7 — deposits, card-on-file and policy rules",
     excerpt:
-      "Denials now route by reason code, appeals draft themselves from the original claim and chart notes, and payer-specific rules are editable without a support ticket.",
+      "Deposits now follow your own cancellation policy, refunds draft themselves from the booking, and the awkward late-cancellation message is written for you.",
     category: "Product update",
     date: "2026-06-18",
     readingMinutes: 6,
@@ -56,30 +56,30 @@ export const blogPosts: BlogPost[] = [
     version: "v2.7",
   },
   {
-    slug: "forty-calls-a-day-to-voicemail",
-    title: "The forty calls a day your clinic never hears",
+    slug: "thirty-dms-a-day-your-studio-never-reads",
+    title: "The thirty DMs a day your studio never reads",
     excerpt:
-      "Most practices measure abandoned calls at the switchboard and stop there. The bookings you lose happen after the caller hangs up — and they never show up in a report.",
-    category: "Front office",
+      "Most owners measure missed calls and stop there. The bookings you lose happen in an inbox nobody owns — and they never show up in a report.",
+    category: "Front of house",
     date: "2026-07-09",
     readingMinutes: 7,
     author: "Dana Whitfield",
   },
   {
-    slug: "prior-auth-is-a-queue-problem",
-    title: "Prior authorisation is a queue problem, not a paperwork problem",
+    slug: "rebooking-is-an-interval-problem",
+    title: "Rebooking is an interval problem, not a reminder problem",
     excerpt:
-      "Automating the form fills is the easy half. What actually clears the backlog is deciding what a human should still look at, and when.",
-    category: "Revenue cycle",
+      "Sending everyone a text at six weeks is not retention. What actually fills the diary is knowing which treatment wants which gap, and asking then.",
+    category: "Retention",
     date: "2026-06-24",
     readingMinutes: 9,
     author: "Priya Raghunathan",
   },
   {
-    slug: "release-2-6-epic-integration",
-    title: "Aurelius 2.6 — Epic integration and audit exports",
+    slug: "release-2-6-fresha-integration",
+    title: "Aurelius 2.6 — Fresha integration and consent exports",
     excerpt:
-      "Bidirectional scheduling with Epic, plus signed audit exports you can hand straight to a compliance reviewer.",
+      "Two-way diary sync with Fresha, plus signed consent and patch-test exports you can hand straight to an insurer.",
     category: "Product update",
     date: "2026-05-21",
     readingMinutes: 4,
@@ -88,40 +88,40 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "no-show-rate-nineteen-to-eleven",
-    title: "How one group took its no-show rate from 19% to 11%",
+    title: "How one clinic took its no-show rate from 19% to 11%",
     excerpt:
-      "No new staff, no policy change, no deposits. Just follow-up that happens on the days everyone is too busy to make the calls.",
+      "No new staff, no price change, no shouting about deposits. Just follow-up that happens on the days everyone is too busy to send it.",
     category: "Case study",
     date: "2026-06-11",
     readingMinutes: 6,
     author: "Tomás Ferreira",
   },
   {
-    slug: "what-hipaa-actually-requires-of-ai-vendors",
-    title: "What HIPAA actually requires of an AI vendor",
+    slug: "what-gdpr-asks-of-a-beauty-studio",
+    title: "What GDPR actually asks of a beauty studio",
     excerpt:
-      "A plain reading of the parts that matter when you are evaluating anything that answers your phones or touches a chart — BAAs, minimum necessary, and audit trails.",
-    category: "Security",
+      "A plain reading of the parts that matter when you hold skin histories, consent forms and before photos — lawful basis, retention, and who gets to see the pictures.",
+    category: "Client data",
     date: "2026-05-28",
     readingMinutes: 11,
-    author: "Aurelius Security Team",
+    author: "Aurelius Data Team",
   },
   {
-    slug: "why-we-price-per-provider",
-    title: "Why we price per provider and not per seat",
+    slug: "why-we-price-per-location",
+    title: "Why we price per location and not per seat",
     excerpt:
-      "Clinics add front-desk staff to survive admin load. Charging per seat bills you for the symptom, which is a strange thing to do to the customer you claim to be helping.",
+      "Studios add front-desk cover to survive the message volume. Charging per seat bills you for the symptom, which is a strange thing to do to the customer you claim to be helping.",
     category: "Company",
     date: "2026-05-14",
     readingMinutes: 4,
     author: "Marcus Oyelaran",
   },
   {
-    slug: "eligibility-checks-before-the-visit",
-    title: "Running eligibility before the visit, not after the denial",
+    slug: "consultations-before-the-chair",
+    title: "Run the consultation before they sit in the chair",
     excerpt:
-      "Front-end eligibility is the cheapest denial you will ever prevent. Here is where the checks actually belong in an intake flow.",
-    category: "Revenue cycle",
+      "A questionnaire filled in at the door is a questionnaire nobody reads. Here is where the consent, the patch test and the photos actually belong in a booking flow.",
+    category: "Front of house",
     date: "2026-04-30",
     readingMinutes: 8,
     author: "Helen Kowalski",

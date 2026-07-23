@@ -71,8 +71,8 @@ export function HowItWorks() {
         <SectionHeading
           headingId="how-heading"
           eyebrow="How it works"
-          title="Live in two weeks, not two quarters"
-          description="Aurelius starts read-only and earns write access. You see its judgement against your real schedule before it touches anything."
+          title="Live in a week, not a season"
+          description="Aurelius starts read-only and earns write access. You see its judgement against your real diary before it touches anything."
         />
 
         {/* One column on mobile with the panel pinned above the steps; two on

@@ -17,7 +17,7 @@ import { formatNumber } from "@/lib/utils"
 
 const SERIES = [
   { key: "automated", label: "Handled by Aurelius", color: "var(--chart-1)" },
-  { key: "manual", label: "Handled by staff", color: "var(--chart-3)" },
+  { key: "manual", label: "Handled by your team", color: "var(--chart-3)" },
 ] as const
 
 function ChartTooltip({ active, payload, label }: TooltipProps<number, string>) {
@@ -52,9 +52,9 @@ export function CoverageChart() {
   return (
     <figure className="flex flex-col gap-3">
       <figcaption className="sr-only">
-        Front-office tasks handled by Aurelius rising from 180 in January to
-        2,420 in August, while tasks handled by staff fall from 1,240 to 160
-        over the same period.
+        Enquiries and bookings handled by Aurelius rising from 180 in January to
+        2,420 in August, while those handled by the studio team fall from 1,240
+        to 160 over the same period.
       </figcaption>
 
       {/* Fixed height reserves space before Recharts measures — keeps CLS ~0. */}

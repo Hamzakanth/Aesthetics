@@ -23,7 +23,7 @@ export async function signIn(values: unknown): Promise<LoginResult> {
 
   // Integration point: hand `parsed.data` to your identity provider, then set
   // the session cookie and redirect. Left unimplemented on purpose — which
-  // provider signs a clinic in is a product decision, not a scaffold one.
+  // provider signs a studio in is a product decision, not a scaffold one.
   //
   //   const session = await auth.password.verify(parsed.data)
   //   if (!session) return INVALID
@@ -31,9 +31,8 @@ export async function signIn(values: unknown): Promise<LoginResult> {
   //   redirect("/app")
 
   // One message for every failure, on purpose. Saying "no account with that
-  // email" turns the form into an account-enumeration oracle — and in
-  // healthcare, confirming that a named person has an account is itself a
-  // disclosure.
+  // email" turns the form into an account-enumeration oracle, and confirming
+  // which studio a named person works at is itself a disclosure.
   return {
     ok: false,
     message: "That email and password combination did not match an account.",

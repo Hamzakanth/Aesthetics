@@ -79,7 +79,7 @@ export function PricingComparison({
         as="h3"
         eyebrow="Full breakdown"
         title="Compare every plan"
-        description="Unlimited front-desk logins, HIPAA-eligible infrastructure and a free pilot come with all three."
+        description="Unlimited team logins, GDPR-compliant data handling and a free pilot come with all three."
         className="mx-auto"
       />
 
@@ -172,7 +172,7 @@ export function PricingComparison({
                                   ${price}
                                 </span>
                                 <span className="text-xs text-muted-foreground">
-                                  / provider
+                                  / location
                                 </span>
                               </>
                             )}
@@ -264,7 +264,7 @@ export function PricingComparison({
                   <span className="text-muted-foreground">
                     {selectedPrice === null
                       ? " · custom pricing"
-                      : ` · $${selectedPrice} per provider / month`}
+                      : ` · $${selectedPrice} per location / month`}
                   </span>
                 ) : null}
               </p>

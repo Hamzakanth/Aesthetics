@@ -48,7 +48,7 @@ export function SiteHeader() {
             <Link href="/login">Sign in</Link>
           </Button>
           <Button size="sm" className="hidden lg:inline-flex" asChild>
-            <Link href="/contact">Book a demo</Link>
+            <Link href="/contact">Book a walkthrough</Link>
           </Button>
           <MobileNav />
         </div>

@@ -1,10 +1,12 @@
 # Aurelius
 
-Marketing site foundation for a premium enterprise SaaS product.
+Marketing site foundation for an AI front desk sold to aesthetic clinics, skin
+studios, nail bars and laser rooms.
 Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · shadcn/ui.
 
-Design philosophy: **Apple × Stripe × Linear** — Swiss Modernism base, near-black
-neutrals, a single gold accent.
+Design philosophy: **Apple Store × Chanel** — quiet luxury. Soft nude ground
+(ivory, beige, sand), warm charcoal type, a single scarce gold accent and a
+high-contrast display serif.
 
 ## Getting started
 
@@ -65,7 +67,8 @@ primitive → semantic → component — and bridged into Tailwind via `@theme i
 
 ## Adding a shadcn component
 
-`components.json` is configured (new-york, stone base, CSS variables):
+`components.json` is configured (new-york, stone base, CSS variables) — the
+stone base is the right starting point now that the neutral ramp is warm:
 
 ```bash
 npx shadcn@latest add dialog
@@ -96,3 +99,6 @@ DOM, text alternatives for charts, 4.5:1 contrast in both themes, and
   forward anywhere. Wire it to your CRM or email provider.
 - `/login`, `/docs`, `/signup` and the legal routes are linked but not built.
 - `public/og.png` (1200×630) is referenced by metadata and needs to be added.
+- `src/assets/hero-clinic.png` and the two logo PNGs are inherited artwork.
+  They still read as a front desk, but a nude-palette photograph and a serif
+  wordmark would finish the rebrand — swap the files, not the components.

@@ -7,7 +7,7 @@ export function LogoCloud() {
     <section className="border-y border-border bg-muted/30 py-10">
       <Container>
         <p className="text-center font-mono text-xs tracking-[0.14em] text-muted-foreground uppercase">
-          Running the front office at
+          Running the front desk at
         </p>
 
         {/* Duplicated track: the -50% translate makes the loop seamless.

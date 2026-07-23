@@ -38,6 +38,6 @@ export async function submitContact(values: unknown): Promise<ActionResult> {
 
   return {
     ok: true,
-    message: "Thanks — a solutions engineer will reply within one business day.",
+    message: "Thanks — someone from the studio team will reply within one business day.",
   }
 }

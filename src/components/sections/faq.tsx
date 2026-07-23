@@ -23,14 +23,14 @@ export function Faq() {
               title="Questions we get on the first call"
             />
             <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
-              Still unresolved?{" "}
+              Still unanswered?{" "}
               <Link
                 href="/contact"
                 className="font-medium text-foreground underline decoration-accent underline-offset-4 transition-colors hover:text-accent"
               >
-                Talk to someone who has deployed this
+                Talk to someone who has set this up in a studio
               </Link>{" "}
-              — not a sales development rep.
+              — not a sales rep.
             </p>
           </div>
 

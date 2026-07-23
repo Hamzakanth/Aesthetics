@@ -10,9 +10,9 @@ import { GradientMesh } from "@/components/motion/gradient-mesh"
 import { ContactForm } from "@/components/forms/contact-form"
 
 export const metadata = buildMetadata({
-  title: "Book a demo",
+  title: "Book a walkthrough",
   description:
-    "Thirty minutes with the Aurelius team, run against your clinic's own schedule and call volume.",
+    "Thirty minutes with the Aurelius team, run against your studio's own diary and message volume.",
   path: "/contact",
 })
 
@@ -22,17 +22,17 @@ const ASSURANCES = [
   {
     icon: CalendarClock,
     title: "Thirty minutes, one call",
-    body: "Run against your own schedule and call volume — not a slide deck.",
+    body: "Run against your own diary and message volume — not a slide deck.",
   },
   {
     icon: MessageSquare,
     title: "An implementer, not a rep",
-    body: "Whoever joins can answer EHR and payer questions on the spot.",
+    body: "Whoever joins can answer booking-system questions on the spot.",
   },
   {
     icon: ShieldCheck,
-    title: "Nothing touches your EHR",
-    body: "The demo runs on sample data. No integration, no commitment.",
+    title: "Nothing touches your diary",
+    body: "The walkthrough runs on sample data. No integration, no commitment.",
   },
 ]
 
@@ -56,13 +56,14 @@ export default function ContactPage() {
                 tall viewports without duplicating it inside the card. */}
             <div className="flex flex-col gap-8 lg:sticky lg:top-28">
               <div className="flex flex-col gap-4">
-                <Eyebrow>Book a demo</Eyebrow>
-                <h1 className="text-display-sm font-semibold text-gradient">
-                  See Aurelius run your front office
+                <Eyebrow>Book a walkthrough</Eyebrow>
+                <h1 className="text-display-sm font-medium text-gradient">
+                  See Aurelius run your front desk
                 </h1>
                 <p className="text-base leading-relaxed text-muted-foreground text-balance sm:text-lg">
-                  Tell us your EHR and rough call volume. We&rsquo;ll arrive
-                  with the relevant workflows already configured.
+                  Tell us which booking system you use and roughly how many
+                  messages a day you get. We&rsquo;ll arrive with the relevant
+                  workflows already configured.
                 </p>
               </div>
 
@@ -152,7 +153,9 @@ export default function ContactPage() {
             <div className="rounded-2xl border border-border bg-card p-6 shadow-md sm:p-8">
               <div className="mb-6 flex flex-wrap items-start justify-between gap-3 border-b border-border pb-5">
                 <div className="flex flex-col gap-1.5">
-                  <h2 className="text-lg font-semibold">Request a demo</h2>
+                  <h2 className="text-lg font-semibold">
+                    Request a walkthrough
+                  </h2>
                   <p className="text-sm text-muted-foreground">
                     Five fields. Replies within one business day.
                   </p>
@@ -177,8 +180,8 @@ export default function ContactPage() {
                 homepage and pushed the page a screen longer for nothing. */}
             <p className="mt-5 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
               <ShieldCheck aria-hidden className="size-3.5 text-accent" />
-              HIPAA-eligible infrastructure · Signed BAA available · SOC 2 Type
-              II
+              GDPR compliant · Data processing agreement available · PCI DSS
+              payments
             </p>
           </div>
         </div>

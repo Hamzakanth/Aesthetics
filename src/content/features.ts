@@ -1,79 +1,79 @@
 import {
   CalendarCheck,
   ClipboardList,
-  FileCheck2,
-  PhoneCall,
-  Receipt,
+  CreditCard,
+  MessageCircle,
   Repeat,
+  Sparkles,
 } from "lucide-react"
 
 import type { Feature } from "@/types"
 
 /**
- * Deliberately framed as staff roles, not software modules. Clinics do not
- * buy "a scheduling module" — they buy the work getting done.
+ * Deliberately framed as front-of-house roles, not software modules. A studio
+ * owner does not buy "a booking module" — they buy the chair being filled.
  */
 export const features: Feature[] = [
   {
-    id: "phones",
+    id: "front-desk",
     eyebrow: "Front desk",
-    title: "Every call answered, on the first ring",
+    title: "Every call and DM answered, in minutes",
     description:
-      "Booking, rescheduling, refills, directions and insurance questions — in the caller's language, with anything clinical escalated to a human.",
-    icon: PhoneCall,
-    impact: "92% resolved without staff",
+      "Bookings, price lists, aftercare and directions — on the phone, on Instagram and over WhatsApp, in your studio's own tone of voice.",
+    icon: MessageCircle,
+    impact: "94% handled without your team",
   },
   {
-    id: "scheduling",
-    eyebrow: "Scheduling",
-    title: "Cancellations refilled automatically",
+    id: "diary",
+    eyebrow: "The diary",
+    title: "Gaps filled before you notice them",
     description:
-      "The moment a slot opens, Aurelius works your waitlist by clinical priority and books the first patient who confirms.",
+      "The moment a client cancels, Aurelius works your waitlist by treatment and therapist and books the first person who confirms.",
     icon: CalendarCheck,
-    impact: "Slots refilled in under 5 min",
+    impact: "Gaps refilled in under 5 min",
   },
   {
-    id: "intake",
-    eyebrow: "Intake",
-    title: "Paperwork done before arrival",
+    id: "consultations",
+    eyebrow: "Consultations",
+    title: "Consultations and consents done before arrival",
     description:
-      "Forms, consents, insurance cards and eligibility checks collected by text, then written straight into the chart.",
+      "Patch-test reminders, skin questionnaires, consent forms and before photos collected by text and filed against the client record.",
     icon: ClipboardList,
-    impact: "Zero clipboards at check-in",
+    impact: "Nobody arrives with paperwork",
   },
   {
-    id: "prior-auth",
-    eyebrow: "Authorisations",
-    title: "Prior auths chased end to end",
+    id: "deposits",
+    eyebrow: "Deposits",
+    title: "Deposits taken, no-shows chased",
     description:
-      "Aurelius assembles the packet, submits to the payer, sits in the queue and follows up until there is a decision.",
-    icon: FileCheck2,
-    impact: "9 days down to 2",
+      "Card held at booking, reminders on your cadence, late cancellations charged to your policy — without anyone having to have the conversation.",
+    icon: CreditCard,
+    impact: "41% fewer no-shows",
   },
   {
-    id: "billing",
+    id: "packages",
     eyebrow: "Revenue",
-    title: "Claims scrubbed, denials worked",
+    title: "Courses, memberships and retail followed up",
     description:
-      "Coding checked before submission, denials triaged and appealed, payments posted and reconciled the same day.",
-    icon: Receipt,
-    impact: "Same-day payment posting",
+      "Unused sessions, lapsed memberships and the homecare you recommended in the room — all followed up while the treatment is still fresh.",
+    icon: Sparkles,
+    impact: "+22% retail attachment",
   },
   {
-    id: "recall",
+    id: "rebooking",
     eyebrow: "Retention",
-    title: "Recalls and no-shows pursued",
+    title: "Rebooking and reviews, on time",
     description:
-      "Overdue patients, annual wellness visits and missed appointments followed up on a cadence that actually converts.",
+      "Every client invited back at the right interval for their treatment, and asked for a review on the day they are happiest with it.",
     icon: Repeat,
-    impact: "38% fewer no-shows",
+    impact: "63% rebook before the next cycle",
   },
 ]
 
 /** Compact trust strip under the features heading. Four signals, no prose. */
 export const trustSignals = [
-  { label: "HIPAA compliant", detail: "BAA signed on every plan" },
-  { label: "SOC 2 Type II", detail: "Audited annually" },
-  { label: "PHI never trains models", detail: "Per-tenant encryption keys" },
-  { label: "Works with your EHR", detail: "25+ integrations" },
+  { label: "GDPR compliant", detail: "Client data stays your data" },
+  { label: "PCI DSS payments", detail: "Deposits and card-on-file" },
+  { label: "Your clients never train models", detail: "Per-studio encryption keys" },
+  { label: "Works with your diary", detail: "20+ booking systems" },
 ] as const

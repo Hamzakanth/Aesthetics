@@ -111,9 +111,9 @@ export function Testimonials() {
         <div className="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
           <SectionHeading
             headingId="testimonials-heading"
-            eyebrow="Clinics"
-            title="Trusted by the people who run the front desk"
-            description="Physicians, practice managers and administrators — not a pilot programme. Every quote below is from a clinic in production today."
+            eyebrow="Studios"
+            title="Trusted by the people who run the room"
+            description="Owners, clinic directors and front-of-house managers — not a pilot programme. Every quote below is from a studio running Aurelius today."
           />
 
           <div className="flex gap-2">
@@ -153,8 +153,8 @@ export function Testimonials() {
           </div>
         </div>
 
-        {/* Proof band. Numbers first: they are what a sceptical administrator
-            scans for before reading a single quote. */}
+        {/* Proof band. Numbers first: they are what a sceptical owner scans
+            for before reading a single quote. */}
         <dl className="mt-12 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
           {trustStats.map((stat) => (
             <div key={stat.label} className="bg-card px-6 py-5">

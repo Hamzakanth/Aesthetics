@@ -35,8 +35,8 @@ export function Pricing() {
             headingId="pricing-heading"
             align="center"
             eyebrow="Pricing"
-            title="Priced per provider, not per seat"
-            description="Add as many front-desk logins as you like. Charging per seat would penalise exactly the clinic whose problem this solves."
+            title="Priced per location, not per seat"
+            description="Add as many team logins as you like. Charging per seat would penalise exactly the studio whose problem this solves."
           />
 
           <Tabs
@@ -137,7 +137,7 @@ export function Pricing() {
                             ${price}
                           </span>
                           <span className="text-sm text-muted-foreground">
-                            / provider / mo
+                            / location / mo
                           </span>
                         </>
                       )}
@@ -191,7 +191,7 @@ export function Pricing() {
                 <span className="ml-2 font-normal text-muted-foreground">
                   {selectedPrice === null
                     ? "· custom pricing"
-                    : `· $${selectedPrice} per provider / month, billed ${
+                    : `· $${selectedPrice} per location / month, billed ${
                         cycle === "annual" ? "annually" : "monthly"
                       }`}
                 </span>
@@ -218,7 +218,7 @@ export function Pricing() {
             ? `${selected.name} plan selected, ${
                 selectedPrice === null
                   ? "custom pricing"
-                  : `$${selectedPrice} per provider per month`
+                  : `$${selectedPrice} per location per month`
               }`
             : ""}
         </p>

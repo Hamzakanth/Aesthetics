@@ -9,7 +9,7 @@ import { RevealGroup, RevealItem } from "@/components/motion/reveal"
 import { GradientMesh } from "@/components/motion/gradient-mesh"
 import { HeroGlassCards } from "@/components/sections/hero-glass-cards"
 
-import heroClinic from "@/assets/hero-clinic.png"
+import heroAesthetics from "@/assets/Aesthetics.png"
 
 export function Hero() {
   return (
@@ -24,10 +24,10 @@ export function Hero() {
             <RevealItem>
               <Badge variant="outline" className="gap-2 py-1 pr-3 pl-1.5">
                 <span className="rounded-full bg-accent-subtle px-2 py-0.5 font-mono text-[0.6875rem] tracking-wider text-accent uppercase">
-                  Not a scribe
+                  Not a chatbot
                 </span>
                 <span className="text-muted-foreground">
-                  An AI workforce for the front office
+                  A front desk that never misses
                 </span>
               </Badge>
             </RevealItem>
@@ -35,25 +35,27 @@ export function Hero() {
             <RevealItem>
               {/* One h1. The second line is a span, not an h3 — a lower
                   heading level above an h1 breaks the document outline. */}
-              <h1 className="mt-7 max-w-2xl text-display-lg font-semibold text-gradient">
-                The AI workforce built for
-                <span className="block text-accent">modern healthcare</span>
+              <h1 className="mt-7 max-w-2xl text-display-lg font-medium text-gradient">
+                The AI front desk for
+                <span className="block text-accent italic">
+                  aesthetic studios
+                </span>
               </h1>
             </RevealItem>
 
             <RevealItem>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground text-balance">
-                Aurelius runs your clinic&rsquo;s operations. It answers the
-                phones, fills cancelled slots, chases prior authorisations and
-                posts payments &mdash; so your staff can look after patients
-                instead of paperwork.
+                Aurelius runs your front of house. It answers the calls and the
+                DMs, fills cancelled slots, takes the deposit and brings clients
+                back &mdash; so your team can look after the room instead of the
+                phone.
               </p>
             </RevealItem>
 
             <RevealItem className="mt-9 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
               <Button size="lg" asChild>
                 <Link href="/contact">
-                  Book a demo
+                  Book a walkthrough
                   <ArrowRight />
                 </Link>
               </Button>
@@ -65,8 +67,8 @@ export function Hero() {
             <RevealItem>
               <p className="mt-6 flex items-center gap-2 text-sm text-muted-foreground">
                 <ShieldCheck aria-hidden className="size-4 text-accent" />
-                HIPAA compliant &middot; SOC 2 Type II &middot; Works with your
-                existing EHR
+                GDPR compliant &middot; PCI DSS payments &middot; Works with your
+                existing diary
               </p>
             </RevealItem>
           </RevealGroup>
@@ -74,9 +76,10 @@ export function Hero() {
       </Container>
 
       {/*
-        The photograph is authored with a white gradient falling off to the
-        left, so it dissolves into the page rather than sitting in a box —
-        no mask or overlay needed on a white ground.
+        Unlike the photograph this replaced, the artwork carries its own tinted
+        field all the way to the left edge — so the mask below is now load
+        bearing rather than a refinement. Without it the image ends on a hard
+        vertical seam against the ivory ground.
 
         One <Image> reflowed by breakpoint rather than two elements, so the
         browser only ever fetches the asset once. `priority` because this is
@@ -92,15 +95,16 @@ export function Hero() {
             image directly would take the glass cards with it. */}
         <div className="mask-hero-b lg:mask-hero absolute inset-0">
           <Image
-            src={heroClinic}
-            alt="A clinic receptionist taking a call at the front desk while two clinicians confer behind her."
+            src={heroAesthetics}
+            alt="A client resting with her eyes closed after a facial treatment, her skin traced with fine contour lines."
             fill
             priority
             sizes="(max-width: 1024px) 100vw, 56vw"
             placeholder="blur"
-            // The subject (reception desk) sits in the right third of the
-            // source image; the left two thirds are its white fall-off.
-            // Anchoring right keeps the people in frame at every crop width.
+            // The subject sits in the right fifth of a 1.9:1 source; the rest
+            // is soft field. The container is far taller than that ratio, so
+            // cover crops horizontally — anchoring right is what keeps her in
+            // frame at every width.
             className="object-cover object-right"
           />
         </div>

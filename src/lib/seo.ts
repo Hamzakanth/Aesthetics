@@ -63,8 +63,8 @@ export function organizationJsonLd() {
     foundingDate: String(siteConfig.company.foundedYear),
     sameAs: [
       siteConfig.links.x,
+      siteConfig.links.instagram,
       siteConfig.links.linkedin,
-      siteConfig.links.github,
     ],
     contactPoint: {
       "@type": "ContactPoint",
