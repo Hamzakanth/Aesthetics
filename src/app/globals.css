@@ -1,0 +1,563 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ==========================================================================
+   AURELIUS DESIGN TOKENS
+   Swiss Modernism 2.0 — strict grid, mathematical spacing, single accent.
+   Layer 1 (primitive) -> Layer 2 (semantic) -> Layer 3 (component).
+   Never reference a raw hex inside a component. Always go through a token.
+   ========================================================================== */
+
+:root {
+  /* --- Layer 1: primitives -------------------------------------------- */
+  /* Cool slate neutrals. Blue-leaning grey reads clinical and calm next to
+     a blue accent; a warm grey would fight it. */
+  --slate-0: #ffffff;
+  --slate-50: #f7f9fc;
+  --slate-100: #eef2f7;
+  --slate-200: #e3e8ef;
+  --slate-300: #cdd5e0;
+  --slate-400: #9aa7b8;
+  --slate-500: #6c7a8d;
+  --slate-600: #4e5a6b;
+  --slate-700: #37424f;
+  --slate-800: #212b36;
+  --slate-900: #131c26;
+  --slate-950: #0a121b;
+
+  /* Single accent. Apple's system blue, which is also the one blue that
+     survives on pure white without vibrating. */
+  --blue-300: #7ab8ff;
+  --blue-400: #4da3ff;
+  --blue-500: #0a84ff;
+  --blue-600: #0071e3;
+  --blue-700: #0062c4;
+  --blue-900: #0b3c78;
+
+  /* --- Layer 2: semantic (light) --------------------------------------- */
+  /* Apple's ground is pure white, not off-white. Elevation is carried by
+     hairlines and shadow, never by a grey page. */
+  --background: var(--slate-0);
+  --foreground: var(--slate-950);
+
+  --card: var(--slate-0);
+  --card-foreground: var(--slate-950);
+  --popover: var(--slate-0);
+  --popover-foreground: var(--slate-950);
+
+  /* Primary IS the blue. On an Apple-register site the filled button is the
+     brand, so primary and accent are intentionally the same hue. */
+  --primary: var(--blue-600);
+  --primary-foreground: #ffffff;
+
+  --secondary: var(--slate-100);
+  --secondary-foreground: var(--slate-900);
+
+  --muted: var(--slate-50);
+  --muted-foreground: var(--slate-600);
+
+  --accent: var(--blue-600);
+  --accent-foreground: #ffffff;
+  --accent-subtle: color-mix(in oklab, var(--blue-600) 9%, transparent);
+
+  /* Deep navy panel used for the closing CTA. Trust register — Nabla's move
+     of ending on a dark, quiet, confident block rather than a loud one. */
+  --ink: var(--slate-950);
+  --ink-foreground: var(--slate-50);
+
+  /* Scrim behind modals and the mobile sheet. Cool, never neutral grey. */
+  --overlay: color-mix(in oklab, var(--slate-950) 45%, transparent);
+
+  --destructive: #d92d20;
+  --destructive-foreground: #ffffff;
+  --success: #0e7a4d;
+  --warning: #b54708;
+
+  --border: var(--slate-200);
+  --input: var(--slate-200);
+  --ring: var(--blue-600);
+
+  /* Hairline used for the Swiss grid rules. Deliberately near-invisible. */
+  --rule: color-mix(in oklab, var(--slate-950) 6%, transparent);
+
+  --chart-1: var(--blue-600);
+  --chart-2: var(--blue-400);
+  --chart-3: var(--slate-400);
+  --chart-4: var(--blue-900);
+  --chart-5: var(--slate-600);
+
+  /* --- Layer 3: component --------------------------------------------- */
+  /* Softened from 0.625rem. Rounder geometry reads calmer and more
+     approachable — the trust register — without tipping into playful. */
+  --radius: 0.875rem;
+
+  /* Density dial = 4/10 (standard). 8px base unit, mathematical scale. */
+  --space-2xs: 0.5rem;
+  --space-xs: 1rem;
+  --space-sm: 1.5rem;
+  --space-md: 2rem;
+  --space-lg: 3rem;
+  --space-xl: 4rem;
+  --space-2xl: 6rem;
+  --space-3xl: 8rem;
+
+  /* Elevation. Premium = tight, low-opacity, never a soft gray blob. */
+  /* Blue-tinted shadow rather than neutral grey. On a pure-white ground a
+     grey shadow reads as dirt; a cool one reads as depth. */
+  --shadow-xs: 0 1px 2px 0 rgb(10 18 27 / 0.04);
+  --shadow-sm: 0 1px 3px 0 rgb(10 18 27 / 0.06), 0 1px 2px -1px rgb(10 18 27 / 0.04);
+  --shadow-md: 0 4px 14px -2px rgb(10 18 27 / 0.09), 0 2px 6px -2px rgb(10 18 27 / 0.05);
+  --shadow-lg: 0 16px 40px -10px rgb(10 18 27 / 0.14), 0 4px 12px -4px rgb(10 18 27 / 0.06);
+  --shadow-blue: 0 8px 28px -8px rgb(0 113 227 / 0.35);
+
+  /* Gradient-mesh blob fills. Tokenised so the field is theme-aware and can
+     be retuned in one place instead of across three blurred divs. */
+  --mesh-a: color-mix(in oklab, var(--blue-500) 18%, transparent);
+  --mesh-b: color-mix(in oklab, var(--blue-600) 14%, transparent);
+  --mesh-c: color-mix(in oklab, var(--blue-300) 26%, transparent);
+
+  /* Motion dial = 6/10 (standard). Exit is always faster than enter. */
+  --duration-fast: 150ms;
+  --duration-base: 220ms;
+  --duration-slow: 320ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.dark {
+  --background: #070d14;
+  --foreground: var(--slate-50);
+
+  --card: #0e161f;
+  --card-foreground: var(--slate-50);
+  --popover: #111a24;
+  --popover-foreground: var(--slate-50);
+
+  /* Lifted from blue-600 to blue-400: 600 fails 4.5:1 against a dark ground. */
+  --primary: var(--blue-400);
+  --primary-foreground: #04121f;
+
+  --secondary: #1a2430;
+  --secondary-foreground: var(--slate-50);
+
+  --muted: #101a24;
+  --muted-foreground: var(--slate-400);
+
+  --accent: var(--blue-400);
+  --accent-foreground: #04121f;
+  --accent-subtle: color-mix(in oklab, var(--blue-400) 14%, transparent);
+
+  /* On dark the CTA panel inverts to a raised surface, not a darker hole. */
+  --ink: #0e161f;
+  --ink-foreground: var(--slate-50);
+
+  --overlay: color-mix(in oklab, #000000 62%, transparent);
+
+  --destructive: #ff6b63;
+  --destructive-foreground: #04121f;
+  --success: #3ddc9a;
+  --warning: #fbbf24;
+
+  --border: #1e2937;
+  --input: #24303f;
+  --ring: var(--blue-400);
+
+  --rule: color-mix(in oklab, var(--slate-50) 9%, transparent);
+
+  --chart-1: var(--blue-400);
+  --chart-2: var(--blue-300);
+  --chart-3: var(--slate-500);
+  --chart-4: var(--blue-600);
+  --chart-5: var(--slate-400);
+
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4);
+  --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.5);
+  --shadow-lg: 0 12px 32px -8px rgb(0 0 0 / 0.6);
+  --shadow-blue: 0 8px 28px -8px rgb(77 163 255 / 0.28);
+
+  --mesh-a: color-mix(in oklab, var(--blue-500) 26%, transparent);
+  --mesh-b: color-mix(in oklab, var(--blue-600) 34%, transparent);
+  --mesh-c: color-mix(in oklab, var(--blue-300) 16%, transparent);
+}
+
+/* ==========================================================================
+   TAILWIND THEME BRIDGE
+   Exposes the semantic tokens above as Tailwind utilities (bg-background,
+   text-muted-foreground, rounded-lg, ...).
+   ========================================================================== */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-subtle: var(--accent-subtle);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-ink: var(--ink);
+  --color-ink-foreground: var(--ink-foreground);
+  --color-overlay: var(--overlay);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-rule: var(--rule);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-inter-tight), var(--font-inter), sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 10px);
+
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-blue: var(--shadow-blue);
+
+  --ease-out-expo: var(--ease-out);
+
+  --animate-accordion-down: accordion-down var(--duration-base) var(--ease-out);
+  --animate-accordion-up: accordion-up var(--duration-fast) var(--ease-out);
+  --animate-marquee: marquee 42s linear infinite;
+  --animate-drift-a: drift-a 22s var(--ease-in-out) infinite;
+  --animate-drift-b: drift-b 28s var(--ease-in-out) infinite;
+  --animate-drift-c: drift-c 34s var(--ease-in-out) infinite;
+  --animate-sheen: sheen 8s var(--ease-in-out) infinite;
+  /* Duration must match AUTOPLAY_DELAY in testimonials.tsx (4500ms). */
+  --animate-dot-progress: dot-progress 4.5s linear forwards;
+  --animate-float-slow: float-y 7s var(--ease-in-out) infinite;
+  --animate-float-slower: float-y 9.5s var(--ease-in-out) infinite;
+
+  /* Fluid display scale. clamp() so headlines never need a breakpoint. */
+  --text-display-sm: clamp(1.75rem, 1.4rem + 1.75vw, 2.5rem);
+  --text-display-sm--line-height: 1.15;
+  --text-display-md: clamp(2.25rem, 1.7rem + 2.75vw, 3.5rem);
+  --text-display-md--line-height: 1.08;
+  --text-display-lg: clamp(2.75rem, 1.9rem + 4.25vw, 5rem);
+  --text-display-lg--line-height: 1.04;
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
+}
+
+/* Translates by exactly -50%; the track renders the logo list twice. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* The ink CTA panel sits on a dark ground in BOTH themes, so it always wants
+   the high-saturation blob mix rather than the light-theme one. */
+[data-mesh-tone="ink"] {
+  --mesh-a: color-mix(in oklab, var(--blue-500) 30%, transparent);
+  --mesh-b: color-mix(in oklab, var(--blue-600) 42%, transparent);
+  --mesh-c: color-mix(in oklab, var(--blue-300) 20%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   Gradient mesh (Stripe-style animated field)
+   Stripe drives theirs with WebGL. This is the CSS approximation: three
+   blurred radial blobs on independent, prime-ish cycles so they never visibly
+   loop together. Only `transform` and `opacity` animate — both composited, so
+   the whole field runs off the main thread at zero layout cost.
+   -------------------------------------------------------------------------- */
+
+@keyframes drift-a {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(6%, 8%, 0) scale(1.18);
+  }
+}
+
+@keyframes drift-b {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1.1);
+  }
+  50% {
+    transform: translate3d(-9%, 5%, 0) scale(0.92);
+  }
+}
+
+@keyframes drift-c {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(0.95);
+  }
+  50% {
+    transform: translate3d(5%, -7%, 0) scale(1.22);
+  }
+}
+
+/* Fills the active carousel dot over one autoplay interval, so the rotation
+   is legible before it happens rather than surprising. */
+@keyframes dot-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Gentle vertical float for the glass cards. Small amplitude on purpose —
+   6px reads as "alive", 20px reads as a toy. */
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -6px, 0);
+  }
+}
+
+/* Slow luminance breath layered over the blobs — the thing that reads as
+   "alive" rather than "a static gradient". */
+@keyframes sheen {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Offset anchor targets so the sticky header never covers a heading. */
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Swiss Modernism: display type is tight, body type is not. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.028em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--accent-subtle);
+    color: var(--foreground);
+  }
+
+  /* Never remove the focus ring — replace it with a better one. */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Reserve the scrollbar gutter so opening a modal cannot shift layout. */
+  html {
+    scrollbar-gutter: stable;
+  }
+}
+
+/* ==========================================================================
+   UTILITIES
+   ========================================================================== */
+
+@utility text-gradient {
+  background-image: linear-gradient(
+    180deg,
+    var(--foreground) 0%,
+    color-mix(in oklab, var(--foreground) 62%, transparent) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Vertical hairlines that mark the 12-column grid — the Swiss signature. */
+@utility grid-rules {
+  background-image: linear-gradient(to right, var(--rule) 1px, transparent 1px);
+  background-size: calc(100% / 6) 100%;
+}
+
+/* Frosted panel. Real glass has three parts: blur, a translucent fill, and a
+   bright top edge where light catches. Skipping the edge is what makes most
+   glassmorphism look flat. */
+@utility glass {
+  background: color-mix(in oklab, var(--card) 62%, transparent);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid color-mix(in oklab, var(--card) 70%, transparent);
+  box-shadow:
+    var(--shadow-lg),
+    inset 0 1px 0 0 color-mix(in oklab, #fff 55%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   Drafting field — the static line background behind the auth screens.
+   Colour is always `currentColor`, so one set of utilities works on the white
+   ground and on the ink panel; the caller sets colour and opacity per layer.
+   Cell size and ring spacing are variables so two layers can share a utility
+   at different scales instead of needing a second one.
+   -------------------------------------------------------------------------- */
+
+@utility line-grid {
+  background-image:
+    linear-gradient(to right, currentColor 1px, transparent 1px),
+    linear-gradient(to bottom, currentColor 1px, transparent 1px);
+  background-size: var(--line-cell, 28px) var(--line-cell, 28px);
+  background-position: center center;
+}
+
+/* Concentric rings. Reads as a plotted instrument rather than wallpaper,
+   which is the difference between this and a stock grid background. */
+@utility line-rings {
+  background-image: repeating-radial-gradient(
+    circle at var(--ring-x, 50%) var(--ring-y, 50%),
+    currentColor 0 1px,
+    transparent 1px var(--ring-gap, 88px)
+  );
+}
+
+/* Fades a layer out from a chosen origin so the lines dissolve into the
+   ground instead of stopping at a hard edge. */
+@utility mask-radial {
+  mask-image: radial-gradient(
+    ellipse var(--mask-size, 120% 100%) at var(--mask-x, 50%) var(--mask-y, 50%),
+    #000 0%,
+    color-mix(in oklab, #000 40%, transparent) 55%,
+    transparent 100%
+  );
+}
+
+@utility mask-fade-b {
+  mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+}
+
+/* Hero photograph dissolve.
+   The photo carries its own white fall-off, but the page behind it is
+   mesh-tinted, so butting them together leaves a visible seam wherever the
+   two whites disagree. Masking the photo's own alpha instead means there is
+   no boundary to match — it fades into whatever is behind it.
+
+   Mobile: bottom fade only. A left fade at this width would eat the subject. */
+@utility mask-hero-b {
+  mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+}
+
+/* Desktop: fade the left edge into the copy column AND the bottom into the
+   next section. Two masks intersected, so both fades apply. */
+@utility mask-hero {
+  mask-image:
+    linear-gradient(to right, transparent 0%, rgb(0 0 0 / 0.35) 18%, #000 42%),
+    linear-gradient(to bottom, #000 78%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
+}
+
+@utility mask-fade-x {
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 12%,
+    #000 88%,
+    transparent 100%
+  );
+}
+
+/* ==========================================================================
+   ACCESSIBILITY
+   Honour the OS setting globally. Individual components additionally read
+   useReducedMotion() so they can swap to a fade instead of just snapping.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
