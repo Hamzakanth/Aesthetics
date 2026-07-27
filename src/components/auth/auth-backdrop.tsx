@@ -2,7 +2,6 @@
 
 import type { CSSProperties } from "react"
 
-import { LineField } from "@/components/motion/line-field"
 import { Parallax } from "@/components/motion/pointer-stage"
 
 /**
@@ -13,7 +12,7 @@ import { Parallax } from "@/components/motion/pointer-stage"
  * have to fake its depth with drop shadows; a dark one can use actual light,
  * which is the whole point of the composition.
  *
- * Five planes, back to front: ground, aurora, drafting field, dust, vignette.
+ * Five planes, back to front: ground, aurora, sheen, dust, vignette.
  * Each moves at its own rate against the pointer. Motion parallax is the only
  * depth cue on a flat screen that the eye trusts without being told, and it is
  * why this reads as a room rather than as a gradient.
@@ -101,17 +100,19 @@ export function AuthBackdrop() {
         />
       </Parallax>
 
-      {/* --- Drafting field ---------------------------------------------- */}
-      {/* The house texture, kept from the previous screen because it is the
-          one element here that is unmistakably Aurelius. Sits between the
-          aurora and the dust so the grid reads as a wall, not as an overlay. */}
+      {/* --- Sheen -------------------------------------------------------- */}
+      {/* Where the drafting grid used to sit. The hairlines gave the plane a
+          hard edge that fought the light behind it; a slow breathing wash sits
+          in the same slot and does the same job — separating the aurora from
+          the dust — without drawing anything. Same treatment as the gradient
+          field on the contact page, which runs its rules off for this reason. */}
       <Parallax depth={-12} className="absolute inset-0">
-        <LineField
-          className="text-white"
-          originX="26%"
-          originY="40%"
-          spread="140% 120%"
-          animated
+        <div
+          className="animate-sheen absolute inset-0 motion-reduce:animate-none"
+          style={{
+            background:
+              "radial-gradient(70% 55% at 26% 8%, color-mix(in oklab, var(--gold-400) 16%, transparent), transparent 72%)",
+          }}
         />
       </Parallax>
 

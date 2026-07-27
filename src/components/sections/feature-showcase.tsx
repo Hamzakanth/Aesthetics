@@ -31,8 +31,8 @@ import { Button } from "@/components/ui/button"
  * Everything degrades to a clean crossfade under prefers-reduced-motion.
  */
 
-// Kept identical to the testimonials carousel so the shared `dot-progress`
-// keyframe (defined once in globals.css at 4.5s) lands exactly on the advance.
+// Must stay in step with the `dot-progress` keyframe (globals.css, 4.5s) so
+// the progress fill lands exactly on the advance.
 const AUTOPLAY_DELAY = 4500
 
 const screenContainer: Variants = {

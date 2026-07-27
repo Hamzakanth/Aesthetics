@@ -2,156 +2,193 @@
 
 import * as React from "react"
 import useEmblaCarousel from "embla-carousel-react"
-import Autoplay from "embla-carousel-autoplay"
+import AutoScroll from "embla-carousel-auto-scroll"
 import { useReducedMotion } from "framer-motion"
-import {
-  ArrowLeft,
-  ArrowRight,
-  BadgeCheck,
-  Pause,
-  Play,
-  Quote,
-  Star,
-} from "lucide-react"
+import { BadgeCheck, Quote, Star } from "lucide-react"
 
 import { testimonials, trustStats } from "@/content/testimonials"
 import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
 import { Container } from "@/components/primitives/container"
 import { Section } from "@/components/primitives/section"
 import { SectionHeading } from "@/components/primitives/section-heading"
 
-const AUTOPLAY_DELAY = 4500
+/**
+ * Pixels per frame — a velocity, not a delay, since the track glides rather
+ * than snaps. Deliberately slow: at 0.6 a card takes the better part of ten
+ * seconds to cross, which is a drift you read *against* rather than one you
+ * chase. Anything past ~1 starts to feel frantic next to the serif setting,
+ * and a frantic proof band undercuts the thing it is meant to prove.
+ */
+const SCROLL_SPEED = 0.6
+
+/**
+ * Embla's loop engine fills the gutters by translating slides around the
+ * track, so it needs the slide set to be comfortably wider than the viewport
+ * or it parks cards on the left and they read as overlapping. Five cards at
+ * 38% is 190% — just under the threshold. Running the list twice clears it
+ * and, because the seam lands mid-flow, the repeat is never visible.
+ */
+const LOOPED = [...testimonials, ...testimonials]
 
 export function Testimonials() {
   const shouldReduceMotion = useReducedMotion()
 
-  // The plugin instance must be stable across renders, or Embla tears down and
-  // rebuilds autoplay on every state change and the timer never completes.
-  const autoplay = React.useRef(
-    Autoplay({
-      delay: AUTOPLAY_DELAY,
-      // Keep rolling after a manual nudge — stopping forever on first touch is
-      // the single most common autoplay mistake.
-      stopOnInteraction: false,
-      // But never advance under someone's cursor or keyboard focus.
+  // Stable across renders, or Embla tears the plugin down and rebuilds it on
+  // every state change and the scroll restarts.
+  const autoScroll = React.useRef(
+    AutoScroll({
+      speed: SCROLL_SPEED,
+      startDelay: 0,
+      // Never advance under someone's cursor or keyboard focus — if they are
+      // reading it, the track holds still.
       stopOnMouseEnter: true,
       stopOnFocusIn: true,
+      // ...but a swipe or a scrub is a nudge, not a stop. Movement resumes on
+      // its own once the gesture ends — the carousel is never left dead.
+      stopOnInteraction: false,
     })
   )
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
       align: "start",
-      // Deliberately NOT looped. Embla's loop engine fills the gutters by
-      // translating slides around the track, and with only five testimonials
-      // there is never enough to fill the left side — so it parks slides
-      // there, which reads as cards overlapping and mis-aligned. Autoplay
-      // still cycles: at the last snap it rewinds to the first.
-      // Revisit only if the testimonial count grows well past the number
-      // visible at once.
-      loop: false,
-      // Embla's default is 25, which reads as syrupy next to the 220ms the
-      // rest of the site moves at. 10 is a fast native-feeling swipe —
-      // roughly 180ms end to end. Below ~8 the cards teleport and the eye
-      // loses track of which one moved where.
-      duration: 10,
-      // Let a fast flick travel more than one slide instead of braking hard
-      // at the next snap — the main thing that makes a carousel feel sticky.
+      loop: true,
+      // Auto-scroll drives the track itself; this only governs the settle
+      // after a manual flick or a scrollbar jump. 22 lands it without the
+      // hard brake that makes a swipe feel like it hit something.
+      duration: 22,
       skipSnaps: true,
-      // Start tracking the drag sooner, so a swipe never feels like it has
-      // to overcome friction before the track responds.
       dragThreshold: 6,
+      // Keep the loop measuring against the duplicated set rather than
+      // snapping back at the true end of the list.
+      containScroll: false,
     },
-    // Honour the OS setting: no plugin at all rather than a paused one.
-    shouldReduceMotion ? [] : [autoplay.current]
+    // Honour the OS setting: no plugin at all rather than a stalled one.
+    shouldReduceMotion ? [] : [autoScroll.current]
   )
 
-  const [selected, setSelected] = React.useState(0)
-  const [isPlaying, setIsPlaying] = React.useState(!shouldReduceMotion)
+  // A pointer leaving the track is what restarts it, but a drag that ends
+  // outside the element never fires `mouseleave` on it. Nudging the plugin
+  // back to life on pointer-up covers that gap.
+  const resume = React.useCallback(() => {
+    const plugin = emblaApi?.plugins().autoScroll
+    if (plugin && !plugin.isPlaying()) plugin.play()
+  }, [emblaApi])
+
+  const halt = React.useCallback(() => {
+    emblaApi?.plugins().autoScroll?.stop()
+  }, [emblaApi])
+
+  // --- Scrollbar -------------------------------------------------------
+  // Position of the thumb, 0–1. Read off Embla rather than kept in step with
+  // it, so the bar is a readout of the real track position at every frame of
+  // the drift — not a second source of truth that can drift out of sync.
+  const [progress, setProgress] = React.useState(0)
+  const railRef = React.useRef<HTMLDivElement>(null)
 
   React.useEffect(() => {
     if (!emblaApi) return
 
-    const sync = () => setSelected(emblaApi.selectedScrollSnap())
-    const syncPlayState = () => {
-      const plugin = emblaApi.plugins().autoplay
-      if (plugin) setIsPlaying(plugin.isPlaying())
+    const sync = () => {
+      // Looping keeps the raw progress just outside 0–1 at the seam; the
+      // modulo turns the wrap into a clean restart instead of a flick past
+      // the end of the rail.
+      const raw = emblaApi.scrollProgress()
+      setProgress(((raw % 1) + 1) % 1)
     }
 
     sync()
-    syncPlayState()
-
-    emblaApi.on("select", sync).on("reInit", sync)
-    emblaApi
-      .on("autoplay:play", syncPlayState)
-      .on("autoplay:stop", syncPlayState)
-      .on("reInit", syncPlayState)
-
+    emblaApi.on("scroll", sync).on("reInit", sync)
     return () => {
-      emblaApi.off("select", sync).off("reInit", sync)
-      emblaApi
-        .off("autoplay:play", syncPlayState)
-        .off("autoplay:stop", syncPlayState)
-        .off("reInit", syncPlayState)
+      emblaApi.off("scroll", sync).off("reInit", sync)
     }
   }, [emblaApi])
 
-  const toggleAutoplay = React.useCallback(() => {
-    const plugin = emblaApi?.plugins().autoplay
-    if (!plugin) return
-    if (plugin.isPlaying()) plugin.stop()
-    else plugin.play()
-  }, [emblaApi])
+  // The rail is an absolute control: where you press is where the track goes,
+  // and dragging scrubs it continuously. Pointer capture means the drag keeps
+  // tracking after the cursor leaves the rail, which is what every native
+  // scrollbar does and what its absence makes feel cheap.
+  const scrubTo = React.useCallback(
+    (clientX: number) => {
+      const rail = railRef.current
+      if (!rail || !emblaApi) return
+      const { left, width } = rail.getBoundingClientRect()
+      if (width === 0) return
+      const ratio = Math.min(Math.max((clientX - left) / width, 0), 1)
+      emblaApi.scrollTo(
+        Math.round(ratio * (emblaApi.scrollSnapList().length - 1))
+      )
+    },
+    [emblaApi]
+  )
+
+  const [scrubbing, setScrubbing] = React.useState(false)
+
+  const onRailDown = React.useCallback(
+    (event: React.PointerEvent<HTMLDivElement>) => {
+      event.currentTarget.setPointerCapture(event.pointerId)
+      setScrubbing(true)
+      halt()
+      scrubTo(event.clientX)
+    },
+    [halt, scrubTo]
+  )
+
+  const onRailMove = React.useCallback(
+    (event: React.PointerEvent<HTMLDivElement>) => {
+      if (!scrubbing) return
+      scrubTo(event.clientX)
+    },
+    [scrubbing, scrubTo]
+  )
+
+  const onRailUp = React.useCallback(
+    (event: React.PointerEvent<HTMLDivElement>) => {
+      if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+        event.currentTarget.releasePointerCapture(event.pointerId)
+      }
+      setScrubbing(false)
+      resume()
+    },
+    [resume]
+  )
+
+  // Arrow keys on the rail, because a drag handle that only answers to a mouse
+  // is not a control — it is a decoration that happens to work.
+  const onRailKeyDown = React.useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (event.key === "ArrowLeft") {
+        event.preventDefault()
+        emblaApi?.scrollPrev()
+      } else if (event.key === "ArrowRight") {
+        event.preventDefault()
+        emblaApi?.scrollNext()
+      }
+    },
+    [emblaApi]
+  )
+
+  // How much of the set is on screen — the thumb is that fraction of the rail,
+  // so its size says how much there is to read, exactly like a real scrollbar.
+  // Floored, because a thumb thinner than about an eighth of the rail is
+  // hard to grab and stops reading as a handle at all.
+  const thumbFraction = Math.max(1 / LOOPED.length, 0.12)
+  const thumbWidth = `${(thumbFraction * 100).toFixed(2)}%`
 
   return (
     <Section id="testimonials" aria-labelledby="testimonials-heading">
       <Container>
-        <div className="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
-          <SectionHeading
-            headingId="testimonials-heading"
-            eyebrow="Studios"
-            title="Trusted by the people who run the room"
-            description="Owners, clinic directors and front-of-house managers — not a pilot programme. Every quote below is from a studio running Aurelius today."
-          />
-
-          <div className="flex gap-2">
-            {/* WCAG 2.2.2: anything that moves automatically for more than
-                five seconds needs an explicit pause control. */}
-            {!shouldReduceMotion ? (
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={toggleAutoplay}
-                aria-label={
-                  isPlaying
-                    ? "Pause automatic rotation"
-                    : "Resume automatic rotation"
-                }
-              >
-                {isPlaying ? <Pause /> : <Play />}
-              </Button>
-            ) : null}
-
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => emblaApi?.scrollPrev()}
-              aria-label="Previous testimonial"
-            >
-              <ArrowLeft />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => emblaApi?.scrollNext()}
-              aria-label="Next testimonial"
-            >
-              <ArrowRight />
-            </Button>
-          </div>
-        </div>
+        {/* No pause button and no arrows: hovering the track is the pause —
+            which is what people reach for and what WCAG 2.2.2 asks for — and
+            the rail below is the manual control. A pair of step buttons next
+            to a continuously drifting band never matched what it does. */}
+        <SectionHeading
+          headingId="testimonials-heading"
+          eyebrow="Studios"
+          title="Trusted by the people who run the room"
+          description="Owners, clinic directors and front-of-house managers — not a pilot programme. Every quote below is from a studio running Aurelius today."
+        />
 
         {/* Proof band. Numbers first: they are what a sceptical owner scans
             for before reading a single quote. */}
@@ -171,124 +208,167 @@ export function Testimonials() {
           ))}
         </dl>
 
+        {/* The edges fade rather than cut. A continuously moving track that
+            stops dead at a hard border reads as clipped; a soft entry and exit
+            reads as a band that carries on past the page. */}
+        {/* Touch has no hover, so the gesture itself has to be the pause: a
+            finger down halts the drift instantly and the track follows the
+            swipe, then it resumes the moment the finger lifts. Handled on
+            pointer events rather than touch ones so a mouse drag behaves
+            identically, and on the wrapper rather than the viewport so a
+            gesture that ends off-element still releases the hold. */}
         <div
-          className="mt-6 overflow-hidden"
-          ref={emblaRef}
-          role="region"
-          aria-roledescription="carousel"
-          aria-label="Customer testimonials"
+          className="relative mt-6 [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]"
+          onPointerDown={halt}
+          onPointerUp={resume}
+          onPointerCancel={resume}
+          onTouchEnd={resume}
         >
-          {/* The track is translated every frame of a drag — keeping it on
-              the compositor is the difference between smooth and stuttery. */}
-          <ul className="-ml-4 flex will-change-transform [backface-visibility:hidden] [touch-action:pan-y_pinch-zoom]">
-            {testimonials.map((t, i) => (
-              <li
-                key={t.id}
-                /* The 38% peek is safe now that the track does not loop: a
-                   partial third card signals "there is more" without the
-                   loop engine needing slides to fill the gutter. */
-                className="min-w-0 shrink-0 basis-full pl-4 sm:basis-1/2 lg:basis-[38%]"
-                role="group"
-                aria-roledescription="slide"
-                aria-label={`${i + 1} of ${testimonials.length}`}
-              >
-                <figure
-                  className={cn(
-                    "flex h-full flex-col gap-6 rounded-xl border bg-card p-7",
-                    "transition-[border-color,box-shadow,opacity] duration-[--duration-base] ease-[--ease-out]",
-                    i === selected
-                      ? "border-accent/40 opacity-100 shadow-md"
-                      : "border-border opacity-70 shadow-xs"
-                  )}
-                >
-                  <div className="flex items-center justify-between gap-3">
-                    {/* Rating is stated in text for screen readers; the stars
-                        are decorative so it is not read out five times. */}
-                    <div className="flex items-center gap-0.5">
-                      <span className="sr-only">Rated 5 out of 5</span>
-                      {Array.from({ length: 5 }).map((_, star) => (
-                        <Star
-                          key={star}
+          <div
+            className="overflow-hidden"
+            ref={emblaRef}
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Customer testimonials"
+          >
+            {/* The track is translated every frame — keeping it on the
+                compositor is the difference between smooth and stuttery. */}
+            <ul className="-ml-4 flex will-change-transform [backface-visibility:hidden] [touch-action:pan-y_pinch-zoom]">
+              {LOOPED.map((t, i) => {
+                // The second pass is the same five quotes; screen readers
+                // should hear the list once.
+                const isRepeat = i >= testimonials.length
+
+                return (
+                  <li
+                    key={`${t.id}-${i}`}
+                    className="group min-w-0 shrink-0 basis-full pl-4 sm:basis-1/2 lg:basis-[38%]"
+                    {...(isRepeat
+                      ? { "aria-hidden": true }
+                      : {
+                          role: "group",
+                          "aria-roledescription": "slide",
+                          "aria-label": `${i + 1} of ${testimonials.length}`,
+                        })}
+                  >
+                    <figure
+                      className={cn(
+                        "flex h-full flex-col gap-6 rounded-xl border border-border bg-card p-7 shadow-xs",
+                        // The card the cursor is on lifts and warms while the
+                        // track holds still under it — the stop and the
+                        // emphasis are the same gesture.
+                        "transition-[transform,border-color,box-shadow] duration-[--duration-base] ease-[--ease-out]",
+                        "group-hover:-translate-y-1 group-hover:border-accent/40 group-hover:shadow-md",
+                        "motion-reduce:transform-none"
+                      )}
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        {/* Rating is stated in text for screen readers; the
+                            stars are decorative so it is not read out five
+                            times. */}
+                        <div className="flex items-center gap-0.5">
+                          <span className="sr-only">Rated 5 out of 5</span>
+                          {Array.from({ length: 5 }).map((_, star) => (
+                            <Star
+                              key={star}
+                              aria-hidden
+                              className="size-3.5 fill-accent text-accent"
+                            />
+                          ))}
+                        </div>
+                        <Quote
                           aria-hidden
-                          className="size-3.5 fill-accent text-accent"
+                          className="size-5 shrink-0 text-accent/40 transition-colors duration-[--duration-base] group-hover:text-accent/70"
+                          strokeWidth={1.5}
                         />
-                      ))}
-                    </div>
-                    <Quote
-                      aria-hidden
-                      className="size-5 shrink-0 text-accent/40"
-                      strokeWidth={1.5}
-                    />
-                  </div>
-                  <blockquote className="flex-1 text-[0.9375rem] leading-relaxed text-foreground">
-                    {t.quote}
-                  </blockquote>
-                  <figcaption className="flex items-center gap-3 border-t border-border pt-5">
-                    <Avatar>
-                      <AvatarFallback>{t.initials}</AvatarFallback>
-                    </Avatar>
-                    <div className="min-w-0 flex-1">
-                      <p className="flex items-center gap-1.5 truncate text-sm font-medium">
-                        {t.author}
-                        <BadgeCheck
-                          aria-label="Verified customer"
-                          className="size-3.5 shrink-0 text-accent"
-                        />
-                      </p>
-                      <p className="truncate text-xs text-muted-foreground">
-                        {t.role}, {t.company}
-                      </p>
-                    </div>
-                  </figcaption>
-                </figure>
-              </li>
-            ))}
-          </ul>
+                      </div>
+                      <blockquote className="flex-1 text-[0.9375rem] leading-relaxed text-foreground">
+                        {t.quote}
+                      </blockquote>
+                      <figcaption className="flex items-center gap-3 border-t border-border pt-5">
+                        <Avatar>
+                          <AvatarFallback>{t.initials}</AvatarFallback>
+                        </Avatar>
+                        <div className="min-w-0 flex-1">
+                          <p className="flex items-center gap-1.5 truncate text-sm font-medium">
+                            {t.author}
+                            <BadgeCheck
+                              aria-label="Verified customer"
+                              className="size-3.5 shrink-0 text-accent"
+                            />
+                          </p>
+                          <p className="truncate text-xs text-muted-foreground">
+                            {t.role}, {t.company}
+                          </p>
+                        </div>
+                      </figcaption>
+                    </figure>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
         </div>
 
-        {/* Dots double as position indicator and jump control. The active one
-            carries a progress fill so the rotation feels intentional rather
-            than something that just happens to you. */}
-        <div className="mt-8 flex justify-center gap-2">
-          {testimonials.map((t, i) => (
-            <button
-              key={t.id}
-              type="button"
-              onClick={() => emblaApi?.scrollTo(i)}
-              aria-label={`Go to testimonial ${i + 1}`}
-              aria-current={i === selected}
-              className="group cursor-pointer p-2 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+        {/* --- Scroll rail --------------------------------------------- */}
+        {/* Sits outside the masked track so it is never faded at the edges,
+            and narrow enough that it reads as an instrument under the band
+            rather than a second element competing with it. */}
+        <div className="mt-8 flex justify-center">
+          <div
+            ref={railRef}
+            role="slider"
+            tabIndex={0}
+            aria-label="Scroll testimonials"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={Math.round(progress * 100)}
+            aria-valuetext={`${Math.round(progress * 100)}% through the testimonials`}
+            onPointerDown={onRailDown}
+            onPointerMove={onRailMove}
+            onPointerUp={onRailUp}
+            onPointerCancel={onRailUp}
+            onKeyDown={onRailKeyDown}
+            onFocus={halt}
+            onBlur={resume}
+            className={cn(
+              "group relative h-6 w-full max-w-md touch-none",
+              "flex cursor-grab items-center focus-visible:outline-none",
+              scrubbing && "cursor-grabbing"
+            )}
+          >
+            {/* Rail. Thin at rest, thicker the moment the control is in play,
+                so the affordance appears exactly when it is wanted. */}
+            <div
+              className={cn(
+                "relative w-full overflow-hidden rounded-full bg-border",
+                "transition-[height] duration-[--duration-base] ease-[--ease-out]",
+                scrubbing ? "h-1.5" : "h-1 group-hover:h-1.5"
+              )}
             >
-              <span
+              <div
+                style={{
+                  width: thumbWidth,
+                  // Travel is the rail minus the thumb, so the thumb lands
+                  // flush with each end instead of hanging over it.
+                  transform: `translateX(${(progress * (1 / thumbFraction - 1) * 100).toFixed(3)}%)`,
+                }}
                 className={cn(
-                  "relative block h-1 overflow-hidden rounded-full transition-all duration-[--duration-base] ease-[--ease-out]",
-                  i === selected
-                    ? "w-8 bg-border"
-                    : "w-3 bg-border group-hover:bg-muted-foreground"
+                  "h-full rounded-full bg-accent",
+                  // No transition on transform: the position is already
+                  // driven frame-by-frame by Embla, and easing it on top
+                  // would put the thumb permanently behind the cards.
+                  "transition-colors duration-[--duration-base]",
+                  scrubbing && "bg-accent/80"
                 )}
-              >
-                {i === selected ? (
-                  <span
-                    key={`${t.id}-${String(isPlaying)}`}
-                    className={cn(
-                      "absolute inset-0 origin-left rounded-full bg-accent",
-                      isPlaying && !shouldReduceMotion
-                        ? "animate-dot-progress"
-                        : "scale-x-100"
-                    )}
-                  />
-                ) : null}
-              </span>
-            </button>
-          ))}
-        </div>
+              />
+            </div>
 
-        {/* Announce slide changes to screen readers without moving focus. */}
-        <p aria-live="polite" aria-atomic className="sr-only">
-          {`Testimonial ${selected + 1} of ${testimonials.length}: ${
-            testimonials[selected]?.author ?? ""
-          }, ${testimonials[selected]?.company ?? ""}`}
-        </p>
+            {/* Focus ring belongs to the rail, not the thumb — the thumb moves
+                and a ring chasing it around is noise. */}
+            <span className="pointer-events-none absolute -inset-x-2 -inset-y-1 rounded-full ring-ring transition-shadow group-focus-visible:ring-2" />
+          </div>
+        </div>
       </Container>
     </Section>
   )
