@@ -8,6 +8,8 @@
    an ink panel without a theme switcher existing at all. */
 @custom-variant dark (&:is([data-surface="ink"] *));
 
+/* Temporary push test marker */
+
 /* ==========================================================================
    AURELIUS DESIGN TOKENS
    Quiet Luxury — soft nude ground, warm neutrals, a single gold accent.
@@ -42,6 +44,7 @@
   --gold-600: #a9853f;
   --gold-700: #8a6a2f; /* Antique Gold — THE primary action colour */
   --gold-800: #765a28;
+  --gold-850: #5f4720;
   --gold-900: #4a3818;
 
   /* --- Layer 2: semantic (light) --------------------------------------- */
@@ -63,8 +66,8 @@
      `--primary-raised` is the same colour a shade deeper: filled controls are
      painted as a top-lit gradient between the two, which is what makes them
      read as raised objects rather than as coloured rectangles. */
-  --primary: var(--gold-700);
-  --primary-raised: var(--gold-800);
+  --primary: var(--gold-800);
+  --primary-raised: var(--gold-850);
   --primary-foreground: #ffffff;
 
   --secondary: var(--stone-100);
@@ -129,8 +132,8 @@
   /* Lift under filled buttons. Tinted with the primary itself rather than
      with grey, so the control looks like it is emitting its own colour onto
      the page instead of sitting on a smudge. */
-  --shadow-lift: 0 8px 22px -8px rgb(138 106 47 / 0.45);
-  --shadow-lift-hover: 0 12px 28px -8px rgb(138 106 47 / 0.55);
+  --shadow-lift: 0 8px 22px -8px rgb(118 90 40 / 0.45);
+  --shadow-lift-hover: 0 12px 28px -8px rgb(118 90 40 / 0.55);
 
   /* Gradient-mesh blob fills. Tokenised so the field is theme-aware and can
      be retuned in one place instead of across three blurred divs. */
@@ -167,8 +170,8 @@
 
   /* Antique gold disappears into espresso, so on ink the filled button opens
      up to the bright gold and takes dark type — same colour, lit differently. */
-  --primary: var(--gold-400);
-  --primary-raised: var(--gold-500);
+  --primary: var(--gold-500);
+  --primary-raised: var(--gold-600);
   --primary-foreground: #1a150f;
 
   --secondary: #292219;
