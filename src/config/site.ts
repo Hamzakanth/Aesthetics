@@ -3,7 +3,7 @@ export const siteConfig = {
   shortName: "Aurelius",
   tagline: "The AI front desk for aesthetic and beauty studios",
   description:
-    "Aurelius runs the front of house for aesthetic clinics, skin studios, nail bars and laser rooms — calls, DMs, bookings, consultations, deposits and rebooking. Not a chatbot: a front desk that never misses.",
+    "Aurelius runs the front of house for aesthetic clinics, skin studios, nail bars and laser rooms — calls, DMs, bookings, consultations and rebooking. Not a chatbot: a front desk that never misses.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   ogImage: "/og.png",
   locale: "en_US",
@@ -13,7 +13,7 @@ export const siteConfig = {
     "med spa booking automation",
     "nail salon front desk automation",
     "skin studio client management",
-    "salon deposits and no-show automation",
+    "salon no-show and reminder automation",
     "beauty studio rebooking software",
   ],
   links: {

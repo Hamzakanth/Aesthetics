@@ -13,7 +13,7 @@ export const testimonials: Testimonial[] = [
   {
     id: "t2",
     quote:
-      "I had trialled two booking chatbots and neither touched my actual problem. My website was fine. My Instagram inbox, my deposits and my empty Tuesdays were not.",
+      "I had trialled two booking chatbots and neither touched my actual problem. My website was fine. My Instagram inbox, my no-shows and my empty Tuesdays were not.",
     author: "Marcus Oyelaran",
     role: "Founder",
     company: "Lumière Aesthetics",
@@ -22,7 +22,7 @@ export const testimonials: Testimonial[] = [
   {
     id: "t3",
     quote:
-      "Chasing deposits used to be the job nobody wanted. It is now a list somebody glances at with a coffee before the first client.",
+      "Chasing confirmations used to be the job nobody wanted. It is now a list somebody glances at with a coffee before the first client.",
     author: "Priya Raghunathan",
     role: "Operations Director",
     company: "The Nail Atelier",

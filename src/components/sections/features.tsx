@@ -1,13 +1,13 @@
 ﻿import Link from "next/link"
 import { ArrowRight, ShieldCheck } from "lucide-react"
 
-import { features, trustSignals } from "@/content/features"
-import { cn } from "@/lib/utils"
+import { trustSignals } from "@/content/features"
 import { Button } from "@/components/ui/button"
 import { Container } from "@/components/primitives/container"
 import { Section } from "@/components/primitives/section"
 import { SectionHeading } from "@/components/primitives/section-heading"
-import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal"
+import { Reveal } from "@/components/motion/reveal"
+import { FeatureShowcase } from "@/components/sections/feature-showcase"
 
 export function Features() {
   return (
@@ -16,69 +16,14 @@ export function Features() {
         <SectionHeading
           headingId="features-heading"
           eyebrow="What it does"
-          title="Six jobs your front desk no longer has to do"
+          title="Five jobs your front desk no longer has to do"
           description="Turn them on one at a time or all at once. Each one is measured against the work it replaced, not against a demo."
         />
 
-        {/* Six cards, one weight. Two rows of three on desktop, three of two
-            on tablet — the symmetry is the point: no job is the headline. */}
-        <RevealGroup className="mt-14 grid auto-rows-fr gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {features.map((feature) => {
-            const Icon = feature.icon
-            return (
-              <RevealItem key={feature.id} className="h-full">
-                {/* Not focusable: these cards have no action, and a tab stop
-                    that does nothing is worse than no tab stop. */}
-                <article
-                  className={cn(
-                    "group relative flex h-full flex-col gap-4 overflow-hidden rounded-xl border border-border bg-card p-6",
-                    "transition-[border-color,box-shadow,transform] duration-[--duration-base] ease-[--ease-out]",
-                    "hover:-translate-y-1 hover:border-accent/40 hover:shadow-md",
-                    "motion-reduce:hover:translate-y-0"
-                  )}
-                >
-                  {/* Accent wash that only resolves on hover/focus. */}
-                  <div
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-br from-accent-subtle to-transparent opacity-0 transition-opacity duration-[--duration-slow] group-hover:opacity-100"
-                  />
-
-                  <div className="relative flex items-center gap-3">
-                    <span
-                      className={cn(
-                        "flex size-10 items-center justify-center rounded-lg border border-border bg-background",
-                        "transition-colors duration-[--duration-base]",
-                        "group-hover:border-accent/40 group-hover:bg-accent-subtle",
-                      )}
-                    >
-                      <Icon aria-hidden className="size-[1.15rem] text-accent" />
-                    </span>
-                    <span className="font-mono text-xs tracking-[0.14em] text-muted-foreground uppercase">
-                      {feature.eyebrow}
-                    </span>
-                  </div>
-
-                  <div className="relative flex flex-col gap-2">
-                    <h3 className="text-base font-semibold">{feature.title}</h3>
-                    <p className="text-sm leading-relaxed text-muted-foreground">
-                      {feature.description}
-                    </p>
-                  </div>
-
-                  {/* One number per card. Pinned to the bottom so the chips
-                      line up across a row of uneven-length descriptions. */}
-                  <p className="relative mt-auto flex items-center gap-2 pt-2 text-sm font-medium text-accent">
-                    <span
-                      aria-hidden
-                      className="h-px w-4 bg-accent transition-[width] duration-[--duration-base] ease-[--ease-out] group-hover:w-7"
-                    />
-                    {feature.impact}
-                  </p>
-                </article>
-              </RevealItem>
-            )
-          })}
-        </RevealGroup>
+        {/* Not five static cards but one device doing all five jobs: pick a job
+            on the left and watch it play out inside the phone. The showcase
+            owns its own motion, autoplay and reduced-motion fallbacks. */}
+        <FeatureShowcase />
 
         {/* Trust strip. "Who holds my clients' data and their photos" is the
             first objection, so it sits with the capabilities rather than

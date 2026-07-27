@@ -37,7 +37,7 @@ export default function BlogPage() {
             </h1>
             <p className="text-lg leading-relaxed text-muted-foreground text-balance">
               Everything we ship, plus what we learn setting Aurelius up in real
-              studios — the diary, deposits, rebooking, and holding client data
+              studios — the diary, consultations, rebooking, and holding client data
               you would not want leaked.
             </p>
           </div>

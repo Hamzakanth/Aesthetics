@@ -5,7 +5,7 @@ export const faqs: FaqItem[] = [
     id: "chatbot",
     question: "Is this just a chatbot on my website?",
     answer:
-      "No. A website chatbot waits for someone to find it. Aurelius works the channels your clients actually use — the phone, Instagram and Facebook DMs, WhatsApp and text — and it books, moves and takes deposits inside your existing diary rather than handing over a transcript.",
+      "No. A website chatbot waits for someone to find it. Aurelius works the channels your clients actually use — the phone, Instagram and Facebook DMs, WhatsApp and text — and it books, moves and confirms appointments inside your existing diary rather than handing over a transcript.",
   },
   {
     id: "booking-system",
@@ -47,6 +47,6 @@ export const faqs: FaqItem[] = [
     id: "live",
     question: "How long until it is live?",
     answer:
-      "The front desk and diary typically go live in under a week. Deposits, courses and rebooking take two to three, because we set them against your own policies and treatment intervals before turning them on.",
+      "The front desk and diary typically go live in under a week. Consultations, courses and rebooking take two to three, because we set them against your own policies and treatment intervals before turning them on.",
   },
 ]

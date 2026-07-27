@@ -15,7 +15,7 @@ export const footerNav: NavSection[] = [
       { title: "AI front desk", href: "/#features" },
       { title: "Booking and waitlist", href: "/#features" },
       { title: "Consultations and consents", href: "/#features" },
-      { title: "Deposits and no-shows", href: "/#features" },
+      { title: "Reminders and no-shows", href: "/#features" },
       { title: "Booking-system integrations", href: "/integrations" },
     ],
   },

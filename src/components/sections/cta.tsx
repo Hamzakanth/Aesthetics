@@ -12,7 +12,13 @@ export function Cta() {
     <Section spacing="compact">
       <Container>
         <Reveal>
-          <div className="relative overflow-hidden rounded-2xl bg-ink px-8 py-16 text-center sm:px-16">
+          {/* Opted into ink rather than painted with it, so the buttons inside
+              resolve to the lit gold-on-espresso pairing instead of wearing
+              the light theme's antique gold against a near-black panel. */}
+          <div
+            data-surface="ink"
+            className="relative overflow-hidden rounded-2xl bg-ink px-8 py-16 text-center sm:px-16"
+          >
             <GradientMesh tone="ink" fade={false} rules={false} className="-z-0" />
 
             <div className="relative z-10 flex flex-col items-center">
@@ -26,7 +32,7 @@ export function Cta() {
               </p>
 
               <div className="mt-9 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-                <Button size="lg" variant="accent" className="shadow-lift" asChild>
+                <Button size="lg" asChild>
                   <Link href="/contact">
                     Book a walkthrough
                     <ArrowRight />

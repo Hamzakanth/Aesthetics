@@ -1,18 +1,17 @@
 "use client"
 
-import { useTheme } from "next-themes"
 import { Toaster as Sonner, type ToasterProps } from "sonner"
 
 /**
- * Toasts inherit the app theme and the design-system tokens rather than
- * Sonner's defaults, so a toast never looks like a different product.
+ * Toasts take the design-system tokens rather than Sonner's defaults, so a
+ * toast never looks like a different product. Pinned light: the site has one
+ * theme, and Sonner's "system" would hand a visitor on a dark OS a black
+ * toast on an ivory page.
  */
 function Toaster(props: ToasterProps) {
-  const { resolvedTheme } = useTheme()
-
   return (
     <Sonner
-      theme={(resolvedTheme as ToasterProps["theme"]) ?? "system"}
+      theme="light"
       position="bottom-right"
       offset={20}
       toastOptions={{

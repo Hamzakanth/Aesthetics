@@ -24,10 +24,17 @@ export function Metrics() {
   const shouldReduceMotion = useReducedMotion()
 
   return (
+    // The page's dark beat. The proof band is the one section that is pure
+    // evidence rather than persuasion, so it gets its own room: espresso,
+    // full-bleed, framed by ivory on both sides. `data-surface="ink"`
+    // re-resolves every token beneath it — cards, hairlines, muted copy, the
+    // chart series and the gold — so nothing inside this subtree had to be
+    // told it is on a dark ground.
     <Section
       id="metrics"
+      data-surface="ink"
       aria-labelledby="metrics-heading"
-      className="border-y border-border bg-muted/30"
+      className="border-y border-border bg-background text-foreground"
     >
       <Container>
         <SectionHeading

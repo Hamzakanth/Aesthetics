@@ -21,7 +21,10 @@ function TooltipContent({
         data-slot="tooltip-content"
         sideOffset={sideOffset}
         className={cn(
-          "z-50 w-fit rounded-md bg-primary px-2.5 py-1.5 text-xs text-primary-foreground shadow-md",
+          // Ink, not primary. A tooltip is a label, not an action — painting
+          // it in the action colour would spend the one colour that is
+          // supposed to mean "click this".
+          "z-50 w-fit rounded-md bg-ink px-2.5 py-1.5 text-xs text-ink-foreground shadow-md",
           "data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-95",
           "data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
           className
@@ -29,7 +32,7 @@ function TooltipContent({
         {...props}
       >
         {children}
-        <TooltipPrimitive.Arrow className="fill-primary" width={10} height={5} />
+        <TooltipPrimitive.Arrow className="fill-ink" width={10} height={5} />
       </TooltipPrimitive.Content>
     </TooltipPrimitive.Portal>
   )

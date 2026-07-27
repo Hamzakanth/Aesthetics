@@ -34,7 +34,7 @@ export const pricingTiers: PricingTier[] = [
     annualPrice: 359,
     features: [
       "Everything in Studio",
-      "Deposits, card-on-file and late-cancellation policy",
+      "Confirmations and late-cancellation policy",
       "Courses, memberships and retail follow-up",
       "Patch-test and aftercare automation",
       "Multi-location routing",
@@ -136,10 +136,6 @@ export const pricingComparison: PricingComparisonGroup[] = [
       {
         label: "Consultation forms and consents",
         values: { studio: true, group: true, brand: true },
-      },
-      {
-        label: "Deposits and card-on-file",
-        values: { studio: false, group: true, brand: true },
       },
       {
         label: "Late-cancellation policy enforcement",

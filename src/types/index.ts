@@ -24,6 +24,41 @@ export interface Feature {
 }
 
 /**
+ * A single line inside the interactive phone screen that demonstrates a
+ * feature. One small vocabulary of line kinds covers every feature, so the
+ * screen reads as one app doing six jobs rather than six unrelated mockups:
+ *  - `in`     incoming client message (with an optional channel/name label)
+ *  - `out`    Aurelius's reply
+ *  - `typing` the three-dot "…is typing" bubble
+ *  - `status` a result row (booked, held, filed) with an icon and tone
+ *  - `chip`   a small centered pill (a card number, a product, a count)
+ *  - `stars`  a review-request rating row
+ */
+export type ScreenLineKind = "in" | "out" | "typing" | "status" | "chip" | "stars"
+
+export type ScreenLineTone = "done" | "accent" | "pending"
+
+export interface ScreenLine {
+  kind: ScreenLineKind
+  text?: string
+  /** Sender label above an incoming bubble, e.g. "@ellierose". */
+  via?: string
+  /** Colour treatment for a `status` row. */
+  tone?: ScreenLineTone
+  /** Leading glyph for a `status` row. */
+  icon?: LucideIcon
+  /** Number of filled stars for a `stars` row. */
+  count?: number
+}
+
+export interface FeatureScreen {
+  /** Title shown in the phone's app bar, e.g. "Instagram · Direct". */
+  app: string
+  appIcon: LucideIcon
+  lines: ScreenLine[]
+}
+
+/**
  * Row states in the mock product panel. `on`/`off` render as a switch, the
  * rest as a status glyph — one indicator vocabulary across all three steps.
  */

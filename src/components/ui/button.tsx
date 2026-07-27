@@ -8,9 +8,11 @@ const buttonVariants = cva(
   cn(
     "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-lg font-medium",
     "cursor-pointer select-none outline-none",
-    "transition-[color,background-color,border-color,box-shadow,transform] duration-[--duration-fast] ease-[--ease-out]",
-    // Tactile press. Scale only — never animate width/height.
-    "active:scale-[0.97] motion-reduce:active:scale-100",
+    "transition-[color,background-color,background-image,border-color,box-shadow,transform] duration-[--duration-fast] ease-[--ease-out]",
+    // Tactile press. Transform only — never animate width/height. The matching
+    // hover *rise* lives on the raised variants, since a flat control that
+    // lifts is a control that was lying about being flat.
+    "active:scale-[0.98] motion-reduce:active:scale-100",
     "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
     "disabled:pointer-events-none disabled:opacity-50",
     "[&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
@@ -18,18 +20,23 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        // Blue-tinted lift rather than a grey drop shadow — the filled button
-        // should look like it is emitting the brand colour, not sitting on dirt.
+        // The one primary action colour, painted as a raised object. See
+        // `btn-raised` in globals.css for what the three cues are doing.
         default:
-          "bg-primary text-primary-foreground shadow-lift hover:bg-primary/90",
+          "btn-raised bg-primary text-primary-foreground hover:-translate-y-px active:translate-y-0",
+        // Kept as an alias of the filled button so older call sites that ask
+        // for "accent" still get THE action colour rather than a second one.
         accent:
-          "bg-accent text-accent-foreground shadow-lift hover:bg-accent/90",
+          "btn-raised bg-primary text-primary-foreground hover:-translate-y-px active:translate-y-0",
+        // The considered second choice, not a disabled-looking one: a real
+        // card edge, its own small lift, and a sand border that warms to the
+        // primary on hover so the pair reads as one family.
         outline:
-          "border border-border bg-card text-foreground shadow-xs hover:bg-muted",
+          "border border-input bg-card text-foreground shadow-sm hover:-translate-y-px hover:border-primary/45 hover:bg-secondary hover:shadow-md active:translate-y-0",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "text-foreground hover:bg-muted",
-        link: "text-foreground underline-offset-4 hover:underline active:scale-100",
+          "border border-border bg-secondary text-secondary-foreground shadow-xs hover:-translate-y-px hover:bg-muted hover:shadow-sm active:translate-y-0",
+        ghost: "text-foreground hover:bg-secondary",
+        link: "text-accent underline-offset-4 hover:underline active:scale-100",
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
       },

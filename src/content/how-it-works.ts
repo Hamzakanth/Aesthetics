@@ -102,8 +102,8 @@ export const howItWorks: HowItWorksStep[] = [
           state: "on",
         },
         {
-          title: "Deposits",
-          detail: "Card at booking, policy applied on lates",
+          title: "Reminders",
+          detail: "Confirmations sent, policy applied on lates",
           meta: "≥ 88%",
           state: "on",
         },
@@ -144,7 +144,7 @@ export const howItWorks: HowItWorksStep[] = [
         },
         {
           title: "Refilled · 2:15pm cancellation",
-          detail: "Waitlist worked · confirmed in 4 min · deposit taken",
+          detail: "Waitlist worked · confirmed in 4 min · reminder set",
           meta: "Diary",
           state: "done",
         },

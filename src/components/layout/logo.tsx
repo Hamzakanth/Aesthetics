@@ -26,13 +26,18 @@ function Logo({
   /** `inverted` knocks the lockup out to ivory for use on a brand or ink surface. */
   tone?: "brand" | "inverted"
 }) {
+  // Ivory is pinned to the primitive, not to `--primary-foreground`. The two
+  // agree in the light theme, but on dark `--primary-foreground` flips to near
+  // black to sit on the gold button — which would put a black lockup on the
+  // espresso surfaces this tone exists for. An inverted mark is inverted
+  // against the *surface*, and these surfaces are dark in both themes.
   return (
     <Link
       href={href}
       aria-label={`${siteConfig.name} — home`}
       className={cn(
         "group flex shrink-0 items-center gap-2.5 rounded-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
-        tone === "inverted" ? "text-primary-foreground" : "text-foreground",
+        tone === "inverted" ? "text-[var(--stone-50)]" : "text-foreground",
         className
       )}
       {...props}

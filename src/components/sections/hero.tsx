@@ -46,7 +46,7 @@ export function Hero() {
             <RevealItem>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground text-balance">
                 Aurelius runs your front of house. It answers the calls and the
-                DMs, fills cancelled slots, takes the deposit and brings clients
+                DMs, fills cancelled slots, confirms visits and brings clients
                 back &mdash; so your team can look after the room instead of the
                 phone.
               </p>

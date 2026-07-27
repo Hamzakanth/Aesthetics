@@ -45,10 +45,10 @@ export const blogPosts: BlogPost[] = [
     featured: true,
   },
   {
-    slug: "release-2-7-deposits-and-policies",
-    title: "Aurelius 2.7 — deposits, card-on-file and policy rules",
+    slug: "release-2-7-reminders-and-policies",
+    title: "Aurelius 2.7 — reminders, confirmations and policy rules",
     excerpt:
-      "Deposits now follow your own cancellation policy, refunds draft themselves from the booking, and the awkward late-cancellation message is written for you.",
+      "Reminders now follow your own cancellation policy, confirmations chase themselves, and the awkward late-cancellation message is written for you.",
     category: "Product update",
     date: "2026-06-18",
     readingMinutes: 6,
@@ -90,7 +90,7 @@ export const blogPosts: BlogPost[] = [
     slug: "no-show-rate-nineteen-to-eleven",
     title: "How one clinic took its no-show rate from 19% to 11%",
     excerpt:
-      "No new staff, no price change, no shouting about deposits. Just follow-up that happens on the days everyone is too busy to send it.",
+      "No new staff, no price change, no shouting about policies. Just follow-up that happens on the days everyone is too busy to send it.",
     category: "Case study",
     date: "2026-06-11",
     readingMinutes: 6,

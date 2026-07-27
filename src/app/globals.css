@@ -1,7 +1,12 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+/* The site has one theme: light. There is no toggle and no `.dark` class —
+   the only dark thing on the site is a surface that opts in with
+   `data-surface="ink"`, so `dark:` utilities are scoped to those subtrees.
+   That keeps every shadcn component that ships a `dark:` rule working inside
+   an ink panel without a theme switcher existing at all. */
+@custom-variant dark (&:is([data-surface="ink"] *));
 
 /* ==========================================================================
    AURELIUS DESIGN TOKENS
@@ -35,7 +40,8 @@
   --gold-400: #d9be87;
   --gold-500: #c9a96a; /* Gold Accent */
   --gold-600: #a9853f;
-  --gold-700: #8a6a2f;
+  --gold-700: #8a6a2f; /* Antique Gold — THE primary action colour */
+  --gold-800: #765a28;
   --gold-900: #4a3818;
 
   /* --- Layer 2: semantic (light) --------------------------------------- */
@@ -49,11 +55,17 @@
   --popover: var(--stone-0);
   --popover-foreground: var(--stone-900);
 
-  /* Primary is charcoal, not gold. The Chanel move: the filled button is
-     near-black and the gold stays scarce — a page of gold buttons reads
-     costume, not couture. Gold carries emphasis, charcoal carries action. */
-  --primary: var(--stone-900);
-  --primary-foreground: var(--stone-50);
+  /* THE primary colour. Antique gold — the brand's one colour, taken down
+     until it clears 5:1 under white so it can carry text, not just decoration.
+     Every filled action on the site is this; charcoal steps back to ink
+     surfaces and body copy. One colour means an owner scanning the page can
+     find the next action without reading a word.
+     `--primary-raised` is the same colour a shade deeper: filled controls are
+     painted as a top-lit gradient between the two, which is what makes them
+     read as raised objects rather than as coloured rectangles. */
+  --primary: var(--gold-700);
+  --primary-raised: var(--gold-800);
+  --primary-foreground: #ffffff;
 
   --secondary: var(--stone-100);
   --secondary-foreground: var(--stone-900);
@@ -114,9 +126,11 @@
   --shadow-sm: 0 1px 3px 0 rgb(42 36 31 / 0.06), 0 1px 2px -1px rgb(42 36 31 / 0.04);
   --shadow-md: 0 4px 14px -2px rgb(42 36 31 / 0.09), 0 2px 6px -2px rgb(42 36 31 / 0.05);
   --shadow-lg: 0 16px 40px -10px rgb(42 36 31 / 0.14), 0 4px 12px -4px rgb(42 36 31 / 0.06);
-  /* Lift under filled buttons — warm and soft, so the control looks like it
-     is resting on the page rather than cut out of it. */
-  --shadow-lift: 0 8px 28px -8px rgb(42 36 31 / 0.28);
+  /* Lift under filled buttons. Tinted with the primary itself rather than
+     with grey, so the control looks like it is emitting its own colour onto
+     the page instead of sitting on a smudge. */
+  --shadow-lift: 0 8px 22px -8px rgb(138 106 47 / 0.45);
+  --shadow-lift-hover: 0 12px 28px -8px rgb(138 106 47 / 0.55);
 
   /* Gradient-mesh blob fills. Tokenised so the field is theme-aware and can
      be retuned in one place instead of across three blurred divs. */
@@ -132,9 +146,17 @@
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-.dark {
-  /* Dark is espresso, not black — the same warmth as the light theme with
-     the lights off. A neutral black under a gold accent goes green. */
+/* The site's only dark surface. `[data-surface="ink"]` opts a subtree into
+   espresso — the auth stage, the outcomes band, the closing CTA panel — and
+   every semantic token inside it re-resolves: cards go espresso, the filled
+   button becomes gold on dark, hairlines and muted copy follow. Nothing inside
+   an ink subtree has to know it is dark.
+   This is deliberately NOT a theme. There is no toggle, no system preference
+   and no `.dark` class; a section is dark because the composition wanted a
+   dark beat there, and it stays dark for everyone. */
+[data-surface="ink"] {
+  /* Espresso, not black — the same warmth as the page ground with the lights
+     off. A neutral black under a gold accent goes green. */
   --background: #14110e;
   --foreground: #f5f0ea;
 
@@ -143,9 +165,10 @@
   --popover: #221d18;
   --popover-foreground: #f5f0ea;
 
-  /* Charcoal is invisible on an espresso ground, so on dark the filled
-     button becomes the gold and takes dark type. */
+  /* Antique gold disappears into espresso, so on ink the filled button opens
+     up to the bright gold and takes dark type — same colour, lit differently. */
   --primary: var(--gold-400);
+  --primary-raised: var(--gold-500);
   --primary-foreground: #1a150f;
 
   --secondary: #292219;
@@ -185,7 +208,8 @@
   --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4);
   --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.5);
   --shadow-lg: 0 12px 32px -8px rgb(0 0 0 / 0.6);
-  --shadow-lift: 0 8px 28px -8px rgb(201 169 106 / 0.3);
+  --shadow-lift: 0 8px 22px -8px rgb(201 169 106 / 0.32);
+  --shadow-lift-hover: 0 12px 30px -8px rgb(201 169 106 / 0.42);
 
   --mesh-a: color-mix(in oklab, var(--gold-600) 30%, transparent);
   --mesh-b: color-mix(in oklab, var(--stone-700) 42%, transparent);
@@ -206,6 +230,7 @@
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
+  --color-primary-raised: var(--primary-raised);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -252,6 +277,7 @@
   --shadow-md: var(--shadow-md);
   --shadow-lg: var(--shadow-lg);
   --shadow-lift: var(--shadow-lift);
+  --shadow-lift-hover: var(--shadow-lift-hover);
 
   --ease-out-expo: var(--ease-out);
 
@@ -443,6 +469,58 @@
   }
 }
 
+/* --------------------------------------------------------------------------
+   Auth stage — real 3D
+   The sign-in screen is the one surface in the product that is allowed to be
+   a *scene*: a lit stage with objects standing in it at different depths.
+   Everything below animates `transform` or `opacity` only, so the whole stage
+   composites off the main thread, and every piece is switched off wholesale by
+   the global reduced-motion rule.
+   -------------------------------------------------------------------------- */
+
+/* Armillary rings. One keyframe, three rings: each carries its own resting
+   tilt in `--orbit-tilt` / `--orbit-pitch` and spins about its own Y axis, so
+   the set reads as a sphere of hoops rather than three concentric circles.
+   The rotateY is what makes a flat ring collapse to a line and open out
+   again — the whole 3D read comes from that one term. */
+@keyframes orbit {
+  from {
+    transform: rotateZ(var(--orbit-tilt, 0deg)) rotateX(var(--orbit-pitch, 0deg))
+      rotateY(0deg);
+  }
+  to {
+    transform: rotateZ(var(--orbit-tilt, 0deg)) rotateX(var(--orbit-pitch, 0deg))
+      rotateY(360deg);
+  }
+}
+
+/* Specular bar crossing a filled control. Travels in the first 18% and waits
+   out the rest — a continuous sweep reads as a loading bar, a rare one reads
+   as light moving across a physical surface. */
+@keyframes sheen-x {
+  0% {
+    transform: translateX(-140%) skewX(-18deg);
+  }
+  18%,
+  100% {
+    transform: translateX(320%) skewX(-18deg);
+  }
+}
+
+/* Dust in the light. Amplitude stays under 16px: past that it stops being
+   depth and starts being confetti. */
+@keyframes mote {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translate3d(0, -14px, 0);
+    opacity: 0.85;
+  }
+}
+
 /* ==========================================================================
    BASE
    ========================================================================== */
@@ -538,6 +616,45 @@
 /* Frosted panel. Real glass has three parts: blur, a translucent fill, and a
    bright top edge where light catches. Skipping the edge is what makes most
    glassmorphism look flat. */
+/* Filled controls, painted as objects rather than as coloured rectangles.
+   Three cues do the work, and all three are how a real raised surface behaves
+   under the page's fixed top-left light:
+     · a top-lit gradient down the face, so the button has a lit edge and a
+       shaded foot instead of one flat fill;
+     · a hairline of the light along the top edge and a shade along the bottom,
+       which is what gives it a thickness;
+     · a lift shadow tinted with the button's own colour.
+   On press the gradient flips to an inner shadow and the lift collapses — the
+   control goes *into* the page, which is the whole reason a user believes it
+   was a button before they clicked it. */
+@utility btn-raised {
+  background-image: linear-gradient(
+    180deg,
+    var(--primary) 0%,
+    var(--primary-raised) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.22),
+    inset 0 -1px 0 0 rgb(0 0 0 / 0.14),
+    var(--shadow-lift);
+
+  &:hover {
+    box-shadow:
+      inset 0 1px 0 0 rgb(255 255 255 / 0.28),
+      inset 0 -1px 0 0 rgb(0 0 0 / 0.14),
+      var(--shadow-lift-hover);
+  }
+
+  &:active {
+    background-image: linear-gradient(
+      180deg,
+      var(--primary-raised) 0%,
+      var(--primary-raised) 100%
+    );
+    box-shadow: inset 0 2px 5px 0 rgb(0 0 0 / 0.22);
+  }
+}
+
 @utility glass {
   background: color-mix(in oklab, var(--card) 62%, transparent);
   backdrop-filter: blur(20px) saturate(180%);
@@ -618,6 +735,51 @@
     #000 88%,
     transparent 100%
   );
+}
+
+/* Border-only gradient. Paints the caller's `background` into a 1px ring by
+   punching the content box back out of it, so a moving light can travel the
+   edge of a card without a second, offset copy of the card behind it.
+   The edge is where a lit object reads as three-dimensional — a highlight in
+   the middle of a face is just a gradient. */
+@utility rim-light {
+  padding: 1px;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+/* The auth stage is espresso in BOTH themes, so any semantic colour painted
+   directly onto it wants its dark-theme value whichever theme is active — the
+   light-theme sage is a mid-green and goes muddy on near-black.
+   Applied to the individual elements that need it rather than to the stage
+   root, so it can never reach the sign-in card, which *is* themed and would be
+   handed a light-on-dark green for a white surface. */
+@utility on-stage {
+  --success: #8fb890;
+  --warning: #e0a75a;
+}
+
+/* Frosted pane for the auth stage. Distinct from `glass`, which is themed:
+   the stage is espresso in BOTH themes, so its panes are always knocked out
+   of white and never follow `--card`. */
+@utility glass-dark {
+  background: linear-gradient(
+    160deg,
+    rgb(255 255 255 / 0.09) 0%,
+    rgb(255 255 255 / 0.04) 100%
+  );
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  border: 1px solid rgb(255 255 255 / 0.1);
+  box-shadow:
+    0 24px 60px -20px rgb(0 0 0 / 0.65),
+    inset 0 1px 0 0 rgb(255 255 255 / 0.14);
 }
 
 /* ==========================================================================

@@ -5,10 +5,13 @@ import Link from "next/link"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
+  ArrowRight,
   Eye,
   EyeOff,
   KeyRound,
   Loader2,
+  Lock,
+  Mail,
   ShieldAlert,
   TriangleAlert,
 } from "lucide-react"
@@ -52,6 +55,35 @@ function MicrosoftMark() {
       <path fill="#00A4EF" d="M1 13h10v10H1z" />
       <path fill="#FFB900" d="M13 13h10v10H13z" />
     </svg>
+  )
+}
+
+/**
+ * Federated buttons lift on hover rather than just changing fill. The card
+ * they sit on is a physical object in this composition, so its controls have
+ * to behave like they are attached to it — a flat colour swap on a lit surface
+ * is the one place the illusion would break.
+ */
+const LIFT =
+  "hover:-translate-y-px hover:shadow-md active:translate-y-0 motion-reduce:hover:translate-y-0"
+
+/**
+ * The focus treatment is a gold hairline that draws itself along the bottom of
+ * the field, plus the icon warming to the accent. It reads as the field being
+ * *selected* rather than outlined, and it survives the tilt — a ring drawn on
+ * a turning surface turns with it and stays legible, where a glow would smear.
+ */
+function FieldUnderline() {
+  return (
+    <span
+      aria-hidden
+      className={cn(
+        "pointer-events-none absolute inset-x-3 bottom-0 h-px origin-center scale-x-0",
+        "bg-gradient-to-r from-transparent via-accent to-transparent",
+        "transition-transform duration-[--duration-base] ease-[--ease-out]",
+        "group-focus-within:scale-x-100"
+      )}
+    />
   )
 }
 
@@ -114,7 +146,7 @@ export function LoginForm() {
           variant="outline"
           size="lg"
           type="button"
-          className="flex-1 bg-secondary/50 font-medium"
+          className={cn("flex-1 bg-secondary/40 font-medium", LIFT)}
         >
           <GoogleMark />
           Sign in with Google
@@ -125,6 +157,7 @@ export function LoginForm() {
           size="icon"
           type="button"
           aria-label="Sign in with Microsoft"
+          className={cn("size-12 bg-secondary/40", LIFT)}
         >
           <MicrosoftMark />
         </Button>
@@ -134,6 +167,7 @@ export function LoginForm() {
           size="icon"
           type="button"
           aria-label="Sign in with SAML single sign-on"
+          className={cn("size-12 bg-secondary/40", LIFT)}
           asChild
         >
           <Link href="/login/sso">
@@ -143,11 +177,11 @@ export function LoginForm() {
       </div>
 
       <div className="flex items-center gap-4">
-        <span className="h-px flex-1 bg-border" />
+        <span className="h-px flex-1 bg-gradient-to-r from-transparent to-border" />
         <span className="font-mono text-[0.6875rem] tracking-[0.14em] text-muted-foreground uppercase">
           or
         </span>
-        <span className="h-px flex-1 bg-border" />
+        <span className="h-px flex-1 bg-gradient-to-l from-transparent to-border" />
       </div>
 
       <form
@@ -166,17 +200,27 @@ export function LoginForm() {
         ) : null}
 
         <div className="flex flex-col gap-2">
-          <Label htmlFor="email">Enter your work email</Label>
-          <Input
-            id="email"
-            type="email"
-            autoComplete="username"
-            autoFocus
-            placeholder="dana@maisonskin.com"
-            aria-invalid={!!errors.email}
-            aria-describedby={errors.email ? "email-error" : undefined}
-            {...register("email")}
-          />
+          <Label htmlFor="email">Work email</Label>
+
+          <div className="group relative">
+            <Mail
+              aria-hidden
+              className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground transition-colors duration-[--duration-fast] group-focus-within:text-accent"
+            />
+            <Input
+              id="email"
+              type="email"
+              autoComplete="username"
+              autoFocus
+              placeholder="dana@maisonskin.com"
+              className="h-12 bg-secondary/30 pl-10"
+              aria-invalid={!!errors.email}
+              aria-describedby={errors.email ? "email-error" : undefined}
+              {...register("email")}
+            />
+            <FieldUnderline />
+          </div>
+
           {errors.email ? (
             <p id="email-error" role="alert" className="text-sm text-destructive">
               {errors.email.message}
@@ -185,15 +229,30 @@ export function LoginForm() {
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label htmlFor="password">Enter your password</Label>
+          {/* Recovery sits on the label row rather than under the field. It
+              belongs to the password, and pairing them there buys back a whole
+              line on a card that must not scroll. */}
+          <div className="flex items-baseline justify-between gap-4">
+            <Label htmlFor="password">Password</Label>
+            <Link
+              href="/forgot-password"
+              className="rounded-sm text-xs font-medium text-accent underline-offset-4 transition-colors duration-[--duration-fast] hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            >
+              Forgot password
+            </Link>
+          </div>
 
-          <div className="relative">
+          <div className="group relative">
+            <Lock
+              aria-hidden
+              className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground transition-colors duration-[--duration-fast] group-focus-within:text-accent"
+            />
             <Input
               id="password"
               type={showPassword ? "text" : "password"}
               autoComplete="current-password"
               placeholder="••••••••••••"
-              className="pr-11"
+              className="h-12 bg-secondary/30 pr-12 pl-10"
               aria-invalid={!!errors.password}
               aria-describedby={cn(
                 errors.password && "password-error",
@@ -210,7 +269,7 @@ export function LoginForm() {
               onClick={() => setShowPassword((v) => !v)}
               aria-pressed={showPassword}
               aria-label={showPassword ? "Hide password" : "Show password"}
-              className="absolute inset-y-0 right-0 flex w-11 items-center justify-center rounded-r-lg text-muted-foreground transition-colors duration-[--duration-fast] hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+              className="absolute inset-y-0 right-0 flex w-12 items-center justify-center rounded-r-lg text-muted-foreground transition-colors duration-[--duration-fast] hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
             >
               {showPassword ? (
                 <EyeOff aria-hidden className="size-4" />
@@ -218,6 +277,7 @@ export function LoginForm() {
                 <Eye aria-hidden className="size-4" />
               )}
             </button>
+            <FieldUnderline />
           </div>
 
           {errors.password ? (
@@ -235,31 +295,20 @@ export function LoginForm() {
           ) : null}
         </div>
 
-        {/* Remember and recovery share a row. On a card that must not scroll,
-            every line has to earn its height. */}
         <div className="flex flex-col gap-2">
-          <div className="flex items-center justify-between gap-4">
-            <label
-              htmlFor="remember"
-              className="flex cursor-pointer items-center gap-2.5 text-sm text-muted-foreground select-none"
-            >
-              <input
-                id="remember"
-                type="checkbox"
-                aria-describedby={remember ? "remember-hint" : undefined}
-                className="size-4 rounded-sm border-input accent-[var(--accent)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-                {...register("remember")}
-              />
-              Keep me signed in
-            </label>
-
-            <Link
-              href="/forgot-password"
-              className="rounded-sm text-sm font-medium text-accent underline-offset-4 transition-colors duration-[--duration-fast] hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-            >
-              Forgot password
-            </Link>
-          </div>
+          <label
+            htmlFor="remember"
+            className="flex w-fit cursor-pointer items-center gap-2.5 text-sm text-muted-foreground transition-colors duration-[--duration-fast] select-none hover:text-foreground"
+          >
+            <input
+              id="remember"
+              type="checkbox"
+              aria-describedby={remember ? "remember-hint" : undefined}
+              className="size-4 rounded-sm border-input accent-[var(--accent)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+              {...register("remember")}
+            />
+            Keep me signed in
+          </label>
 
           {/* Warn at the moment of the choice, not in a policy document. */}
           {remember ? (
@@ -274,15 +323,39 @@ export function LoginForm() {
           ) : null}
         </div>
 
-        <Button type="submit" size="lg" disabled={isPending} className="w-full">
-          {isPending ? (
-            <>
-              <Loader2 aria-hidden className="animate-spin" />
-              Signing in
-            </>
-          ) : (
-            "Sign in"
-          )}
+        <Button
+          type="submit"
+          size="lg"
+          disabled={isPending}
+          className="group relative w-full overflow-hidden"
+        >
+          {/* Specular bar crossing the face of the control, once every seven
+              seconds. It is the only thing on the card that moves on its own,
+              which is precisely why it is on the one control that matters —
+              and why it stops the moment the button is doing real work. */}
+          {!isPending ? (
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-y-0 left-0 w-1/4 animate-[sheen-x_7s_var(--ease-in-out)_infinite] bg-gradient-to-r from-transparent via-white/25 to-transparent motion-reduce:hidden"
+            />
+          ) : null}
+
+          <span className="relative z-10 inline-flex items-center gap-2">
+            {isPending ? (
+              <>
+                <Loader2 aria-hidden className="animate-spin" />
+                Signing in
+              </>
+            ) : (
+              <>
+                Sign in
+                <ArrowRight
+                  aria-hidden
+                  className="transition-transform duration-[--duration-base] ease-[--ease-out] group-hover:translate-x-0.5 motion-reduce:group-hover:translate-x-0"
+                />
+              </>
+            )}
+          </span>
         </Button>
       </form>
     </div>

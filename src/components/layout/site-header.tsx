@@ -8,7 +8,6 @@ import { useScrollThreshold } from "@/hooks/use-scroll-threshold"
 import { Button } from "@/components/ui/button"
 import { Logo } from "@/components/layout/logo"
 import { MobileNav } from "@/components/layout/mobile-nav"
-import { ThemeToggle } from "@/components/layout/theme-toggle"
 
 export function SiteHeader() {
   const scrolled = useScrollThreshold(8)
@@ -43,7 +42,6 @@ export function SiteHeader() {
         </nav>
 
         <div className="ml-auto flex items-center gap-1.5">
-          <ThemeToggle />
           <Button variant="ghost" size="sm" className="hidden lg:inline-flex" asChild>
             <Link href="/login">Sign in</Link>
           </Button>

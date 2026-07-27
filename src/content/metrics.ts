@@ -13,7 +13,7 @@ export const metrics: Metric[] = [
     value: 41,
     suffix: "%",
     label: "Fewer no-shows",
-    description: "Median drop once deposits and reminders run themselves.",
+    description: "Median drop once confirmations and reminders run themselves.",
   },
   {
     id: "recovered",
@@ -22,7 +22,7 @@ export const metrics: Metric[] = [
     decimals: 1,
     suffix: "k",
     label: "Recovered per location",
-    description: "Monthly, from filled gaps, deposits taken and rebooking.",
+    description: "Monthly, from filled gaps, follow-up and rebooking.",
   },
   {
     id: "hours",
