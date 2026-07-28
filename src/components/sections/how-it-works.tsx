@@ -88,7 +88,7 @@ export function HowItWorks() {
             <ProductFrame panel={activeStep.panel} />
           </div>
 
-          <ol ref={railRef} onKeyDown={onKeyDown} className="lg:order-1">
+          <ol ref={railRef} onKeyDown={onKeyDown} className="relative lg:order-1">
             {howItWorks.map((item, i) => (
               <Step
                 key={item.id}

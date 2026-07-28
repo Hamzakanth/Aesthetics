@@ -44,7 +44,7 @@ export function Cta() {
                   className="text-ink-foreground hover:bg-ink-foreground/10"
                   asChild
                 >
-                  <Link href="/#pricing">See pricing</Link>
+                  <Link href="/pricing">See pricing</Link>
                 </Button>
               </div>
             </div>

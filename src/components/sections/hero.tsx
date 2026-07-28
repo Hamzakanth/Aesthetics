@@ -60,7 +60,7 @@ export function Hero() {
                 </Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <Link href="/#how-it-works">See how it works</Link>
+                <Link href="/how-it-works">See how it works</Link>
               </Button>
             </RevealItem>
 

@@ -59,6 +59,11 @@ export default function RootLayout({
       lang="en"
       style={{ colorScheme: "light" }}
       className={cn(inter.variable, cormorant.variable)}
+      // Browser extensions stamp attributes onto <html> before React hydrates
+      // (e.g. `data-vp-extension`), which React reports as a mismatch. Nothing
+      // we render here is client-variable, so suppressing is safe and only
+      // affects attributes on this element, not its subtree.
+      suppressHydrationWarning
     >
       <body className="min-h-dvh antialiased">
         <TooltipProvider delayDuration={200}>
