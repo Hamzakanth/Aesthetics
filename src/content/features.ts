@@ -128,11 +128,3 @@ export const featureScreens: Record<string, FeatureScreen> = {
     ],
   },
 }
-
-/** Compact trust strip under the features heading. Four signals, no prose. */
-export const trustSignals = [
-  { label: "GDPR compliant", detail: "Client data stays your data" },
-  { label: "PCI DSS payments", detail: "Secure by design" },
-  { label: "Your clients never train models", detail: "Per-studio encryption keys" },
-  { label: "Works with your diary", detail: "20+ booking systems" },
-] as const

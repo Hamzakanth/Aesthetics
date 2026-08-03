@@ -80,109 +80,14 @@ export function Testimonials() {
     emblaApi?.plugins().autoScroll?.stop()
   }, [emblaApi])
 
-  // --- Scrollbar -------------------------------------------------------
-  // Position of the thumb, 0–1. Read off Embla rather than kept in step with
-  // it, so the bar is a readout of the real track position at every frame of
-  // the drift — not a second source of truth that can drift out of sync.
-  const [progress, setProgress] = React.useState(0)
-  const railRef = React.useRef<HTMLDivElement>(null)
-
-  React.useEffect(() => {
-    if (!emblaApi) return
-
-    const sync = () => {
-      // Looping keeps the raw progress just outside 0–1 at the seam; the
-      // modulo turns the wrap into a clean restart instead of a flick past
-      // the end of the rail.
-      const raw = emblaApi.scrollProgress()
-      setProgress(((raw % 1) + 1) % 1)
-    }
-
-    sync()
-    emblaApi.on("scroll", sync).on("reInit", sync)
-    return () => {
-      emblaApi.off("scroll", sync).off("reInit", sync)
-    }
-  }, [emblaApi])
-
-  // The rail is an absolute control: where you press is where the track goes,
-  // and dragging scrubs it continuously. Pointer capture means the drag keeps
-  // tracking after the cursor leaves the rail, which is what every native
-  // scrollbar does and what its absence makes feel cheap.
-  const scrubTo = React.useCallback(
-    (clientX: number) => {
-      const rail = railRef.current
-      if (!rail || !emblaApi) return
-      const { left, width } = rail.getBoundingClientRect()
-      if (width === 0) return
-      const ratio = Math.min(Math.max((clientX - left) / width, 0), 1)
-      emblaApi.scrollTo(
-        Math.round(ratio * (emblaApi.scrollSnapList().length - 1))
-      )
-    },
-    [emblaApi]
-  )
-
-  const [scrubbing, setScrubbing] = React.useState(false)
-
-  const onRailDown = React.useCallback(
-    (event: React.PointerEvent<HTMLDivElement>) => {
-      event.currentTarget.setPointerCapture(event.pointerId)
-      setScrubbing(true)
-      halt()
-      scrubTo(event.clientX)
-    },
-    [halt, scrubTo]
-  )
-
-  const onRailMove = React.useCallback(
-    (event: React.PointerEvent<HTMLDivElement>) => {
-      if (!scrubbing) return
-      scrubTo(event.clientX)
-    },
-    [scrubbing, scrubTo]
-  )
-
-  const onRailUp = React.useCallback(
-    (event: React.PointerEvent<HTMLDivElement>) => {
-      if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-        event.currentTarget.releasePointerCapture(event.pointerId)
-      }
-      setScrubbing(false)
-      resume()
-    },
-    [resume]
-  )
-
-  // Arrow keys on the rail, because a drag handle that only answers to a mouse
-  // is not a control — it is a decoration that happens to work.
-  const onRailKeyDown = React.useCallback(
-    (event: React.KeyboardEvent<HTMLDivElement>) => {
-      if (event.key === "ArrowLeft") {
-        event.preventDefault()
-        emblaApi?.scrollPrev()
-      } else if (event.key === "ArrowRight") {
-        event.preventDefault()
-        emblaApi?.scrollNext()
-      }
-    },
-    [emblaApi]
-  )
-
-  // How much of the set is on screen — the thumb is that fraction of the rail,
-  // so its size says how much there is to read, exactly like a real scrollbar.
-  // Floored, because a thumb thinner than about an eighth of the rail is
-  // hard to grab and stops reading as a handle at all.
-  const thumbFraction = Math.max(1 / LOOPED.length, 0.12)
-  const thumbWidth = `${(thumbFraction * 100).toFixed(2)}%`
-
   return (
     <Section id="testimonials" aria-labelledby="testimonials-heading">
       <Container>
-        {/* No pause button and no arrows: hovering the track is the pause —
-            which is what people reach for and what WCAG 2.2.2 asks for — and
-            the rail below is the manual control. A pair of step buttons next
-            to a continuously drifting band never matched what it does. */}
+        {/* No visible controls at all: hovering or touching the track is the
+            pause — which is what people reach for and what WCAG 2.2.2 asks
+            for — and dragging it is the manual scrub. Step buttons and a
+            scroll rail both read as chrome under a band that is already
+            self-evidently draggable. */}
         <SectionHeading
           headingId="testimonials-heading"
           eyebrow="Studios"
@@ -310,65 +215,6 @@ export function Testimonials() {
           </div>
         </div>
 
-        {/* --- Scroll rail --------------------------------------------- */}
-        {/* Sits outside the masked track so it is never faded at the edges,
-            and narrow enough that it reads as an instrument under the band
-            rather than a second element competing with it. */}
-        <div className="mt-8 flex justify-center">
-          <div
-            ref={railRef}
-            role="slider"
-            tabIndex={0}
-            aria-label="Scroll testimonials"
-            aria-valuemin={0}
-            aria-valuemax={100}
-            aria-valuenow={Math.round(progress * 100)}
-            aria-valuetext={`${Math.round(progress * 100)}% through the testimonials`}
-            onPointerDown={onRailDown}
-            onPointerMove={onRailMove}
-            onPointerUp={onRailUp}
-            onPointerCancel={onRailUp}
-            onKeyDown={onRailKeyDown}
-            onFocus={halt}
-            onBlur={resume}
-            className={cn(
-              "group relative h-6 w-full max-w-md touch-none",
-              "flex cursor-grab items-center focus-visible:outline-none",
-              scrubbing && "cursor-grabbing"
-            )}
-          >
-            {/* Rail. Thin at rest, thicker the moment the control is in play,
-                so the affordance appears exactly when it is wanted. */}
-            <div
-              className={cn(
-                "relative w-full overflow-hidden rounded-full bg-border",
-                "transition-[height] duration-[--duration-base] ease-[--ease-out]",
-                scrubbing ? "h-1.5" : "h-1 group-hover:h-1.5"
-              )}
-            >
-              <div
-                style={{
-                  width: thumbWidth,
-                  // Travel is the rail minus the thumb, so the thumb lands
-                  // flush with each end instead of hanging over it.
-                  transform: `translateX(${(progress * (1 / thumbFraction - 1) * 100).toFixed(3)}%)`,
-                }}
-                className={cn(
-                  "h-full rounded-full bg-accent",
-                  // No transition on transform: the position is already
-                  // driven frame-by-frame by Embla, and easing it on top
-                  // would put the thumb permanently behind the cards.
-                  "transition-colors duration-[--duration-base]",
-                  scrubbing && "bg-accent/80"
-                )}
-              />
-            </div>
-
-            {/* Focus ring belongs to the rail, not the thumb — the thumb moves
-                and a ring chasing it around is noise. */}
-            <span className="pointer-events-none absolute -inset-x-2 -inset-y-1 rounded-full ring-ring transition-shadow group-focus-visible:ring-2" />
-          </div>
-        </div>
       </Container>
     </Section>
   )

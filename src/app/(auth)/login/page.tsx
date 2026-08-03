@@ -49,16 +49,17 @@ export default function LoginPage() {
     <PointerStage className="relative isolate min-h-dvh overflow-hidden bg-[var(--stone-950)]">
       <AuthBackdrop />
 
-      <div className="relative mx-auto flex min-h-dvh w-full max-w-6xl flex-col px-5 py-7 sm:px-8">
-        <header className="flex items-center justify-between gap-4">
+      <div className="relative mx-auto flex min-h-dvh w-full max-w-6xl flex-col px-5 py-5 sm:px-8 sm:py-7">
+        <header className="flex items-center justify-between gap-3">
           <Logo tone="inverted" />
 
           {/* The way out lives at the top, not buried in the footer. Someone
               who landed here by accident should not have to read a sign-in
-              form to find the door. */}
+              form to find the door. `shrink-0` because the logo will otherwise
+              push it off the right edge on a narrow phone. */}
           <Link
             href="/"
-            className="rounded-sm text-sm text-white/55 underline-offset-4 transition-colors duration-[--duration-fast] hover:text-white focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            className="shrink-0 rounded-sm text-sm text-white/55 underline-offset-4 transition-colors duration-[--duration-fast] hover:text-white focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
             Back to site
           </Link>
@@ -67,7 +68,7 @@ export default function LoginPage() {
         {/* Centred rather than top-aligned: the card is the subject of a
             composition now, and a subject sitting high on a dark stage reads
             as an accident. */}
-        <div className="grid flex-1 items-center gap-12 py-10 lg:grid-cols-[1fr_25.5rem] lg:gap-16 lg:py-14">
+        <div className="grid flex-1 items-center gap-7 py-7 sm:gap-12 sm:py-10 lg:grid-cols-[1fr_25.5rem] lg:gap-16 lg:py-14">
           <AuthPitch />
           <SignInCard />
         </div>

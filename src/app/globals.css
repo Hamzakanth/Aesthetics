@@ -65,10 +65,25 @@
      find the next action without reading a word.
      `--primary-raised` is the same colour a shade deeper: filled controls are
      painted as a top-lit gradient between the two, which is what makes them
-     read as raised objects rather than as coloured rectangles. */
-  --primary: var(--gold-800);
-  --primary-raised: var(--gold-850);
+     read as raised objects rather than as coloured rectangles.
+     Sitting on gold-700 rather than gold-800: this is the brightest step of
+     the scale that still clears 4.5:1 under white text, so the buttons read
+     as lit gold instead of bronze without putting their own label below AA. */
+  --primary: var(--gold-700);
+  --primary-raised: var(--gold-800);
   --primary-foreground: #ffffff;
+
+  /* The three stops of a raised filled button's face (see `btn-raised`).
+     Split out per surface because paper and ink need opposite gradients: the
+     label is white here and near-black on an ink surface, so "more contrast"
+     means a deeper face here and a brighter one there.
+     Light: white on gold-700 is 5.0:1, which is the low end of comfortable at
+     button weight. Dropping the label's ground to gold-800/850 takes it to
+     6.4:1–8.7:1 while the lit rim stays gold, so the button still reads as
+     bronze catching light rather than as a flat dark chip. */
+  --btn-face-top: color-mix(in oklab, var(--gold-500) 45%, var(--primary));
+  --btn-face-mid: var(--gold-800);
+  --btn-face-end: var(--gold-850);
 
   --secondary: var(--stone-100);
   --secondary-foreground: var(--stone-900);
@@ -173,6 +188,15 @@
   --primary: var(--gold-500);
   --primary-raised: var(--gold-600);
   --primary-foreground: #1a150f;
+
+  /* Mirror image of the face on paper: the label is near-black on ink, so the
+     ground has to get *lighter* to gain contrast, not darker. The old shared
+     gradient bottomed out on gold-600 (5.3:1 under this label); holding the
+     face on gold-500 and only hinting at gold-600 at the very bottom keeps
+     the raised read and puts the label back above 7:1. */
+  --btn-face-top: color-mix(in oklab, var(--gold-300) 55%, var(--primary));
+  --btn-face-mid: var(--gold-500);
+  --btn-face-end: color-mix(in oklab, var(--gold-600) 30%, var(--gold-500));
 
   --secondary: #292219;
   --secondary-foreground: #f5f0ea;
@@ -293,6 +317,7 @@
   --animate-sheen: sheen 8s var(--ease-in-out) infinite;
   /* Duration must match AUTOPLAY_DELAY in testimonials.tsx (4500ms). */
   --animate-dot-progress: dot-progress 4.5s linear forwards;
+  --animate-nudge-x: nudge-x 1.8s var(--ease-in-out) infinite;
   --animate-float-slow: float-y 7s var(--ease-in-out) infinite;
   --animate-float-slower: float-y 9.5s var(--ease-in-out) infinite;
 
@@ -385,6 +410,19 @@
 
 /* Fills the active carousel dot over one autoplay interval, so the rotation
    is legible before it happens rather than surprising. */
+/* A short sideways nudge that teaches a swipe gesture. Small and slow enough
+   to read as an invitation rather than as something demanding attention. */
+@keyframes nudge-x {
+  0%,
+  60%,
+  100% {
+    transform: translateX(0);
+  }
+  30% {
+    transform: translateX(3px);
+  }
+}
+
 @keyframes dot-progress {
   from {
     transform: scaleX(0);
@@ -599,6 +637,18 @@
    UTILITIES
    ========================================================================== */
 
+/* Swipeable rails carry their own position indicator (dots, chips, "2 / 5"),
+   so the scrollbar is redundant chrome that also shifts the layout on desktop
+   trackpads. Scrolling itself is untouched. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @utility text-gradient {
   background-image: linear-gradient(
     180deg,
@@ -631,10 +681,16 @@
    control goes *into* the page, which is the whole reason a user believes it
    was a button before they clicked it. */
 @utility btn-raised {
+  /* The face opens toward the bright brand gold at the very top edge — the
+     lit rim — and settles onto the mid stop before the label's cap height, so
+     the type never sits on the rim. Stops are theme tokens because light and
+     dark need the gradient to run in opposite directions to hold contrast;
+     see `--btn-face-*`. */
   background-image: linear-gradient(
     180deg,
-    var(--primary) 0%,
-    var(--primary-raised) 100%
+    var(--btn-face-top) 0%,
+    var(--btn-face-mid) 30%,
+    var(--btn-face-end) 100%
   );
   box-shadow:
     inset 0 1px 0 0 rgb(255 255 255 / 0.22),

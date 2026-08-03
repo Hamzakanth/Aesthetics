@@ -14,6 +14,7 @@ import { Section } from "@/components/primitives/section"
 import { SectionHeading } from "@/components/primitives/section-heading"
 import { RevealGroup, RevealItem } from "@/components/motion/reveal"
 import { PricingComparison } from "@/components/sections/pricing-comparison"
+import { PricingMobile } from "@/components/sections/pricing-mobile"
 
 type Cycle = "monthly" | "annual"
 
@@ -62,7 +63,15 @@ export function Pricing() {
           "one of several" announcement all come from the browser — no
           keyboard handlers to write and get subtly wrong.
         */}
-        <fieldset className="mt-14">
+        {/* Phones get the single-plan spec sheet instead of three cards plus a
+            sideways-scrolling table. Both read the same content. */}
+        <PricingMobile
+          cycle={cycle}
+          selectedId={selectedId}
+          onSelect={setSelectedId}
+        />
+
+        <fieldset className="mt-14 hidden lg:block">
           <legend className="sr-only">Choose a plan</legend>
 
           <RevealGroup className="grid items-start gap-6 lg:grid-cols-3">
@@ -170,7 +179,7 @@ export function Pricing() {
           </RevealGroup>
         </fieldset>
 
-        <RevealGroup>
+        <RevealGroup className="hidden lg:block">
           <RevealItem>
             <PricingComparison
               cycle={cycle}
@@ -183,7 +192,7 @@ export function Pricing() {
         {/* Single CTA reflecting the current selection. One decision, one
             button — rather than three competing buttons on the page. */}
         {selected ? (
-          <div className="mt-16 flex flex-col items-center gap-5 rounded-xl border border-border bg-muted/40 p-6 sm:flex-row sm:justify-between sm:p-7">
+          <div className="mt-16 hidden flex-col items-center gap-5 rounded-xl border border-border bg-muted/40 p-6 lg:flex lg:flex-row lg:justify-between lg:p-7">
             <div className="text-center sm:text-left">
               <p className="text-sm text-muted-foreground">Selected plan</p>
               <p className="mt-1 text-lg font-semibold">

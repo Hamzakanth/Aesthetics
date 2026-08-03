@@ -1,4 +1,5 @@
 import { buildMetadata } from "@/lib/seo"
+import { PageField } from "@/components/primitives/page-field"
 import { Features } from "@/components/sections/features"
 import { Cta } from "@/components/sections/cta"
 
@@ -17,7 +18,9 @@ export const metadata = buildMetadata({
 export default function FeaturesPage() {
   return (
     <>
-      <Features />
+      <PageField>
+        <Features />
+      </PageField>
       <Cta />
     </>
   )

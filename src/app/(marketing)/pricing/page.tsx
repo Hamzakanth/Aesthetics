@@ -1,5 +1,6 @@
 import { faqs } from "@/content/faq"
 import { buildMetadata, faqJsonLd } from "@/lib/seo"
+import { PageField } from "@/components/primitives/page-field"
 import { Pricing } from "@/components/sections/pricing"
 import { Faq } from "@/components/sections/faq"
 import { Cta } from "@/components/sections/cta"
@@ -20,7 +21,9 @@ export default function PricingPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(faqs)) }}
       />
 
-      <Pricing />
+      <PageField>
+        <Pricing />
+      </PageField>
       <Faq />
       <Cta />
     </>

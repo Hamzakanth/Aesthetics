@@ -13,6 +13,7 @@ export const pricingTiers: PricingTier[] = [
     id: "studio",
     name: "Studio",
     description: "For a single clinic, salon or treatment room.",
+    shortFor: "Single site",
     monthlyPrice: 249,
     annualPrice: 199,
     features: [
@@ -28,8 +29,9 @@ export const pricingTiers: PricingTier[] = [
   },
   {
     id: "group",
-    name: "Group",
+    name: "Pro",
     description: "For multi-room clinics and small studio groups.",
+    shortFor: "Growing groups",
     monthlyPrice: 449,
     annualPrice: 359,
     features: [
@@ -49,6 +51,7 @@ export const pricingTiers: PricingTier[] = [
     id: "brand",
     name: "Brand",
     description: "For chains, franchises and multi-site beauty brands.",
+    shortFor: "Multi-site",
     monthlyPrice: null,
     annualPrice: null,
     features: [

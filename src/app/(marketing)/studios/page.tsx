@@ -1,4 +1,5 @@
 import { buildMetadata } from "@/lib/seo"
+import { PageField } from "@/components/primitives/page-field"
 import { Testimonials } from "@/components/sections/testimonials"
 import { LogoCloud } from "@/components/sections/logo-cloud"
 import { Metrics } from "@/components/sections/metrics"
@@ -14,7 +15,9 @@ export const metadata = buildMetadata({
 export default function StudiosPage() {
   return (
     <>
-      <Testimonials />
+      <PageField>
+        <Testimonials />
+      </PageField>
       <LogoCloud />
       <Metrics />
       <Cta />

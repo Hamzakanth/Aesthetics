@@ -1,4 +1,5 @@
 import { buildMetadata } from "@/lib/seo"
+import { PageField } from "@/components/primitives/page-field"
 import { HowItWorks } from "@/components/sections/how-it-works"
 import { Metrics } from "@/components/sections/metrics"
 import { Cta } from "@/components/sections/cta"
@@ -13,7 +14,9 @@ export const metadata = buildMetadata({
 export default function HowItWorksPage() {
   return (
     <>
-      <HowItWorks />
+      <PageField>
+        <HowItWorks />
+      </PageField>
       <Metrics />
       <Cta />
     </>

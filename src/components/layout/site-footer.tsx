@@ -25,7 +25,10 @@ export function SiteFooter() {
             </Badge>
           </div>
 
-          <div className="grid gap-10 sm:grid-cols-2 lg:col-span-8 lg:grid-cols-4">
+          {/* Two columns even on the narrowest phone — a single stacked column
+              turns four short link groups into a long scroll of the same
+              thing. */}
+          <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:col-span-8 lg:grid-cols-4">
             {footerNav.map((group) => (
               <nav key={group.title} aria-labelledby={`footer-${group.title}`}>
                 <h2

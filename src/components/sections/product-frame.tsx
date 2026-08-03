@@ -113,9 +113,9 @@ export function ProductFrame({ panel, className }: ProductFrameProps) {
         </aside>
 
         {/* Fixed floor so the frame does not jump as row counts change. Kept
-            shorter on mobile, where the panel is pinned above the steps and
-            must not eat the viewport. */}
-        <div className="flex min-h-[17rem] flex-col p-4 sm:min-h-[21rem] sm:p-5">
+            shorter on mobile, where the frame sits inline under its step and
+            width is already tight. */}
+        <div className="flex min-h-[17rem] flex-col p-3.5 sm:min-h-[21rem] sm:p-5">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={panel.path}

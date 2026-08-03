@@ -1,5 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32">
-  <rect x="1" y="1" width="22" height="22" rx="6" fill="#2A241F" />
-  <path d="M7.4 17 12 6.6 16.6 17h-2.32l-.86-2.06H10.6L9.74 17H7.4Zm3.98-3.92h1.28L12 10.1l-.62 2.98Z" fill="#F9F7F4" />
-  <circle cx="18.4" cy="5.6" r="2.1" fill="#C9A96A" stroke="#2A241F" stroke-width="1.2" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!--
+    The header monogram with the tile removed: serif A, hairline ring, gold
+    satellite dot, transparent ground.
+
+    Strokes are heavier than the header mark (2.2/1.6 against 1.4/1) because
+    this is read at 16px, where the lockup's true hairline vanishes.
+
+    A favicon cannot reach the theme tokens, so the ink is literal and a
+    prefers-color-scheme rule flips it to ivory — without it, an ink A on a
+    dark browser chrome is an empty tab.
+  -->
+  <style>
+    .ink { stroke: #2A241F }
+    @media (prefers-color-scheme: dark) { .ink { stroke: #F9F7F4 } }
+  </style>
+
+  <circle cx="16" cy="16" r="14.6" fill="none" stroke="#C9A96A" stroke-width="1.4" />
+
+  <path class="ink" d="M9.5 23 16 8.6 22.5 23" fill="none" stroke-width="2.2"
+        stroke-linecap="round" stroke-linejoin="round" />
+  <path class="ink" d="M11.6 18.4h8.8" fill="none" stroke-width="1.6"
+        stroke-linecap="round" />
+
+  <circle cx="26.4" cy="6.6" r="2.8" fill="#C9A96A" />
 </svg>

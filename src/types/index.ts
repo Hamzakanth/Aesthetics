@@ -115,6 +115,11 @@ export interface PricingTier {
   id: string
   name: string
   description: string
+  /**
+   * Two or three words naming who the tier is for. Used where the full
+   * `description` will not fit — the phone plan tabs and their "Best for" row.
+   */
+  shortFor: string
   /** `null` renders as "Custom" — enterprise tiers have no list price. */
   monthlyPrice: number | null
   annualPrice: number | null

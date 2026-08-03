@@ -76,8 +76,8 @@ export function AuthPitch() {
       className="relative flex flex-col"
     >
       {/* --- Mark + eyebrow ---------------------------------------------- */}
-      <motion.div variants={variants} className="flex items-center gap-4">
-        <Armillary className="size-12 lg:size-16" />
+      <motion.div variants={variants} className="flex items-center gap-3 sm:gap-4">
+        <Armillary className="size-10 sm:size-12 lg:size-16" />
         <span className="font-mono text-[0.6875rem] leading-relaxed tracking-[0.22em] text-white/55 uppercase">
           Front desk
           <span className="block text-white/35">console</span>
@@ -89,13 +89,17 @@ export function AuthPitch() {
           and keystoned type at a display size is the fastest way to make an
           expensive-looking screen look cheap. A few px of drift gives it the
           same sense of standing in the scene at no cost to the letterforms. */}
-      <Parallax depth={-8} className="mt-8 max-w-lg lg:mt-10">
+      {/* Mobile trades display size for reach: at 2.5rem this ran to three
+          lines and pushed the Sign in button under the fold, which is the one
+          thing an auth screen cannot do. The line break is desktop-only for
+          the same reason. */}
+      <Parallax depth={-8} className="mt-5 max-w-lg sm:mt-8 lg:mt-10">
         <motion.h1
           variants={variants}
-          className="font-display text-[2.5rem] leading-[1.06] font-medium tracking-[-0.015em] text-balance text-white sm:text-5xl lg:text-[3.4rem]"
+          className="font-display text-[1.75rem] leading-[1.12] font-medium tracking-[-0.015em] text-balance text-white sm:text-5xl sm:leading-[1.06] lg:text-[3.4rem]"
         >
-          Your messages were answered.
-          <br />
+          Your messages were answered.{" "}
+          <br className="hidden sm:block" />
           <span className="text-[var(--gold-300)]">Your diary is full.</span>
         </motion.h1>
 

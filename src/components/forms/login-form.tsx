@@ -112,6 +112,18 @@ export function LoginForm() {
 
   const remember = watch("remember")
 
+  /**
+   * Focus the email field with a pointer, never on touch. Autofocus is a
+   * courtesy on a desktop and a hostile act on a phone: it throws the keyboard
+   * up on load, scrolls the card out from under the reader, and covers the
+   * button they were aiming for.
+   */
+  React.useEffect(() => {
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      setFocus("email")
+    }
+  }, [setFocus])
+
   const onSubmit = (values: LoginValues) => {
     setFormError(null)
 
@@ -211,7 +223,7 @@ export function LoginForm() {
               id="email"
               type="email"
               autoComplete="username"
-              autoFocus
+              inputMode="email"
               placeholder="dana@maisonskin.com"
               className="h-12 bg-secondary/30 pl-10"
               aria-invalid={!!errors.email}
@@ -296,15 +308,17 @@ export function LoginForm() {
         </div>
 
         <div className="flex flex-col gap-2">
+          {/* The row, not the box, is the target: a 16px checkbox is half the
+              44px minimum and this one gets tapped with a client at the desk. */}
           <label
             htmlFor="remember"
-            className="flex w-fit cursor-pointer items-center gap-2.5 text-sm text-muted-foreground transition-colors duration-[--duration-fast] select-none hover:text-foreground"
+            className="-my-2 flex min-h-11 w-fit cursor-pointer items-center gap-3 py-2 text-sm text-muted-foreground transition-colors duration-[--duration-fast] select-none hover:text-foreground"
           >
             <input
               id="remember"
               type="checkbox"
               aria-describedby={remember ? "remember-hint" : undefined}
-              className="size-4 rounded-sm border-input accent-[var(--accent)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+              className="size-5 rounded-sm border-input accent-[var(--accent)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
               {...register("remember")}
             />
             Keep me signed in

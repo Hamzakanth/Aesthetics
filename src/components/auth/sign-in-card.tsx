@@ -142,7 +142,7 @@ export function SignInCard() {
           // becomes gold on dark, the fields go espresso, every label and
           // hairline follows. Nothing inside had to know.
           data-surface="ink"
-          className="relative rounded-2xl border border-white/10 bg-card p-6 text-card-foreground sm:p-8"
+          className="relative rounded-2xl border border-white/10 bg-card p-5 text-card-foreground sm:p-8"
           style={{
             // Two shadows: a tight contact edge that keeps the card attached
             // to the stage, and a wide soft one that gives it height above it.
@@ -199,7 +199,7 @@ export function SignInCard() {
               </p>
             </div>
 
-            <h2 className="mt-4 font-display text-[2.125rem] leading-none font-medium tracking-[-0.02em]">
+            <h2 className="mt-4 font-display text-[1.75rem] leading-none font-medium tracking-[-0.02em] sm:text-[2.125rem]">
               Welcome back
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
@@ -211,7 +211,7 @@ export function SignInCard() {
           <motion.div
             variants={planeIn}
             style={{ z: 18 }}
-            className="relative mt-7 [transform-style:preserve-3d]"
+            className="relative mt-6 [transform-style:preserve-3d] sm:mt-7"
           >
             <LoginForm />
           </motion.div>
