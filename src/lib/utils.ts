@@ -7,6 +7,10 @@ export function cn(...inputs: ClassValue[]) {
 
 /** Absolute URL against the canonical origin. Required for OG tags + sitemap. */
 export function absoluteUrl(path = "/") {
+  // Already absolute — a post banner hosted elsewhere, say. Prefixing the site
+  // origin would produce a URL that resolves to nothing.
+  if (/^https?:\/\//.test(path)) return path
+
   const base = (
     process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
   ).replace(/\/$/, "")

@@ -1,0 +1,67 @@
+---
+title: Aurelius 2.8 — Instagram booking and a rebuilt waitlist
+excerpt: DMs now book end to end without leaving the thread, the waitlist refills a cancellation within ninety seconds, and patch-test rules sit on the treatment instead of in someone's head.
+category: Product update
+date: 2026-07-16
+author: Aurelius Product Team
+version: v2.8
+featured: true
+image: /blog/images/banner-1st.png
+imageAlt: A comic-strip panel of a masked hero sitting on a rooftop at sunset, sighing over a glowing phone. Incoming messages pile up on one side while confirmations answer them on the other — appointment confirmed, technician dispatched, invoice drafted.
+---
+
+Three things shipped this release, and all three came from the same
+complaint: the front desk was doing work the system already had the
+information to do.
+
+## Instagram DMs book without leaving the thread
+
+Until now, a DM conversation ended with a link. The client tapped out to a
+booking page, and roughly a third of them never arrived — they got
+distracted, the page asked for details they had already given, or they simply
+did not want to fill in a form at eleven at night.
+
+Aurelius now completes the booking inside the thread. It reads the diary,
+offers the two or three slots that actually fit the treatment, holds the one
+the client picks for ten minutes, and confirms. Deposits are taken in the
+same conversation where the studio has them switched on.
+
+- Works on Instagram and Facebook DMs today; WhatsApp is in beta
+- Recognises returning clients from the handle, so nobody re-types a phone number
+- Hands over to a human the moment the conversation stops being about booking
+
+## The waitlist refills a cancellation in ninety seconds
+
+The old waitlist was a list. Someone had to read it, decide who to call, and
+call them — which meant it worked on quiet mornings and did nothing on the
+days it mattered.
+
+The new one is a queue with rules. When a slot opens, Aurelius works out who
+can actually take it — right treatment, right practitioner, patch test valid,
+not already booked that week — and offers it to the best match with a short
+expiry. No answer, it moves down the list.
+
+The median gap between a cancellation and a filled slot across the studios
+running the beta was **ninety-four seconds**. The previous median, measured
+on the same studios, was just over four hours.
+
+## Patch-test rules live on the treatment
+
+Patch-test policy used to live in the head of whoever had been there longest.
+Now it is a property of the treatment: how long before the appointment, how
+long it stays valid, and what happens when it has lapsed.
+
+When a client books something that needs one, the flow adjusts on its own —
+it offers the patch test first, blocks slots that are too close, and tells
+the client why in a sentence they can act on rather than a policy paragraph.
+
+## Smaller things
+
+- Cancellation and late-cancellation messages now follow the studio's own policy wording
+- The diary sync with Fresha handles a rescheduled appointment without creating a duplicate
+- Consent exports include the practitioner who took them
+- Reminder timing is per-treatment rather than per-studio
+
+Everything above is on for every studio already. If you want a walkthrough of
+the waitlist rules on your own diary, ask and we will sit with you for twenty
+minutes.

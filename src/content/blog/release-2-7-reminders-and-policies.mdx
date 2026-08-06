@@ -1,0 +1,47 @@
+---
+title: Aurelius 2.7 — reminders, confirmations and policy rules
+excerpt: Reminders now follow your own cancellation policy, confirmations chase themselves, and the awkward late-cancellation message is written for you.
+category: Product update
+date: 2026-06-18
+author: Aurelius Product Team
+version: v2.7
+---
+
+This release is about the messages nobody wants to send: the confirmation
+chase, the reminder that has to mention a fee, and the note after someone
+cancels two hours before a ninety-minute appointment.
+
+## Policy rules
+
+A studio's cancellation policy used to be a paragraph on a website. It is now
+a set of rules the system can act on — notice period, fee, whether a deposit
+is held, and what happens on a second late cancellation.
+
+Once it is written down, everything downstream stops needing a human
+decision. The reminder mentions the window that applies to that treatment.
+The late-cancellation message quotes the right fee. The client hears the same
+answer whoever is at the desk.
+
+## Confirmations chase themselves
+
+An unconfirmed appointment is now treated as an open question rather than a
+booking. Aurelius follows up on its own schedule — once, then once more
+closer to the day — and escalates to the desk only when the client has gone
+quiet on both.
+
+Studios in the beta cut unconfirmed appointments at the twenty-four-hour mark
+from roughly one in five to one in twenty.
+
+## Reminder timing per treatment
+
+A brow appointment and a course of laser do not want the same reminder
+schedule, and until now they got one. Timing is now set on the treatment:
+how far out the first reminder goes, whether there is a second, and how
+prep instructions attach to it.
+
+## Smaller things
+
+- Message history is visible on the client record, including anything Aurelius sent
+- Deposit requests expire rather than sitting open forever
+- Bulk edit for reminder templates
+- A quiet-hours setting, so nothing goes out at 3am

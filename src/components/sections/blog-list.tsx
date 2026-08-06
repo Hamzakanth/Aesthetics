@@ -7,6 +7,7 @@ import { Clock, Sparkles } from "lucide-react"
 import { blogCategories, type BlogPost } from "@/content/blog"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
+import { PostBanner } from "@/components/blog/post-banner"
 
 const dateFormat = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
@@ -91,12 +92,21 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
             <Link
               href={`/blog/${post.slug}`}
               className={cn(
-                "group flex w-full flex-col rounded-xl border border-border bg-card p-6 shadow-xs",
+                "group flex w-full flex-col overflow-hidden rounded-xl border border-border bg-card p-6 shadow-xs",
                 "transition-[border-color,box-shadow,transform] duration-[--duration-base] ease-[--ease-out]",
                 "hover:-translate-y-1 hover:border-accent/40 hover:shadow-md motion-reduce:hover:translate-y-0",
                 "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
               )}
             >
+              {/* Alt text is empty on purpose: the title sits right below and
+                  the link would otherwise be announced twice. Without an
+                  image, the category paints its own gradient. */}
+              <PostBanner
+                post={post}
+                sizes="(min-width: 1024px) 22rem, (min-width: 768px) 45vw, 100vw"
+                className="mb-5"
+              />
+
               <div className="flex items-center justify-between gap-3">
                 <span className="font-mono text-[0.6875rem] tracking-[0.14em] text-muted-foreground uppercase">
                   {post.category}

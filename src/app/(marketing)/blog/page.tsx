@@ -2,7 +2,7 @@ import Link from "next/link"
 import { ArrowRight, Sparkles } from "lucide-react"
 
 import { buildMetadata } from "@/lib/seo"
-import { sortedPosts } from "@/content/blog"
+import { getAllPosts } from "@/lib/blog"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Container } from "@/components/primitives/container"
@@ -10,6 +10,7 @@ import { Section } from "@/components/primitives/section"
 import { Eyebrow } from "@/components/primitives/section-heading"
 import { GradientMesh } from "@/components/motion/gradient-mesh"
 import { BlogList, PostMeta } from "@/components/sections/blog-list"
+import { PostBanner } from "@/components/blog/post-banner"
 
 export const metadata = buildMetadata({
   title: "Journal and product updates",
@@ -19,10 +20,14 @@ export const metadata = buildMetadata({
 })
 
 export default function BlogPage() {
+  // Read straight from src/content/blog at build time — a merged .mdx file
+  // shows up here with nothing else to update.
+  const posts = getAllPosts()
+
   // Newest post leads regardless of type; an explicit `featured` flag can
   // override that when a release deserves the slot longer than a week.
-  const featured = sortedPosts.find((p) => p.featured) ?? sortedPosts[0]
-  const rest = sortedPosts.filter((p) => p.slug !== featured?.slug)
+  const featured = posts.find((p) => p.featured) ?? posts[0]
+  const rest = posts.filter((p) => p.slug !== featured?.slug)
 
   return (
     <>
@@ -79,7 +84,17 @@ export default function BlogPage() {
                 <PostMeta post={featured} className="mt-1" />
               </div>
 
-              <div className="flex items-end lg:col-span-4 lg:justify-end">
+              <div className="flex flex-col justify-between gap-6 lg:col-span-4 lg:items-end">
+                {/* Banner shares the column with the CTA; the card keeps its
+                    shape when a post has no image. */}
+                <PostBanner
+                  post={featured}
+                  alt={featured.title}
+                  sizes="(min-width: 1024px) 22rem, 100vw"
+                  priority
+                  className="rounded-xl"
+                />
+
                 <span className="flex items-center gap-2 text-sm font-medium text-accent">
                   Read the post
                   <ArrowRight

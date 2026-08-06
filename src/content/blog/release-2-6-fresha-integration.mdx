@@ -1,0 +1,49 @@
+---
+title: Aurelius 2.6 — Fresha integration and consent exports
+excerpt: Two-way diary sync with Fresha, plus signed consent and patch-test exports you can hand straight to an insurer.
+category: Product update
+date: 2026-05-21
+author: Aurelius Product Team
+version: v2.6
+---
+
+Two pieces of plumbing this release, both of which remove a reason people
+told us they could not switch.
+
+## Fresha, two ways
+
+Aurelius now syncs with Fresha in both directions. Appointments booked
+through Aurelius appear in Fresha; appointments booked or moved in Fresha
+update what Aurelius knows about availability, usually within a few seconds.
+
+What that means in practice:
+
+- Keep Fresha as the system of record and your existing staff workflow
+- No double entry, and no diary that is subtly wrong by the afternoon
+- Treatment durations, practitioners and room constraints come from Fresha
+- Client records are matched on phone number first, then email
+
+Reschedules were the hard part and are the part we tested longest. A moved
+appointment updates rather than duplicating, and a cancellation on either
+side releases the slot to the waitlist.
+
+## Consent and patch-test exports
+
+Everything a client signs is now exportable as a dated PDF bundle: the
+consent text as it was worded at the time, the signature, the timestamp,
+the practitioner, and the patch-test result if the treatment required one.
+
+That last detail matters more than it sounds. Exporting today's consent
+wording against last year's appointment is not evidence of anything.
+Aurelius versions the wording, so the export shows what the client actually
+agreed to.
+
+Insurers and inspectors ask for this in a specific shape, and until now
+studios were assembling it by hand from screenshots.
+
+## Smaller things
+
+- Client merge, for the same person who booked twice under two numbers
+- Faster search on the client list
+- Treatment categories can be reordered
+- Fixed a timezone bug affecting studios that had recently changed opening hours

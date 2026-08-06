@@ -3,22 +3,25 @@ import { notFound } from "next/navigation"
 import { ArrowLeft, Clock } from "lucide-react"
 
 import { buildMetadata } from "@/lib/seo"
-import { blogPosts } from "@/content/blog"
+import { getAllPostSlugs, getPostBySlug } from "@/lib/blog"
 import { Badge } from "@/components/ui/badge"
 import { Container } from "@/components/primitives/container"
 import { Section } from "@/components/primitives/section"
+import { MdxContent } from "@/components/sections/mdx-content"
+import { PostBanner } from "@/components/blog/post-banner"
 
 interface PageProps {
   params: Promise<{ slug: string }>
 }
 
+/** Every file in src/content/blog becomes a static page at build time. */
 export function generateStaticParams() {
-  return blogPosts.map((post) => ({ slug: post.slug }))
+  return getAllPostSlugs().map((slug) => ({ slug }))
 }
 
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params
-  const post = blogPosts.find((p) => p.slug === slug)
+  const post = getPostBySlug(slug)
 
   if (!post) return buildMetadata({ title: "Post not found", noIndex: true })
 
@@ -26,12 +29,15 @@ export async function generateMetadata({ params }: PageProps) {
     title: post.title,
     description: post.excerpt,
     path: `/blog/${post.slug}`,
+    // The banner doubles as the social preview; without one the site-wide
+    // default still applies.
+    ...(post.image ? { image: post.image } : {}),
   })
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params
-  const post = blogPosts.find((p) => p.slug === slug)
+  const post = getPostBySlug(slug)
 
   if (!post) notFound()
 
@@ -82,23 +88,38 @@ export default async function BlogPostPage({ params }: PageProps) {
             </span>
           </div>
 
+          {/* The banner is the largest thing above the fold, so it loads
+              eagerly rather than waiting on the lazy observer. */}
+          <PostBanner
+            post={post}
+            alt={post.title}
+            priority
+            sizes="(min-width: 768px) 48rem, 100vw"
+            className="mt-8 rounded-2xl"
+          />
+
           <p className="mt-8 text-lg leading-relaxed text-muted-foreground text-balance">
             {post.excerpt}
           </p>
 
-          {/* Body copy lands here once posts move to MDX. Until then the page
-              exists so the index has somewhere real to link to. */}
-          <p className="mt-6 leading-relaxed text-muted-foreground">
-            The full article is being prepared. In the meantime,{" "}
+          <div className="mt-10">
+            <MdxContent source={post.content} />
+          </div>
+        </article>
+
+        <div className="mt-16 rounded-2xl border border-border bg-card p-7">
+          <p className="text-lg font-medium">See it running in your studio</p>
+          <p className="mt-2 leading-relaxed text-muted-foreground">
+            Fifteen minutes, your diary, your treatments.{" "}
             <Link
               href="/contact"
               className="font-medium text-accent underline underline-offset-4"
             >
-              book a demo
-            </Link>{" "}
-            and we will walk you through it directly.
+              Book a walkthrough
+            </Link>
+            .
           </p>
-        </article>
+        </div>
       </Container>
     </Section>
   )
